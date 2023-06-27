@@ -9,8 +9,12 @@ import Foundation
 
 struct CharacterSetting {
     
-    var charName: String // 캐릭터 이름
-    var charLevel: String   // 캐릭터 레벨
+    let charName: String // 캐릭터 이름
+    var charLevel: Double   // 캐릭터 레벨
+    /*var classImage: UIImage? {
+        return UIImage(named: characterClassImage)
+    }**/
+    
     var isDailyEpona: Bool //   일일 에포나 여부
     var isGudianRaid: Bool //   일일 가디언 토벌 여부
     var isChaosDungeon: Bool //   일일 카오스 던전 여부

@@ -9,6 +9,9 @@ import UIKit
 
 class CharacterMainViewController: UIViewController {
     
+    @IBOutlet weak var TableView: UITableView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //  func 아래 추가
@@ -16,4 +19,12 @@ class CharacterMainViewController: UIViewController {
         //  self.loadCharacterList()
         
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is CharacterSettingViewController {
+            //settingViewController.delegate = self
+        }
+    }
 }
+
+//extension CharacterMainViewController: SettingViewController {
+//}

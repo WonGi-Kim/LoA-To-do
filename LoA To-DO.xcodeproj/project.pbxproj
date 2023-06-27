@@ -15,7 +15,10 @@
 		B20FE4B22A250F9100B9E2D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B20FE4B02A250F9100B9E2D5 /* LaunchScreen.storyboard */; };
 		B20FE4BA2A250FD200B9E2D5 /* CharacterMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20FE4B92A250FD200B9E2D5 /* CharacterMainViewController.swift */; };
 		B20FE4BC2A25135300B9E2D5 /* CharacterSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20FE4BB2A25135300B9E2D5 /* CharacterSetting.swift */; };
-		B20FE4BE2A25148100B9E2D5 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20FE4BD2A25148100B9E2D5 /* CharacterCell.swift */; };
+		B20FE4C52A25C76B00B9E2D5 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20FE4C32A25C76B00B9E2D5 /* CharacterCell.swift */; };
+		B20FE4C62A25C76B00B9E2D5 /* CharacterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */; };
+		B241E7A72A4AC2EA00C2E161 /* CharacterSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */; };
+		B241E7A92A4AC8B400C2E161 /* CharacterClass.plist in Resources */ = {isa = PBXBuildFile; fileRef = B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +32,10 @@
 		B20FE4B32A250F9100B9E2D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B20FE4B92A250FD200B9E2D5 /* CharacterMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterMainViewController.swift; sourceTree = "<group>"; };
 		B20FE4BB2A25135300B9E2D5 /* CharacterSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSetting.swift; sourceTree = "<group>"; };
-		B20FE4BD2A25148100B9E2D5 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
+		B20FE4C32A25C76B00B9E2D5 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
+		B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterCell.xib; sourceTree = "<group>"; };
+		B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSettingViewController.swift; sourceTree = "<group>"; };
+		B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CharacterClass.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,11 +69,14 @@
 			isa = PBXGroup;
 			children = (
 				B20FE4B92A250FD200B9E2D5 /* CharacterMainViewController.swift */,
-				B20FE4BD2A25148100B9E2D5 /* CharacterCell.swift */,
 				B20FE4A22A250F9000B9E2D5 /* AppDelegate.swift */,
+				B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */,
 				B20FE4A42A250F9000B9E2D5 /* SceneDelegate.swift */,
 				B20FE4BB2A25135300B9E2D5 /* CharacterSetting.swift */,
+				B20FE4C32A25C76B00B9E2D5 /* CharacterCell.swift */,
+				B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */,
 				B20FE4A82A250F9000B9E2D5 /* Main.storyboard */,
+				B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */,
 				B20FE4AE2A250F9100B9E2D5 /* Assets.xcassets */,
 				B20FE4B02A250F9100B9E2D5 /* LaunchScreen.storyboard */,
 				B20FE4B32A250F9100B9E2D5 /* Info.plist */,
@@ -135,8 +144,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B20FE4B22A250F9100B9E2D5 /* LaunchScreen.storyboard in Resources */,
+				B241E7A92A4AC8B400C2E161 /* CharacterClass.plist in Resources */,
 				B20FE4AF2A250F9100B9E2D5 /* Assets.xcassets in Resources */,
 				B20FE4AA2A250F9000B9E2D5 /* Main.storyboard in Resources */,
+				B20FE4C62A25C76B00B9E2D5 /* CharacterCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +161,8 @@
 				B20FE4A32A250F9000B9E2D5 /* AppDelegate.swift in Sources */,
 				B20FE4AD2A250F9000B9E2D5 /* LoA_To_DO.xcdatamodeld in Sources */,
 				B20FE4BC2A25135300B9E2D5 /* CharacterSetting.swift in Sources */,
-				B20FE4BE2A25148100B9E2D5 /* CharacterCell.swift in Sources */,
+				B241E7A72A4AC2EA00C2E161 /* CharacterSettingViewController.swift in Sources */,
+				B20FE4C52A25C76B00B9E2D5 /* CharacterCell.swift in Sources */,
 				B20FE4A52A250F9000B9E2D5 /* SceneDelegate.swift in Sources */,
 				B20FE4BA2A250FD200B9E2D5 /* CharacterMainViewController.swift in Sources */,
 			);
