@@ -24,7 +24,7 @@ class CharacterSettingViewController: UIViewController {
     @IBOutlet weak var characterClassPicker: UIPickerView!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var confirmButton: UIButton!
+    @IBOutlet weak var confirmBarButton: UIBarButtonItem!
     
     var dataArray: [String] = []
     
@@ -47,7 +47,7 @@ class CharacterSettingViewController: UIViewController {
         self.loadClassNames()
         self.myPicker()
         
-        self.confirmButton.isEnabled = false
+        self.confirmBarButton.isEnabled = false
         
         //  ScrollView에서 필요한 부분 구현
         let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedMethod))
@@ -92,17 +92,18 @@ class CharacterSettingViewController: UIViewController {
         view.addSubview(characterClassPicker)
     }
     
-    
-    @IBAction func confirmButton(_ sender: UIButton) {
+    @IBAction func confirmBarButton(_ sender: UIBarButtonItem) {
         guard let name = self.characterNameField.text else { return }
         guard let level = self.itemLevelField.text else { return }
         guard let playerClass = self.characterClassField.text else { return }
         
+        print("barButton tapped")
+        
         //  delegate 메소드 호출 후 데이터 전달
         self.delegate?.didSelectCharacter(name: name, level: level, playerClass: playerClass)
         navigationController?.popViewController(animated: true)
-        
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CharacterMainViewController" {
@@ -117,7 +118,7 @@ class CharacterSettingViewController: UIViewController {
     }
     
     private func validateInputField() {
-        self.confirmButton.isEnabled = !(self.characterNameField.text?.isEmpty ?? true) && !(self.itemLevelField.text?.isEmpty ?? true) && !(self.characterClassField.text?.isEmpty ?? true)
+        self.confirmBarButton.isEnabled = !(self.characterNameField.text?.isEmpty ?? true) && !(self.itemLevelField.text?.isEmpty ?? true) && !(self.characterClassField.text?.isEmpty ?? true)
     }
 }
 

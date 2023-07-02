@@ -128,9 +128,6 @@
                                         <rect key="frame" x="160" y="675" width="73" height="35"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="생성"/>
-                                        <connections>
-                                            <action selector="confirmButton:" destination="ML8-6G-UC7" eventType="touchUpInside" id="zLi-lh-Vsw"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -174,12 +171,18 @@
                             <constraint firstItem="ZlH-ul-FJo" firstAttribute="top" secondItem="Q7x-Jg-fgp" secondAttribute="top" id="gc2-UX-9xw"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="캐릭터 설정" id="Xbh-E8-pn5"/>
+                    <navigationItem key="navigationItem" title="캐릭터 설정" id="Xbh-E8-pn5">
+                        <barButtonItem key="rightBarButtonItem" title="캐릭터 생성" id="9h8-Xb-BmG">
+                            <connections>
+                                <action selector="confirmBarButton:" destination="ML8-6G-UC7" id="MUX-oD-Ri4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="characterClassField" destination="6Xw-bC-mRB" id="jJu-jC-PaX"/>
                         <outlet property="characterClassPicker" destination="bcg-3m-1Kb" id="bRU-Rf-JyL"/>
                         <outlet property="characterNameField" destination="xtY-JZ-yAg" id="fRJ-87-c7N"/>
-                        <outlet property="confirmButton" destination="Nf3-MX-Sx5" id="LG8-uW-HKX"/>
+                        <outlet property="confirmBarButton" destination="9h8-Xb-BmG" id="ZtQ-yC-qdd"/>
                         <outlet property="itemLevelField" destination="lFI-Tt-O6b" id="p5R-ER-8AR"/>
                         <outlet property="scrollView" destination="ZlH-ul-FJo" id="vp3-qV-BVb"/>
                     </connections>
