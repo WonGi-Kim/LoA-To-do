@@ -7,10 +7,10 @@
 
 import UIKit
 
-class CharacterMainViewController: UIViewController,CharacterSettingViewControllerDelgate {
+class CharacterMainViewController: UIViewController, CharacterSettingViewControllerDelgate {
+    
     
     @IBOutlet weak var TableView: UITableView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,17 +28,24 @@ class CharacterMainViewController: UIViewController,CharacterSettingViewControll
         }
     }
     
-    var characterData: (name: String, level: String)?
-    var characterName: String = ""
-    var characterLevel: String = ""
+    var characterData: (name: String, level: String, playerClass: String)?
+    var characterDataArray: [(name: String, level: String, playerClass: String)] = []
     
-    func didSelectCharacter(name: String, level: String, playerClass: String) {
-        characterData = (name: name, level: level)
-    }
-    
-    
+    var charName: String = ""
+    var charLevel: String = ""
+    var charClass: String = ""
+
+
 }
 
+extension CharacterMainViewController {
+    
+    func didSelectCharacter(name: String, level: String, playerClass: String) {
+        let characterData = (name: name, level: level, playerClass: playerClass)
+        characterDataArray.append(characterData)
+        TableView.reloadData()
+    }
+}
 
 extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -46,8 +53,8 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     //  xib로 만든 셀을 반환하도록 구현
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as! CharacterCell
-        cell.nameLabel.text = characterName
-        cell.levelLabel.text = characterLevel
+        let characterData = characterDataArray[indexPath.row]
+        cell.characterData = characterData
         
         return cell
     }
@@ -55,7 +62,7 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //  테이블 뷰의 데이터 개수 반환
         
-        return 1
+        return characterDataArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

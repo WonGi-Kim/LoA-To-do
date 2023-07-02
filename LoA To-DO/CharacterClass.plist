@@ -6,13 +6,13 @@
 		<key>className</key>
 		<string>디스트로이어</string>
 		<key>classImage</key>
-		<string></string>
+		<string>디스트로이어</string>
 	</dict>
 	<dict>
 		<key>className</key>
 		<string>버서커</string>
 		<key>classImage</key>
-		<string></string>
+		<string>버서커</string>
 	</dict>
 	<dict>
 		<key>className</key>

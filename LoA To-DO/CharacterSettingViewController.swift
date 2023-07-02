@@ -60,6 +60,7 @@ class CharacterSettingViewController: UIViewController {
         self.validateInputField()
     }
     
+    // MARK: - endEditing
     //  singleTapGestureRecognizer의 selector 구현
     @objc func tappedMethod(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
@@ -70,6 +71,7 @@ class CharacterSettingViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    // MARK: - plistControl
     //  plist에서 class 이름 가져오는 함수
     func loadClassNames() {
         // plist 파일 경로 가져오기
@@ -87,6 +89,9 @@ class CharacterSettingViewController: UIViewController {
         self.dataArray = classNames
     }
     
+    
+    
+    // MARK: - pickerView
     func myPicker() {
         characterClassPicker.frame = CGRect(x: 150, y: 150, width: 200, height: 250)
         view.addSubview(characterClassPicker)
@@ -104,17 +109,17 @@ class CharacterSettingViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    
+    // MARK: - Segue로 데이터 전달
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "CharacterMainViewController" {
-            if let mainViewController = segue.destination as? CharacterMainViewController {
-                guard let name = self.characterNameField.text else { return }
-                guard let level = self.itemLevelField.text else { return }
-                
-                mainViewController.characterName = name
-                mainViewController.characterLevel = level
+        if let mainViewController = segue.destination as? CharacterMainViewController {
+            guard let name = self.characterNameField.text else { return }
+            guard let level = self.itemLevelField.text else { return }
+            guard let playerClass = self.characterClassField.text else { return }
+            
+            mainViewController.charName = name
+            mainViewController.charLevel = level
+            mainViewController.charClass = playerClass
             }
-        }
     }
     
     private func validateInputField() {

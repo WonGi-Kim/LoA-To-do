@@ -36,7 +36,7 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="65" id="vfa-4C-MFQ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="65" id="vfa-4C-MFQ" customClass="CharacterCell" customModule="LoA_To_DO" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vfa-4C-MFQ" id="lee-Nh-dQ7">
@@ -124,11 +124,6 @@
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bcg-3m-1Kb">
                                         <rect key="frame" x="10" y="255" width="373" height="216"/>
                                     </pickerView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nf3-MX-Sx5">
-                                        <rect key="frame" x="160" y="675" width="73" height="35"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="생성"/>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="bcg-3m-1Kb" secondAttribute="trailing" constant="10" id="1aV-uT-3zB"/>
@@ -136,14 +131,12 @@
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="LFZ-6w-7Ty" secondAttribute="trailing" constant="20" id="6GT-rM-j6z"/>
                                     <constraint firstItem="LFZ-6w-7Ty" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="7WS-5y-lJo"/>
                                     <constraint firstItem="xtY-JZ-yAg" firstAttribute="top" secondItem="aSn-LS-XnM" secondAttribute="bottom" constant="12" id="B1u-V1-DFp"/>
-                                    <constraint firstItem="WSf-bh-U80" firstAttribute="bottom" secondItem="Nf3-MX-Sx5" secondAttribute="bottom" constant="5" id="FhR-wC-vRq"/>
                                     <constraint firstItem="aSn-LS-XnM" firstAttribute="top" secondItem="WSf-bh-U80" secondAttribute="top" constant="20" id="IMz-eu-bdx"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="xtY-JZ-yAg" secondAttribute="trailing" constant="20" id="IZ8-Xh-a7c"/>
                                     <constraint firstItem="6Xw-bC-mRB" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="TCc-5L-XDf"/>
                                     <constraint firstItem="xtY-JZ-yAg" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="XfN-fc-Kng"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="lFI-Tt-O6b" secondAttribute="trailing" constant="20" id="YMI-wL-lha"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="wyG-zP-rZ2" secondAttribute="trailing" constant="20" id="aCt-af-skS"/>
-                                    <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="Nf3-MX-Sx5" secondAttribute="trailing" constant="160" id="aSO-fy-uZI"/>
                                     <constraint firstItem="6Xw-bC-mRB" firstAttribute="top" secondItem="wyG-zP-rZ2" secondAttribute="bottom" constant="12" id="cU8-IP-yPd"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="6Xw-bC-mRB" secondAttribute="trailing" constant="20" id="eDA-xv-hFl"/>
                                     <constraint firstItem="wyG-zP-rZ2" firstAttribute="top" secondItem="lFI-Tt-O6b" secondAttribute="bottom" constant="12" id="mVZ-Md-zeg"/>
@@ -153,7 +146,6 @@
                                     <constraint firstItem="wyG-zP-rZ2" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="pUW-Ya-g2L"/>
                                     <constraint firstItem="bcg-3m-1Kb" firstAttribute="top" secondItem="6Xw-bC-mRB" secondAttribute="bottom" constant="10" id="qAL-IY-P6i"/>
                                     <constraint firstItem="LFZ-6w-7Ty" firstAttribute="top" secondItem="xtY-JZ-yAg" secondAttribute="bottom" constant="12" id="qoE-3Z-fn9"/>
-                                    <constraint firstItem="Nf3-MX-Sx5" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="160" id="tBA-UX-DJw"/>
                                     <constraint firstItem="lFI-Tt-O6b" firstAttribute="top" secondItem="LFZ-6w-7Ty" secondAttribute="bottom" constant="12" id="ufv-g9-fg4"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="bcg-3m-1Kb" secondAttribute="trailing" constant="10" id="wuk-yd-DiN"/>
                                     <constraint firstItem="bcg-3m-1Kb" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="10" id="zEY-25-gGt"/>

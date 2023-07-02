@@ -13,16 +13,40 @@ class CharacterCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var classImage: UIImageView!
     
+    var dataArray: [String] = []
+    
     var characterName: String = ""
     var characterLevel: String = ""
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    func viewDidLoad() {
+        self.loadClassImage()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    
+    func loadClassImage() {
+        guard let plistPath = Bundle.main.path(forResource: "CharacterClass", ofType: "plist"),
+            let dataArray = NSArray(contentsOfFile: plistPath) as? [NSDictionary] else { return }
+        
+        var classImage: [String] = []
+        for item in dataArray {
+            if var classImage = item["classImage"] as? String {
+                classImage.append(classImage)
+            }
+        }
+        self.dataArray = classImage
+    }
+    
+    func selectClassImage() {
+        
+    }
+    
+    var characterData: (name: String, level: String, playerClass: String)? {
+        didSet {
+            nameLabel.text = characterData?.name
+            levelLabel.text = characterData?.level
+            if let playerClass = characterData?.playerClass {
+                classImage.image = UIImage(named: playerClass)
+            }
+        }
     }
     
     required init? (coder: NSCoder) {
@@ -32,7 +56,7 @@ class CharacterCell: UITableViewCell {
         //  self.levelBorderColor()
         //  캐릭터 레벨에 따른 borderColor 구현 예정
     }
-    /*
+    /**
     private func levelBorderColor() {
         
         var charLevel = self.levelLabel
@@ -47,5 +71,5 @@ class CharacterCell: UITableViewCell {
                 self.contentView.layer.borderColor = UIColor.black.cgColor
         }
     }
-    **/
+    */
 }
