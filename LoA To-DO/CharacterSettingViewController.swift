@@ -7,22 +7,30 @@
 
 import UIKit
 
+//  CharacterMainViewController로 데이터를 전달하기 위해 delegate 속성을 추가하기 위한 프로토콜 작성
+protocol CharacterSettingViewControllerDelgate: AnyObject {
+    func didSelectCharacter(name: String, level: String, playerClass: String)
+}
+
 class CharacterSettingViewController: UIViewController {
+    
+    //  MARK: - Outlet 선언
+    //  delegate 속성 추가
+    weak var delegate: CharacterSettingViewControllerDelgate?
     
     @IBOutlet weak var characterNameField: UITextField!
     @IBOutlet weak var itemLevelField: UITextField!
     @IBOutlet weak var characterClassField: UITextField!
-    
     @IBOutlet weak var characterClassPicker: UIPickerView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var confirmButton: UIButton!
     
     var dataArray: [String] = []
-    weak var delegate: CharacterSettingViewController?
     
-    // 유저가 화면을 터치하면 발생하는 메소드로 화면 터치시 키보드 혹은 데이터피커 같은 도구가 내려간다.
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
+    //weak var delegate: CharacterSettingViewController?
 
+    //  MARK: - ViewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,16 +41,36 @@ class CharacterSettingViewController: UIViewController {
         characterClassPicker.dataSource = self
         
         characterClassField.inputView = characterClassPicker
-        //characterClassField.inputView = addToolbar() // 툴바 추가
         
         characterClassPicker.isHidden = true
         
         self.loadClassNames()
         self.myPicker()
-        //self.addToolbar()
         
+        self.confirmButton.isEnabled = false
+        
+        //  ScrollView에서 필요한 부분 구현
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedMethod))
+        singleTapGestureRecognizer.numberOfTapsRequired = 1
+        singleTapGestureRecognizer.isEnabled = true
+        singleTapGestureRecognizer.cancelsTouchesInView = false
+        
+        scrollView.addGestureRecognizer(singleTapGestureRecognizer)
+        
+        self.validateInputField()
     }
     
+    //  singleTapGestureRecognizer의 selector 구현
+    @objc func tappedMethod(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    
+    // 유저가 화면을 터치하면 발생하는 메소드로 화면 터치시 키보드 혹은 데이터피커 같은 도구가 내려간다.
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    //  plist에서 class 이름 가져오는 함수
     func loadClassNames() {
         // plist 파일 경로 가져오기
         guard let plistPath = Bundle.main.path(forResource: "CharacterClass", ofType: "plist"),
@@ -64,23 +92,33 @@ class CharacterSettingViewController: UIViewController {
         view.addSubview(characterClassPicker)
     }
     
-    /**func addToolbar() -> UIToolbar {
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
+    
+    @IBAction func confirmButton(_ sender: UIButton) {
+        guard let name = self.characterNameField.text else { return }
+        guard let level = self.itemLevelField.text else { return }
+        guard let playerClass = self.characterClassField.text else { return }
         
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(pickerDoneButtonTapped))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        //  delegate 메소드 호출 후 데이터 전달
+        self.delegate?.didSelectCharacter(name: name, level: level, playerClass: playerClass)
+        navigationController?.popViewController(animated: true)
         
-        toolbar.setItems([flexSpace, doneButton], animated: false)
-        
-        return toolbar
     }
     
-    @objc func pickerDoneButtonTapped() {
-        characterClassField.resignFirstResponder() //   키보드 다운
-    }*/
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CharacterMainViewController" {
+            if let mainViewController = segue.destination as? CharacterMainViewController {
+                guard let name = self.characterNameField.text else { return }
+                guard let level = self.itemLevelField.text else { return }
+                
+                mainViewController.characterName = name
+                mainViewController.characterLevel = level
+            }
+        }
+    }
     
-    
+    private func validateInputField() {
+        self.confirmButton.isEnabled = !(self.characterNameField.text?.isEmpty ?? true) && !(self.itemLevelField.text?.isEmpty ?? true) && !(self.characterClassField.text?.isEmpty ?? true)
+    }
 }
 
 
@@ -121,6 +159,16 @@ extension CharacterSettingViewController: UITextFieldDelegate {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         characterClassPicker.isHidden = true
+        self.validateInputField()
     }
     
+}
+
+extension CharacterSettingViewController: UIScrollViewDelegate {
+    
+    //  ScrollView에서 scroll진행 시 키 다운
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+        self.validateInputField()
+    }
 }
