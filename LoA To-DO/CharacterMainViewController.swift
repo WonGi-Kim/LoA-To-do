@@ -9,7 +9,6 @@ import UIKit
 
 class CharacterMainViewController: UIViewController, CharacterSettingViewControllerDelgate {
     
-    
     @IBOutlet weak var TableView: UITableView!
     
     override func viewDidLoad() {
@@ -28,8 +27,8 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
         }
     }
     
-    var characterData: (name: String, level: String, playerClass: String)?
-    var characterDataArray: [(name: String, level: String, playerClass: String)] = []
+    var characterSetting: CharacterSetting?
+    var characterSettingArray = [CharacterSetting]()
     
     var charName: String = ""
     var charLevel: String = ""
@@ -40,9 +39,9 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
 
 extension CharacterMainViewController {
     
-    func didSelectCharacter(name: String, level: String, playerClass: String) {
-        let characterData = (name: name, level: level, playerClass: playerClass)
-        characterDataArray.append(characterData)
+    func didSelectCharacter(characterSetting: CharacterSetting) {
+        self.characterSetting = characterSetting
+        self.characterSettingArray.append(characterSetting)
         TableView.reloadData()
     }
 }
@@ -53,8 +52,8 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     //  xib로 만든 셀을 반환하도록 구현
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as! CharacterCell
-        let characterData = characterDataArray[indexPath.row]
-        cell.characterData = characterData
+        let characterSetting = characterSettingArray[indexPath.row]
+        cell.characterSetting = characterSetting
         
         return cell
     }
@@ -62,11 +61,13 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //  테이블 뷰의 데이터 개수 반환
         
-        return characterDataArray.count
+        return characterSettingArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //   셀을 선택했을 때 동작 구현
+        print(characterSetting?.isChaosDungeonCheck)
+        print(characterSetting?.isGuardianRaidCheck)
     }
 }
 

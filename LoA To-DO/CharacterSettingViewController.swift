@@ -9,8 +9,12 @@ import UIKit
 
 //  CharacterMainViewController로 데이터를 전달하기 위해 delegate 속성을 추가하기 위한 프로토콜 작성
 protocol CharacterSettingViewControllerDelgate: AnyObject {
-    func didSelectCharacter(name: String, level: String, playerClass: String)
+    //func didSelectCharacter(name: String, level: String, playerClass: String)
+    //  CharacterDetailViewController를 위한 protocol 작성
+    func didSelectCharacter(characterSetting: CharacterSetting)
 }
+
+
 
 class CharacterSettingViewController: UIViewController {
     
@@ -24,10 +28,24 @@ class CharacterSettingViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var confirmBarButton: UIBarButtonItem!
     
+    @IBOutlet weak var chaosDunButton: UIButton!
+    @IBOutlet weak var guardianRaidButton: UIButton!
+    
+    @IBOutlet var checkBoxButtons: [UIButton]!
+    
+    
+    
     var dataArray: [String] = []
     var characterClassPicker: UIPickerView!
     
-
+    var characterSetting: [CharacterSetting] = []
+    var isGuardianRaidCheck: Bool = false//   일일 가디언 토벌 여부
+    var isChaosDungeonCheck: Bool = false //   일일 카오스 던전 여부
+    var isAbyssDungeonCheck: Bool = false //   어비스 던전 여부
+    var isCommander0Check: Bool = false //   첫번째 군단장 여부
+    var isCommander1Check: Bool = false //   두번째 군단장 여부
+    var isCommender2Check: Bool = false //   세번째 군단장 여부
+    
     //  MARK: - ViewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +59,10 @@ class CharacterSettingViewController: UIViewController {
         characterClassPicker.dataSource = self
         
         characterClassField.inputView = characterClassPicker
-        
         characterClassPicker.isHidden = true
         
-        self.loadClassNames()
-        self.myPicker()
-        
         self.confirmBarButton.isEnabled = false
+        
         
         //  ScrollView에서 필요한 부분 구현
         let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedMethod))
@@ -57,7 +72,12 @@ class CharacterSettingViewController: UIViewController {
         
         scrollView.addGestureRecognizer(singleTapGestureRecognizer)
         
+        self.loadClassNames()
+        self.myPicker()
         self.validateInputField()
+        self.checkBoxButtonLayout()
+        
+        
     }
     
     // MARK: - endEditing
@@ -103,14 +123,29 @@ class CharacterSettingViewController: UIViewController {
         guard let level = self.itemLevelField.text else { return }
         guard let playerClass = self.characterClassField.text else { return }
         
+        let characterSetting = CharacterSetting(
+            charName: name,
+            charLevel: level,
+            charClass: playerClass,
+            isGuardianRaidCheck: isGuardianRaidCheck,
+            isChaosDungeonCheck: isChaosDungeonCheck,
+            isAbyssDungeonCheck: isAbyssDungeonCheck,
+            isCommander0Check: isCommander0Check,
+            isCommander1Check: isCommander1Check,
+            isCommender2Check: isCommender2Check
+        )
+        
         print("barButton tapped")
+        print(isChaosDungeonCheck)
         
         //  delegate 메소드 호출 후 데이터 전달
-        self.delegate?.didSelectCharacter(name: name, level: level, playerClass: playerClass)
+        //self.delegate?.didSelectCharacter(name: name, level: level, playerClass: playerClass)
+        self.delegate?.didSelectCharacter(characterSetting: characterSetting)
         navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Using Segue for DataTransper
+    /**
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let mainViewController = segue.destination as? CharacterMainViewController {
             guard let name = self.characterNameField.text else { return }
@@ -121,11 +156,35 @@ class CharacterSettingViewController: UIViewController {
             mainViewController.charLevel = level
             mainViewController.charClass = playerClass
             }
-    }
+    }*/
+    
     // MARK: - validata
     private func validateInputField() {
         self.confirmBarButton.isEnabled = !(self.characterNameField.text?.isEmpty ?? true) && !(self.itemLevelField.text?.isEmpty ?? true) && !(self.characterClassField.text?.isEmpty ?? true)
     }
+    
+    // MARK: - CheckBoxButton UI 관리
+    func checkBoxButtonLayout() {
+        for button in checkBoxButtons {
+            button.layer.cornerRadius = 7
+            button.layer.backgroundColor = UIColor.systemBackground.cgColor
+            button.layer.borderColor = UIColor.gray.cgColor
+            button.layer.borderWidth = 1.5
+        }
+    }
+    
+    // MARK: - 카오스던전 버튼 관리
+    @IBAction func chaosDunButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        isChaosDungeonCheck = true
+    }
+    
+    //  MARK: - 가디언 토벌 버튼 관리
+    @IBAction func guardianRaidButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        isGuardianRaidCheck = true
+    }
+    
 }
 
 

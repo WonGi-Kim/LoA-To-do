@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5VR-RD-amk">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -105,7 +106,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lFI-Tt-O6b">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="소수점까지 입력" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lFI-Tt-O6b">
                                         <rect key="frame" x="20" y="132" width="353" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -121,32 +122,55 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4s-fT-iAt">
-                                        <rect key="frame" x="20" y="257" width="353" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puA-j2-JSG">
+                                        <rect key="frame" x="20" y="269" width="353" height="23.666666666666686"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="카오스 던전">
+                                            <imageReference key="image" image="checkmark.square" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <state key="selected">
+                                            <imageReference key="image" image="checkmark.square.fill" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="chaosDunButton:" destination="ML8-6G-UC7" eventType="touchUpInside" id="SWN-0q-Ko3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PDe-Hm-8rE">
+                                        <rect key="frame" x="20" y="316.66666666666669" width="353" height="23.666666666666686"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="가디언 토벌">
+                                            <imageReference key="image" image="checkmark.square" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <state key="selected">
+                                            <imageReference key="image" image="checkmark.square.fill" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="guardianRaidButton:" destination="ML8-6G-UC7" eventType="touchUpInside" id="vDe-Wc-ZML"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="u4s-fT-iAt" secondAttribute="trailing" constant="20" id="0cq-rY-YGP"/>
-                                    <constraint firstItem="u4s-fT-iAt" firstAttribute="top" secondItem="6Xw-bC-mRB" secondAttribute="bottom" constant="12" id="1Za-Oe-PqM"/>
                                     <constraint firstItem="aSn-LS-XnM" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="2ml-JL-3ST"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="LFZ-6w-7Ty" secondAttribute="trailing" constant="20" id="6GT-rM-j6z"/>
                                     <constraint firstItem="LFZ-6w-7Ty" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="7WS-5y-lJo"/>
                                     <constraint firstItem="xtY-JZ-yAg" firstAttribute="top" secondItem="aSn-LS-XnM" secondAttribute="bottom" constant="12" id="B1u-V1-DFp"/>
+                                    <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="puA-j2-JSG" secondAttribute="trailing" constant="20" id="CmD-cF-7oR"/>
+                                    <constraint firstItem="puA-j2-JSG" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="GNN-hv-oaK"/>
                                     <constraint firstItem="aSn-LS-XnM" firstAttribute="top" secondItem="WSf-bh-U80" secondAttribute="top" constant="20" id="IMz-eu-bdx"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="xtY-JZ-yAg" secondAttribute="trailing" constant="20" id="IZ8-Xh-a7c"/>
+                                    <constraint firstItem="puA-j2-JSG" firstAttribute="top" secondItem="6Xw-bC-mRB" secondAttribute="bottom" constant="24" id="QHv-6g-6Sf"/>
+                                    <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="PDe-Hm-8rE" secondAttribute="trailing" constant="20" id="RQn-rs-RAk"/>
                                     <constraint firstItem="6Xw-bC-mRB" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="TCc-5L-XDf"/>
                                     <constraint firstItem="xtY-JZ-yAg" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="XfN-fc-Kng"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="lFI-Tt-O6b" secondAttribute="trailing" constant="20" id="YMI-wL-lha"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="wyG-zP-rZ2" secondAttribute="trailing" constant="20" id="aCt-af-skS"/>
                                     <constraint firstItem="6Xw-bC-mRB" firstAttribute="top" secondItem="wyG-zP-rZ2" secondAttribute="bottom" constant="12" id="cU8-IP-yPd"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="6Xw-bC-mRB" secondAttribute="trailing" constant="20" id="eDA-xv-hFl"/>
-                                    <constraint firstItem="u4s-fT-iAt" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="iwB-uV-Nkv"/>
                                     <constraint firstItem="wyG-zP-rZ2" firstAttribute="top" secondItem="lFI-Tt-O6b" secondAttribute="bottom" constant="12" id="mVZ-Md-zeg"/>
+                                    <constraint firstItem="PDe-Hm-8rE" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="mbn-W5-7xf"/>
                                     <constraint firstItem="WSf-bh-U80" firstAttribute="trailing" secondItem="aSn-LS-XnM" secondAttribute="trailing" constant="20" id="mlk-G0-coL"/>
                                     <constraint firstItem="lFI-Tt-O6b" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="oBf-mR-duf"/>
+                                    <constraint firstItem="PDe-Hm-8rE" firstAttribute="top" secondItem="puA-j2-JSG" secondAttribute="bottom" constant="24" id="p0j-Yv-0B4"/>
                                     <constraint firstItem="wyG-zP-rZ2" firstAttribute="leading" secondItem="WSf-bh-U80" secondAttribute="leading" constant="20" id="pUW-Ya-g2L"/>
                                     <constraint firstItem="LFZ-6w-7Ty" firstAttribute="top" secondItem="xtY-JZ-yAg" secondAttribute="bottom" constant="12" id="qoE-3Z-fn9"/>
                                     <constraint firstItem="lFI-Tt-O6b" firstAttribute="top" secondItem="LFZ-6w-7Ty" secondAttribute="bottom" constant="12" id="ufv-g9-fg4"/>
@@ -172,11 +196,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="chaosDunButton" destination="puA-j2-JSG" id="QXC-KH-AjR"/>
                         <outlet property="characterClassField" destination="6Xw-bC-mRB" id="jJu-jC-PaX"/>
                         <outlet property="characterNameField" destination="xtY-JZ-yAg" id="fRJ-87-c7N"/>
                         <outlet property="confirmBarButton" destination="9h8-Xb-BmG" id="ZtQ-yC-qdd"/>
+                        <outlet property="guardianRaidButton" destination="PDe-Hm-8rE" id="Y0C-7c-aG0"/>
                         <outlet property="itemLevelField" destination="lFI-Tt-O6b" id="p5R-ER-8AR"/>
                         <outlet property="scrollView" destination="ZlH-ul-FJo" id="vp3-qV-BVb"/>
+                        <outletCollection property="checkBoxButtons" destination="PDe-Hm-8rE" collectionClass="NSMutableArray" id="ZLM-O9-cbv"/>
+                        <outletCollection property="checkBoxButtons" destination="puA-j2-JSG" collectionClass="NSMutableArray" id="zod-V1-iED"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NkO-Yd-Gck" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -185,6 +213,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark.square" catalog="system" width="128" height="114"/>
+        <image name="checkmark.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

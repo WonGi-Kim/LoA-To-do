@@ -35,18 +35,18 @@ class CharacterCell: UITableViewCell {
         self.dataArray = classImage
     }
     
-    func selectClassImage() {
-        
-    }
-    
-    var characterData: (name: String, level: String, playerClass: String)? {
-        didSet {
-            nameLabel.text = characterData?.name
-            levelLabel.text = characterData?.level
-            if let playerClass = characterData?.playerClass {
+    var characterSetting: CharacterSetting? {
+        didSet{
+            nameLabel.text = characterSetting?.charName
+            levelLabel.text = characterSetting?.charLevel
+            if let playerClass = characterSetting?.charClass {
                 classImage.image = UIImage(named: playerClass)
             }
         }
+    }
+    
+    func configure(with characterSetting: CharacterSetting){
+        
     }
     
     required init? (coder: NSCoder) {
