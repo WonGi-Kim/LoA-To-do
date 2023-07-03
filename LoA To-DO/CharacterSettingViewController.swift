@@ -14,21 +14,19 @@ protocol CharacterSettingViewControllerDelgate: AnyObject {
 
 class CharacterSettingViewController: UIViewController {
     
-    //  MARK: - Outlet 선언
+    //  MARK: - Declare Outlet and Variaus
     //  delegate 속성 추가
     weak var delegate: CharacterSettingViewControllerDelgate?
     
     @IBOutlet weak var characterNameField: UITextField!
     @IBOutlet weak var itemLevelField: UITextField!
     @IBOutlet weak var characterClassField: UITextField!
-    @IBOutlet weak var characterClassPicker: UIPickerView!
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var confirmBarButton: UIBarButtonItem!
     
     var dataArray: [String] = []
+    var characterClassPicker: UIPickerView!
     
-    //weak var delegate: CharacterSettingViewController?
 
     //  MARK: - ViewDidLoad()
     override func viewDidLoad() {
@@ -37,6 +35,8 @@ class CharacterSettingViewController: UIViewController {
         characterNameField.delegate = self
         itemLevelField.delegate = self
         characterClassField.delegate = self
+        
+        characterClassPicker = UIPickerView()
         characterClassPicker.delegate = self
         characterClassPicker.dataSource = self
         
@@ -97,6 +97,7 @@ class CharacterSettingViewController: UIViewController {
         view.addSubview(characterClassPicker)
     }
     
+    // MARK: - Using BarButton for DataTransfer
     @IBAction func confirmBarButton(_ sender: UIBarButtonItem) {
         guard let name = self.characterNameField.text else { return }
         guard let level = self.itemLevelField.text else { return }
@@ -109,7 +110,7 @@ class CharacterSettingViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - Segue로 데이터 전달
+    // MARK: - Using Segue for DataTransper
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let mainViewController = segue.destination as? CharacterMainViewController {
             guard let name = self.characterNameField.text else { return }
@@ -121,7 +122,7 @@ class CharacterSettingViewController: UIViewController {
             mainViewController.charClass = playerClass
             }
     }
-    
+    // MARK: - validata
     private func validateInputField() {
         self.confirmBarButton.isEnabled = !(self.characterNameField.text?.isEmpty ?? true) && !(self.itemLevelField.text?.isEmpty ?? true) && !(self.characterClassField.text?.isEmpty ?? true)
     }

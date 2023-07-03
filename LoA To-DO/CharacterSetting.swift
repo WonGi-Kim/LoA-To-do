@@ -10,7 +10,7 @@ import Foundation
 struct CharacterSetting {
     
     let charName: String // 캐릭터 이름
-    var charLevel: Double   // 캐릭터 레벨
+    var charLevel: String   // 캐릭터 레벨
     /*var classImage: UIImage? {
         return UIImage(named: characterClassImage)
     }**/
