@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "8DE22084-A6C3-4039-984A-03E6D78B0210"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F2481126-B191-4039-9D93-68E77AC91677"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LoA To-DO/SettingViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "10"
+            endingLineNumber = "10"
+            landmarkName = "SettingViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "F2481126-B191-4039-9D93-68E77AC91677 - bcc5577eb8e72970"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.__allocating_init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; LoA_To_DO.SettingViewController"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "F2481126-B191-4039-9D93-68E77AC91677 - 3209767f63470fe7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; LoA_To_DO.SettingViewController"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  uuid = "F2481126-B191-4039-9D93-68E77AC91677 - 1cb7dfc8d009b2bf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.__allocating_init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;LoA_To_DO.SettingViewController&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "F2481126-B191-4039-9D93-68E77AC91677 - 8030c8ad42b2a7f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;LoA_To_DO.SettingViewController&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "F2481126-B191-4039-9D93-68E77AC91677 - d53904c10cb81400"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.__deallocating_deinit"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F7181179-DC8D-441F-9207-C811142167FB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LoA To-DO/SettingViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "SettingViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "F7181179-DC8D-441F-9207-C811142167FB - 1bc302b1e0c798f1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterNameField.getter : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "F7181179-DC8D-441F-9207-C811142167FB - ddbe6dd4fa7a4f0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterNameField.setter : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "F7181179-DC8D-441F-9207-C811142167FB - 950df50f400c05fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterNameField.modify : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "F7181179-DC8D-441F-9207-C811142167FB - 760407a32eb5e663"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterNameField.modify : Swift.Optional&lt;__C.UITextField&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "F7181179-DC8D-441F-9207-C811142167FB - 3209767f63470fe7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; LoA_To_DO.SettingViewController"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  uuid = "F7181179-DC8D-441F-9207-C811142167FB - 8030c8ad42b2a7f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;LoA_To_DO.SettingViewController&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "92">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9D8504D7-D191-49BB-82F3-A037AE42E4EE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LoA To-DO/SettingViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "SettingViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "9D8504D7-D191-49BB-82F3-A037AE42E4EE - ab5ebb0a260be703"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.itemLevelField.getter : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "9D8504D7-D191-49BB-82F3-A037AE42E4EE - 333f73fbd14d8b17"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.itemLevelField.setter : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "9D8504D7-D191-49BB-82F3-A037AE42E4EE - 9b13609a2ed04000"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.itemLevelField.modify : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "9D8504D7-D191-49BB-82F3-A037AE42E4EE - e137a1fd92572575"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.itemLevelField.modify : Swift.Optional&lt;__C.UITextField&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "9D8504D7-D191-49BB-82F3-A037AE42E4EE - 3209767f63470f80"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; LoA_To_DO.SettingViewController"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "9D8504D7-D191-49BB-82F3-A037AE42E4EE - 8030c8ad42b2a79f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;LoA_To_DO.SettingViewController&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "140">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1DAC1A45-85AD-40C0-A7E6-925BA6FA3EB2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LoA To-DO/SettingViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "SettingViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "1DAC1A45-85AD-40C0-A7E6-925BA6FA3EB2 - 4415f21c0f6bb83d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterClassField.getter : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "1DAC1A45-85AD-40C0-A7E6-925BA6FA3EB2 - 25da2c6740ae6c31"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterClassField.setter : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "1DAC1A45-85AD-40C0-A7E6-925BA6FA3EB2 - 9d04fd9846b02520"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterClassField.modify : Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "1DAC1A45-85AD-40C0-A7E6-925BA6FA3EB2 - 301af1cfbc850624"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterClassField.modify : Swift.Optional&lt;__C.UITextField&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "1DAC1A45-85AD-40C0-A7E6-925BA6FA3EB2 - 3209767f63470fa1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; LoA_To_DO.SettingViewController"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "204">
+               </Location>
+               <Location
+                  uuid = "1DAC1A45-85AD-40C0-A7E6-925BA6FA3EB2 - 8030c8ad42b2a7be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;LoA_To_DO.SettingViewController&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "180">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "26432048-8F18-45A8-8DD3-54354806A903"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LoA To-DO/SettingViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "SettingViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "26432048-8F18-45A8-8DD3-54354806A903 - e87e2f839e8383d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterClassPicker.getter : Swift.Optional&lt;__C.UIPickerView&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "26432048-8F18-45A8-8DD3-54354806A903 - 2484c8cdd211a3e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterClassPicker.setter : Swift.Optional&lt;__C.UIPickerView&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "26432048-8F18-45A8-8DD3-54354806A903 - 7c59ebfa126d6bd6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterClassPicker.modify : Swift.Optional&lt;__C.UIPickerView&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "26432048-8F18-45A8-8DD3-54354806A903 - 1fbf609173a1946b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.characterClassPicker.modify : Swift.Optional&lt;__C.UIPickerView&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "26432048-8F18-45A8-8DD3-54354806A903 - 3209767f63470e63"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; LoA_To_DO.SettingViewController"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "244">
+               </Location>
+               <Location
+                  uuid = "26432048-8F18-45A8-8DD3-54354806A903 - 8030c8ad42b2a67c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LoA_To_DO.SettingViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;LoA_To_DO.SettingViewController&gt;"
+                  moduleName = "LoA To-DO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kim-wongi/Desktop/swift%20app/LoA%20To-DO/LoA%20To-DO/SettingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "220">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
