@@ -51,25 +51,45 @@ class CharacterCell: UITableViewCell {
     
     required init? (coder: NSCoder) {
         super.init(coder: coder)
-        self.contentView.layer.borderWidth = 1.0
+        self.contentView.layer.borderWidth = 1.5
         self.contentView.layer.borderColor = UIColor.black.cgColor
-        //  self.levelBorderColor()
         //  캐릭터 레벨에 따른 borderColor 구현 예정
+        //self.levelBorderColor()
     }
-    /**
-    private func levelBorderColor() {
+    
+    /**private func levelBorderColor() {
         
-        var charLevel = self.levelLabel
-        
-        switch self.levelLabel.text {
-            case Double(charLevel) >= 1620.00 :
+        if let charLevelText = levelLabel.text, let charLevel = Double(charLevelText) {
+            if charLevel >= 1620.00 {
+                self.contentView.layer.borderColor = UIColor.red.cgColor
+            } else if charLevel < 1620.00 && charLevel >= 1600 {
                 self.contentView.layer.borderColor = UIColor.green.cgColor
-            case Double(self.levelLabel.text) < 1620.00 && self.levelLabel.text >= 1600 :
-                self.contentView.layer.borderColor = UIColor.green.cgColor
-            
-            default:
+            } else {
                 self.contentView.layer.borderColor = UIColor.black.cgColor
+            }
+        } else {
+            self.contentView.layer.borderColor = UIColor.black.cgColor
         }
-    }
-    */
+
+         guard let charLevelText = levelLabel.text else {
+         self.contentView.layer.borderColor = UIColor.black.cgColor
+         return
+         }
+         guard let charLevel = Double(charLevelText) else {
+         self.contentView.layer.borderColor = UIColor.black.cgColor
+         return
+         }
+         
+         
+         switch charLevel {
+         case let value where value >= 1620.0:
+         self.contentView.layer.borderColor = UIColor.red.cgColor
+         case let value where value < 1620.0 && value >= 1600:
+         self.contentView.layer.borderColor = UIColor.green.cgColor
+         default:
+         self.contentView.layer.borderColor = UIColor.black.cgColor
+         }
+         }
+    }*/
+
 }
