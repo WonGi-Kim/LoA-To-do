@@ -19,6 +19,7 @@
 		B20FE4C62A25C76B00B9E2D5 /* CharacterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */; };
 		B241E7A72A4AC2EA00C2E161 /* CharacterSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */; };
 		B241E7A92A4AC8B400C2E161 /* CharacterClass.plist in Resources */ = {isa = PBXBuildFile; fileRef = B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */; };
+		B2BC1BD72A56B4B200DE08CA /* AbyssList.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BC1BD62A56B4B200DE08CA /* AbyssList.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterCell.xib; sourceTree = "<group>"; };
 		B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSettingViewController.swift; sourceTree = "<group>"; };
 		B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CharacterClass.plist; sourceTree = "<group>"; };
+		B2BC1BD62A56B4B200DE08CA /* AbyssList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AbyssList.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */,
 				B20FE4A82A250F9000B9E2D5 /* Main.storyboard */,
 				B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */,
+				B2BC1BD62A56B4B200DE08CA /* AbyssList.plist */,
 				B20FE4AE2A250F9100B9E2D5 /* Assets.xcassets */,
 				B20FE4B02A250F9100B9E2D5 /* LaunchScreen.storyboard */,
 				B20FE4B32A250F9100B9E2D5 /* Info.plist */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B20FE4B22A250F9100B9E2D5 /* LaunchScreen.storyboard in Resources */,
+				B2BC1BD72A56B4B200DE08CA /* AbyssList.plist in Resources */,
 				B241E7A92A4AC8B400C2E161 /* CharacterClass.plist in Resources */,
 				B20FE4AF2A250F9100B9E2D5 /* Assets.xcassets in Resources */,
 				B20FE4AA2A250F9000B9E2D5 /* Main.storyboard in Resources */,

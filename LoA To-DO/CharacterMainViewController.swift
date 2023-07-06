@@ -68,6 +68,8 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
         //   셀을 선택했을 때 동작 구현
         print(characterSetting?.isChaosDungeonCheck)
         print(characterSetting?.isGuardianRaidCheck)
+        print(characterSetting?.isValtanRaidCheck)
+        print(characterSetting?.isViaKissRaidCheck)
     }
 }
 

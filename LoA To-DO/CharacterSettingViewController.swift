@@ -30,21 +30,36 @@ class CharacterSettingViewController: UIViewController {
     
     @IBOutlet weak var chaosDunButton: UIButton!
     @IBOutlet weak var guardianRaidButton: UIButton!
-    
     @IBOutlet var checkBoxButtons: [UIButton]!
     
+    @IBOutlet weak var valtanRaidButton: UIButton!
+    @IBOutlet weak var viaKissRaidButton: UIButton!
+    @IBOutlet weak var koukusatonRaidButton: UIButton!
+    @IBOutlet weak var abrelshudRaidButton: UIButton!
+    @IBOutlet weak var iliakanRaidButton: UIButton!
+    @IBOutlet weak var kamenRaidButton: UIButton!
+    @IBOutlet weak var abyssRaidButton: UIButton!
+    @IBOutlet weak var abyssDunField: UITextField!
     
     
-    var dataArray: [String] = []
+    var classArray: [String] = []
     var characterClassPicker: UIPickerView!
+    var abyssArray: [String] = []
+    var abyssDunPicker: UIPickerView!
     
     var characterSetting: [CharacterSetting] = []
-    var isGuardianRaidCheck: Bool = false//   일일 가디언 토벌 여부
+    var isGuardianRaidCheck: Bool = false //   일일 가디언 토벌 여부
     var isChaosDungeonCheck: Bool = false //   일일 카오스 던전 여부
     var isAbyssDungeonCheck: Bool = false //   어비스 던전 여부
-    var isCommander0Check: Bool = false //   첫번째 군단장 여부
-    var isCommander1Check: Bool = false //   두번째 군단장 여부
-    var isCommender2Check: Bool = false //   세번째 군단장 여부
+    var isAbyssRaidCheck: Bool = false //   어비스 레이드 여부
+    var isValtanRaidCheck: Bool = false //   발탄
+    var isViaKissRaidCheck: Bool = false //   비아키스
+    var isKoukusatonCheck: Bool = false //   쿠크세이튼
+    var isAbrelshudRaidCheck: Bool = false //   아브렐슈드
+    var isIliakanRaidCheck: Bool = false // 일리아칸
+    var isKamenRaidCheck: Bool = false //  카멘
+    
+    var goldButtonTappedCount = 0 // 레이드 버튼 갯수를 3개
     
     //  MARK: - ViewDidLoad()
     override func viewDidLoad() {
@@ -57,9 +72,15 @@ class CharacterSettingViewController: UIViewController {
         characterClassPicker = UIPickerView()
         characterClassPicker.delegate = self
         characterClassPicker.dataSource = self
-        
         characterClassField.inputView = characterClassPicker
         characterClassPicker.isHidden = true
+        
+        abyssDunField.delegate = self
+        abyssDunPicker = UIPickerView()
+        abyssDunPicker.delegate = self
+        abyssDunPicker.dataSource = self
+        abyssDunField.inputView = abyssDunPicker
+        abyssDunPicker.isHidden = true
         
         self.confirmBarButton.isEnabled = false
         
@@ -73,14 +94,19 @@ class CharacterSettingViewController: UIViewController {
         scrollView.addGestureRecognizer(singleTapGestureRecognizer)
         
         self.loadClassNames()
+        self.loadAbyssDun()
         self.myPicker()
         self.validateInputField()
         self.checkBoxButtonLayout()
         
+        //  카멘레이드 설정은 불가
+        kamenRaidButton.isEnabled = true
+        kamenRaidButton.alpha = 0.4
+        
         
     }
     
-    // MARK: - endEditing
+    //  MARK: - endEditing
     //  singleTapGestureRecognizer의 selector 구현
     @objc func tappedMethod(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
@@ -91,33 +117,46 @@ class CharacterSettingViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    // MARK: - plistControl
+    //  MARK: - plistControl
     //  plist에서 class 이름 가져오는 함수
     func loadClassNames() {
         // plist 파일 경로 가져오기
         guard let plistPath = Bundle.main.path(forResource: "CharacterClass", ofType: "plist"),
-            let dataArray = NSArray(contentsOfFile: plistPath) as? [NSDictionary] else { return }
+            let classArray = NSArray(contentsOfFile: plistPath) as? [NSDictionary] else { return }
 
         // className 값 추출하기
         var classNames: [String] = []
-        for item in dataArray {
+        for item in classArray {
             if let className = item["className"] as? String {
                 classNames.append(className)
             }
         }
                 
-        self.dataArray = classNames
+        self.classArray = classNames
     }
     
+    func loadAbyssDun() {
+        guard let plistPath = Bundle.main.path(forResource: "AbyssList", ofType: "plist"),
+            let abyssArray = NSArray(contentsOfFile: plistPath) as? [NSDictionary] else { return }
+        
+        var abyssLists: [String] = []
+        for item in abyssArray {
+            if let abyssList = item["dunName"] as? String {
+                abyssLists.append(abyssList)
+            }
+        }
+        self.abyssArray = abyssLists
+    }
     
-    
-    // MARK: - pickerView
+    //  MARK: - pickerView
     func myPicker() {
         characterClassPicker.frame = CGRect(x: 150, y: 150, width: 200, height: 250)
+        abyssDunPicker.frame = CGRect(x: 150, y: 150, width: 200, height: 250)
         view.addSubview(characterClassPicker)
+        view.addSubview(abyssDunPicker)
     }
     
-    // MARK: - Using BarButton for DataTransfer
+    //  MARK: - Using BarButton for DataTransfer
     @IBAction func confirmBarButton(_ sender: UIBarButtonItem) {
         guard let name = self.characterNameField.text else { return }
         guard let level = self.itemLevelField.text else { return }
@@ -130,9 +169,13 @@ class CharacterSettingViewController: UIViewController {
             isGuardianRaidCheck: isGuardianRaidCheck,
             isChaosDungeonCheck: isChaosDungeonCheck,
             isAbyssDungeonCheck: isAbyssDungeonCheck,
-            isCommander0Check: isCommander0Check,
-            isCommander1Check: isCommander1Check,
-            isCommender2Check: isCommender2Check
+            isAbyssRaidCheck: isAbyssRaidCheck,
+            isValtanRaidCheck: isValtanRaidCheck,
+            isViaKissRaidCheck: isViaKissRaidCheck,
+            isKoukusatonCheck: isKoukusatonCheck,
+            isAbrelshudRaidCheck: isAbrelshudRaidCheck,
+            isIliakanRaidCheck: isIliakanRaidCheck,
+            isKamenRaidCheck: isKamenRaidCheck
         )
         
         print("barButton tapped")
@@ -144,7 +187,7 @@ class CharacterSettingViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - Using Segue for DataTransper
+    //  MARK: - Using Segue for DataTransper
     /**
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let mainViewController = segue.destination as? CharacterMainViewController {
@@ -158,12 +201,12 @@ class CharacterSettingViewController: UIViewController {
             }
     }*/
     
-    // MARK: - validata
+    //  MARK: - validata
     private func validateInputField() {
         self.confirmBarButton.isEnabled = !(self.characterNameField.text?.isEmpty ?? true) && !(self.itemLevelField.text?.isEmpty ?? true) && !(self.characterClassField.text?.isEmpty ?? true)
     }
     
-    // MARK: - CheckBoxButton UI 관리
+    //  MARK: - CheckBoxButton UI 관리
     func checkBoxButtonLayout() {
         for button in checkBoxButtons {
             button.layer.cornerRadius = 7
@@ -173,7 +216,16 @@ class CharacterSettingViewController: UIViewController {
         }
     }
     
-    // MARK: - 카오스던전 버튼 관리
+    //  MARK: - 주간 골드 횟수를 초과하게된다면 알럿 호출
+    func showAlert() {
+        let alert = UIAlertController(title: "확인해주세요", message: "더이상 골드를 획득할 수 없습니다.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    //  MARK: - 카오스던전 버튼 관리
     @IBAction func chaosDunButton(_ sender: UIButton) {
         sender.isSelected.toggle()
         isChaosDungeonCheck = true
@@ -185,10 +237,123 @@ class CharacterSettingViewController: UIViewController {
         isGuardianRaidCheck = true
     }
     
+    //  MARK: - 군단장 레이드 버튼
+    @IBAction func valtanRaidButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            goldButtonTappedCount += 1
+            isValtanRaidCheck = true
+        } else {
+            goldButtonTappedCount -= 1
+            isValtanRaidCheck = false
+        }
+        
+        if goldButtonTappedCount > 3 {
+            showAlert()
+        }
+    }
+    @IBAction func viakissRaidButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            goldButtonTappedCount += 1
+            isViaKissRaidCheck = true
+        } else {
+            goldButtonTappedCount -= 1
+            isViaKissRaidCheck = false
+        }
+        
+        if goldButtonTappedCount > 3 {
+            showAlert()
+        }
+    }
+    @IBAction func koukusatonRaidButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            goldButtonTappedCount += 1
+            isKoukusatonCheck = true
+        } else {
+            goldButtonTappedCount -= 1
+            isKoukusatonCheck = false
+        }
+        
+        if goldButtonTappedCount > 3 {
+            showAlert()
+        }
+    }
+    @IBAction func abrelshudRaidButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            goldButtonTappedCount += 1
+            isAbrelshudRaidCheck = true
+        } else {
+            goldButtonTappedCount -= 1
+            isAbrelshudRaidCheck = false
+        }
+        
+        if goldButtonTappedCount > 3 {
+            showAlert()
+        }
+    }
+    @IBAction func iliakanRaidButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            goldButtonTappedCount += 1
+            isIliakanRaidCheck = true
+        } else {
+            goldButtonTappedCount -= 1
+            isIliakanRaidCheck = false
+        }
+        
+        if goldButtonTappedCount > 3 {
+            showAlert()
+        }
+    }
+    @IBAction func kamenRaidButton(_ sender: UIButton) {
+        // 카멘레이드는 아직 선택할 수 없게 설정
+        /**
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            goldButtonTappedCount += 1
+            isKamenRaidCheck = true
+        } else {
+            goldButtonTappedCount -= 1
+            isKamenRaidCheck = false
+        }
+        
+        if goldButtonTappedCount > 3 {
+            showAlert()
+        }
+         */
+    }
+    
+    //  MARK: - Abyss관련
+    @IBAction func abyssRaidButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            goldButtonTappedCount += 1
+            isAbyssRaidCheck = true
+        } else {
+            goldButtonTappedCount -= 1
+            isAbyssRaidCheck = false
+        }
+        
+        if goldButtonTappedCount > 3 {
+            showAlert()
+        }
+    }
+    
+    
 }
 
 
-
+// MARK: - UIPickerView에 대한 extension
 extension CharacterSettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     // UIPickerViewDataSource methods
@@ -197,21 +362,38 @@ extension CharacterSettingViewController: UIPickerViewDelegate, UIPickerViewData
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return max(dataArray.count, 1)
+        if pickerView == characterClassPicker {
+            return max(classArray.count, 1)
+        } else if pickerView == abyssDunPicker {
+            return max(abyssArray.count, 1)
+        }
+        return 0
+        // return max(classArray.count, 1)
     }
     
     //  UIPickerViewDelegate method
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return dataArray[row]
+        if pickerView == characterClassPicker {
+            return classArray[row]
+        } else if pickerView == abyssDunPicker {
+            return abyssArray[row]
+        }
+        return nil
+        // return classArray[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let selectedOption = dataArray[row]
-        characterClassField.text = selectedOption
-        characterClassField.resignFirstResponder()
+        if pickerView == characterClassPicker {
+            let selectedOption = classArray[row]
+            characterClassField.text = selectedOption
+        } else if pickerView == abyssDunPicker {
+            let selectedOption = abyssArray[row]
+            abyssDunField.text = selectedOption
+        }
     }
 }
 
+// MARK: - UITextField
 extension CharacterSettingViewController: UITextFieldDelegate {
     
     //  UITextFieldDelegate method
@@ -222,6 +404,12 @@ extension CharacterSettingViewController: UITextFieldDelegate {
             characterClassPicker.isHidden = true
         }
         
+        if textField == abyssDunField {
+            abyssDunPicker.isHidden = false
+        } else {
+            abyssDunPicker.isHidden = true
+        }
+        
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         characterClassPicker.isHidden = true
@@ -229,7 +417,7 @@ extension CharacterSettingViewController: UITextFieldDelegate {
     }
     
 }
-
+// MARK: - UIScrollView
 extension CharacterSettingViewController: UIScrollViewDelegate {
     
     //  ScrollView에서 scroll진행 시 키 다운
