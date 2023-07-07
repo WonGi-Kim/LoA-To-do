@@ -20,6 +20,7 @@
 		B241E7A72A4AC2EA00C2E161 /* CharacterSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */; };
 		B241E7A92A4AC8B400C2E161 /* CharacterClass.plist in Resources */ = {isa = PBXBuildFile; fileRef = B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */; };
 		B2BC1BD72A56B4B200DE08CA /* AbyssList.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BC1BD62A56B4B200DE08CA /* AbyssList.plist */; };
+		B2BC1BD92A58099000DE08CA /* CharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC1BD82A58099000DE08CA /* CharacterDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSettingViewController.swift; sourceTree = "<group>"; };
 		B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CharacterClass.plist; sourceTree = "<group>"; };
 		B2BC1BD62A56B4B200DE08CA /* AbyssList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AbyssList.plist; sourceTree = "<group>"; };
+		B2BC1BD82A58099000DE08CA /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		B20FE4962A250F9000B9E2D5 = {
 			isa = PBXGroup;
 			children = (
+				B2BC1BD82A58099000DE08CA /* CharacterDetailViewController.swift */,
 				B20FE4A12A250F9000B9E2D5 /* LoA To-DO */,
 				B20FE4A02A250F9000B9E2D5 /* Products */,
 			);
@@ -167,6 +170,7 @@
 				B20FE4BC2A25135300B9E2D5 /* CharacterSetting.swift in Sources */,
 				B241E7A72A4AC2EA00C2E161 /* CharacterSettingViewController.swift in Sources */,
 				B20FE4C52A25C76B00B9E2D5 /* CharacterCell.swift in Sources */,
+				B2BC1BD92A58099000DE08CA /* CharacterDetailViewController.swift in Sources */,
 				B20FE4A52A250F9000B9E2D5 /* SceneDelegate.swift in Sources */,
 				B20FE4BA2A250FD200B9E2D5 /* CharacterMainViewController.swift in Sources */,
 			);

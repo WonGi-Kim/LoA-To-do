@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct CharacterSetting {
+struct CharacterSetting: Codable {
     
-    let charName: String // 캐릭터 이름
+    var charName: String // 캐릭터 이름
     var charLevel: String   // 캐릭터 레벨
     var charClass: String   // 캐릭터 클래스
     //var isDailyEpona: Bool //   일일 에포나 여부

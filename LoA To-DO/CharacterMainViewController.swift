@@ -7,15 +7,20 @@
 
 import UIKit
 
-class CharacterMainViewController: UIViewController, CharacterSettingViewControllerDelgate {
+class CharacterMainViewController: UIViewController, CharacterSettingViewControllerDelgate{
     
     @IBOutlet weak var TableView: UITableView!
+    
+    var characterSettings: [CharacterSetting] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         TableView.delegate = self
         TableView.dataSource = self
         TableView.register(UINib(nibName: "CharacterCell", bundle: nil), forCellReuseIdentifier: "CharacterCell")
+        
+        loadCharacterSettings()
+        TableView.reloadData()
         
     }
     
@@ -26,6 +31,22 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
             characterSettingViewController.delegate = self
         }
     }
+        
+    func saveCharacterSettings() {
+        let encoder = JSONEncoder()
+        if let encodedData = try? encoder.encode(characterSettingArray) {
+            UserDefaults.standard.set(encodedData, forKey: "CharacterSettings")
+        }
+    }
+        
+    func loadCharacterSettings() {
+        guard let encodedData = UserDefaults.standard.data(forKey: "CharacterSettings"),
+              let decodedData = try? JSONDecoder().decode([CharacterSetting].self, from: encodedData) else {
+            return
+        }
+        characterSettingArray = decodedData
+        print("출력",characterSettingArray.isEmpty)
+    }
     
     var characterSetting: CharacterSetting?
     var characterSettingArray = [CharacterSetting]()
@@ -33,7 +54,8 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
     var charName: String = ""
     var charLevel: String = ""
     var charClass: String = ""
-
+    
+    
 
 }
 
@@ -42,6 +64,7 @@ extension CharacterMainViewController {
     func didSelectCharacter(characterSetting: CharacterSetting) {
         self.characterSetting = characterSetting
         self.characterSettingArray.append(characterSetting)
+        saveCharacterSettings()
         TableView.reloadData()
     }
 }
@@ -55,6 +78,7 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
         let characterSetting = characterSettingArray[indexPath.row]
         cell.characterSetting = characterSetting
         
+        
         return cell
     }
     
@@ -66,10 +90,6 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //   셀을 선택했을 때 동작 구현
-        print(characterSetting?.isChaosDungeonCheck)
-        print(characterSetting?.isGuardianRaidCheck)
-        print(characterSetting?.isValtanRaidCheck)
-        print(characterSetting?.isViaKissRaidCheck)
     }
 }
 
