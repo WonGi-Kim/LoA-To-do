@@ -6,3 +6,10 @@
 //
 
 import Foundation
+import UIKit
+import SnapKit
+
+class CharacterDetailViewController: UIViewController {
+    var characterSetting: CharacterSetting?
+    
+}

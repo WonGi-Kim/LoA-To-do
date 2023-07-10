@@ -44,6 +44,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="1yU-JF-ry1" kind="show" identifier="DetailViewSegue" id="QVK-cm-y1v"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -77,6 +80,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eh2-wQ-ssf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-216.03053435114504" y="-145.07042253521126"/>
+        </scene>
+        <!--Character Detail View Controller-->
+        <scene sceneID="tjz-aZ-YeL">
+            <objects>
+                <viewController id="1yU-JF-ry1" customClass="CharacterDetailViewController" customModule="LoA_To_DO" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dca-9B-Fqr">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="MEf-7C-gJE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dSd-XM-IUt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zba-2A-bnn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-216" y="665"/>
         </scene>
         <!--캐릭터 설정-->
         <scene sceneID="yq2-9f-814">

@@ -30,6 +30,12 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
             let characterSettingViewController = segue.destination as! CharacterSettingViewController
             characterSettingViewController.delegate = self
         }
+        
+        if segue.identifier == "DetailViewSegue",
+           let characterDetailViewController = segue.destination as? CharacterDetailViewController,
+           let characterSetting = sender as? CharacterSetting {
+            characterDetailViewController.characterSetting = characterSetting
+        }
     }
         
     func saveCharacterSettings() {
@@ -90,6 +96,8 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //   셀을 선택했을 때 동작 구현
+        let characterSetting = characterSettingArray[indexPath.row]
+        performSegue(withIdentifier: "DetailViewSegue", sender: characterSetting)
     }
 }
 
