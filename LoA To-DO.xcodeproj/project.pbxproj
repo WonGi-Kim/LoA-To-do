@@ -96,6 +96,7 @@
 		B20FE4A12A250F9000B9E2D5 /* LoA To-DO */ = {
 			isa = PBXGroup;
 			children = (
+				B2BC1BD82A58099000DE08CA /* CharacterDetailViewController.swift */,
 				B20FE4B92A250FD200B9E2D5 /* CharacterMainViewController.swift */,
 				B2113EB22A5B192200936EAE /* CharacterDetailViewController.swift */,
 				B20FE4A22A250F9000B9E2D5 /* AppDelegate.swift */,
