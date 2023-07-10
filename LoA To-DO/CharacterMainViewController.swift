@@ -22,6 +22,20 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
         loadCharacterSettings()
         TableView.reloadData()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleCharacterDeleted(_:)), name: Notification.Name("CharacterDeleted"), object: nil)
+        
+    }
+    
+    @objc func handleCharacterDeleted(_ notification: Notification) {
+        
+        if let characterSetting = notification.object as? CharacterSetting,
+           let index = characterSettingArray.firstIndex(of: characterSetting) {
+            characterSettingArray.remove(at: index)
+            let indexPath = IndexPath(row: index, section: 0)
+            TableView.deleteRows(at: [indexPath], with: .automatic)
+                
+            saveCharacterSettings()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
