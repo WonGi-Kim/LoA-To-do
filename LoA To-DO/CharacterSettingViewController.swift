@@ -73,6 +73,7 @@ class CharacterSettingViewController: UIViewController {
         characterClassPicker.delegate = self
         characterClassPicker.dataSource = self
         characterClassField.inputView = characterClassPicker
+        characterClassField.inputAccessoryView = toolBar(for: characterClassPicker)
         characterClassPicker.isHidden = true
         
         abyssDunField.delegate = self
@@ -80,6 +81,7 @@ class CharacterSettingViewController: UIViewController {
         abyssDunPicker.delegate = self
         abyssDunPicker.dataSource = self
         abyssDunField.inputView = abyssDunPicker
+        abyssDunField.inputAccessoryView = toolBar(for: abyssDunPicker)
         abyssDunPicker.isHidden = true
         
         self.confirmBarButton.isEnabled = false
@@ -98,6 +100,7 @@ class CharacterSettingViewController: UIViewController {
         self.myPicker()
         self.validateInputField()
         self.checkBoxButtonLayout()
+        self.abyssDunSelectedCheck()
         
         //  카멘레이드 설정은 불가
         kamenRaidButton.isEnabled = true
@@ -349,6 +352,36 @@ class CharacterSettingViewController: UIViewController {
         }
     }
     
+    func abyssDunSelectedCheck() {
+        if abyssDunField.text?.isEmpty == false {
+            isAbyssDungeonCheck = true
+            goldButtonTappedCount += 1
+        } else {
+            isAbyssDungeonCheck = false
+        }
+        
+        if goldButtonTappedCount > 3 {
+            showAlert()
+        }
+    }
+    
+    // MARK: - Picker toolbar
+    func toolBar(for picker: UIPickerView) -> UIToolbar {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        
+        let doneBtn = UIBarButtonItem(title: "확인", style: .plain, target: nil, action: #selector(doneButtonTapped))
+        toolBar.setItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), doneBtn], animated: true)
+
+        return toolBar
+    }
+
+    @objc func doneButtonTapped() {
+        // 피커 내용 선택 완료 후 동작할 코드 작성
+        characterClassField.resignFirstResponder()
+        abyssDunField.resignFirstResponder()
+    }
+
     
 }
 
@@ -391,6 +424,7 @@ extension CharacterSettingViewController: UIPickerViewDelegate, UIPickerViewData
             abyssDunField.text = selectedOption
         }
     }
+    
 }
 
 // MARK: - UITextField
@@ -413,8 +447,18 @@ extension CharacterSettingViewController: UITextFieldDelegate {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         characterClassPicker.isHidden = true
+        
+        if textField == abyssDunField {
+            abyssDunSelectedCheck()
+        }
+        
         self.validateInputField()
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        return true
+    }
+
     
 }
 // MARK: - UIScrollView

@@ -112,6 +112,7 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
         //   셀을 선택했을 때 동작 구현
         let characterSetting = characterSettingArray[indexPath.row]
         performSegue(withIdentifier: "DetailViewSegue", sender: characterSetting)
+        print(characterSetting.isAbyssDungeonCheck)
     }
 }
 
