@@ -8,7 +8,7 @@
 import Foundation
 
 struct CharacterSetting: Codable, Equatable {
-    // detailview에서 firstIndex(of:) 메서드를 사용하기 위해 Equatable프로토콜 구현
+    // detailview에서 firstIndex(of:) 메서드를 사용하기 위해 Equatable프로토콜 구현 -> 삭제를 위한 프로토콜
     
     var charName: String // 캐릭터 이름
     var charLevel: String   // 캐릭터 레벨

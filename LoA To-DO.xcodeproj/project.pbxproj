@@ -20,6 +20,7 @@
 		B20FE4C62A25C76B00B9E2D5 /* CharacterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */; };
 		B241E7A72A4AC2EA00C2E161 /* CharacterSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */; };
 		B241E7A92A4AC8B400C2E161 /* CharacterClass.plist in Resources */ = {isa = PBXBuildFile; fileRef = B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */; };
+		B29FB8A82A5D27090011C9CD /* CharacterToDoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FB8A72A5D27090011C9CD /* CharacterToDoInfo.swift */; };
 		B2BC1BD72A56B4B200DE08CA /* AbyssList.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BC1BD62A56B4B200DE08CA /* AbyssList.plist */; };
 		B2BC1BD92A58099000DE08CA /* CharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC1BD82A58099000DE08CA /* CharacterDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,7 @@
 		B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterCell.xib; sourceTree = "<group>"; };
 		B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSettingViewController.swift; sourceTree = "<group>"; };
 		B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CharacterClass.plist; sourceTree = "<group>"; };
+		B29FB8A72A5D27090011C9CD /* CharacterToDoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterToDoInfo.swift; sourceTree = "<group>"; };
 		B2BC1BD62A56B4B200DE08CA /* AbyssList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AbyssList.plist; sourceTree = "<group>"; };
 		B2BC1BD82A58099000DE08CA /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
 		EFB43AA14AF83FB0FD016E7C /* Pods_LoA_To_DO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LoA_To_DO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +66,6 @@
 				2B8D29079ECA0F140C5458A1 /* Pods-LoA To-DO.debug.xcconfig */,
 				33E9CBF50262642E2A7F1B92 /* Pods-LoA To-DO.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -104,6 +105,7 @@
 				B20FE4B02A250F9100B9E2D5 /* LaunchScreen.storyboard */,
 				B20FE4B32A250F9100B9E2D5 /* Info.plist */,
 				B20FE4AB2A250F9000B9E2D5 /* LoA_To_DO.xcdatamodeld */,
+				B29FB8A72A5D27090011C9CD /* CharacterToDoInfo.swift */,
 			);
 			path = "LoA To-DO";
 			sourceTree = "<group>";
@@ -238,6 +240,7 @@
 				B20FE4AD2A250F9000B9E2D5 /* LoA_To_DO.xcdatamodeld in Sources */,
 				B20FE4BC2A25135300B9E2D5 /* CharacterSetting.swift in Sources */,
 				B241E7A72A4AC2EA00C2E161 /* CharacterSettingViewController.swift in Sources */,
+				B29FB8A82A5D27090011C9CD /* CharacterToDoInfo.swift in Sources */,
 				B20FE4C52A25C76B00B9E2D5 /* CharacterCell.swift in Sources */,
 				B2BC1BD92A58099000DE08CA /* CharacterDetailViewController.swift in Sources */,
 				B20FE4A52A250F9000B9E2D5 /* SceneDelegate.swift in Sources */,
