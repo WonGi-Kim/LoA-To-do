@@ -257,10 +257,20 @@ class CharacterDetailViewController: UIViewController {
             make.height.equalTo(30)
         }
         
-        let commendersBtnData = [
-            ("군단장 발탄", #selector(valtanBtnTapped), characterSetting?.isValtanRaidCheck ?? false),
-            ("군단장 비아키스", #selector(viaBtnTapped), characterSetting?.isViaKissRaidCheck ?? false),
-            ("군단장 쿠크세이튼", #selector(koukuBtnTapped), characterSetting?.isKoukusatonCheck ?? false)
+        // 튜플의 데이터가 많아져서 구조체로 변경
+        struct CommenderButtonData {
+            let title: String
+            let selector: Selector
+            var isChecked: Bool
+        }
+        
+        var commendersBtnData = [
+            CommenderButtonData(title: "군단장 발탄", selector: #selector(valtanBtnTapped), isChecked: characterSetting?.isValtanRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 비아키스", selector: #selector(viaBtnTapped), isChecked: characterSetting?.isViaKissRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 쿠크세이튼", selector: #selector(abrelBtnTapped), isChecked: characterSetting?.isKoukusatonCheck ?? false),
+            CommenderButtonData(title: "군단장 아브렐슈드", selector: #selector(koukuBtnTapped), isChecked: characterSetting?.isAbrelshudRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 일리아칸", selector: #selector(iliakanBtnTapped), isChecked: characterSetting?.isIliakanRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 카멘", selector: #selector(kamenBtnTapped), isChecked: characterSetting?.isKamenRaidCheck ?? false),
         ]
         
         // 버튼 레이아웃의 기준값을 잡아주는 변수
@@ -270,12 +280,12 @@ class CharacterDetailViewController: UIViewController {
         var buttons: [UIButton] = []
         
         for data in commendersBtnData {
-            if data.2 {
+            if data.isChecked {
                 let button = UIButton()
-                button.setTitle(data.0, for: .normal)
+                button.setTitle(data.title, for: .normal)
                 button.setTitleColor(.white, for: .normal)
                 button.backgroundColor = .gray
-                button.addTarget(self, action: data.1, for: .touchUpInside)
+                button.addTarget(self, action: data.selector, for: .touchUpInside)
                 scrollView.addSubview(button)
                 
                 button.snp.makeConstraints { make in
@@ -364,6 +374,48 @@ class CharacterDetailViewController: UIViewController {
             sender.alpha = 1.0
             sender.setTitle("군단장 쿠크세이튼", for: .normal)
             isKoukusatonRaidDone = false
+        }
+    }
+    
+    @objc func abrelBtnTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle("군단장 아브렐슈드 토벌 완료", for: .normal)
+            isAbrelshudRaidDone = true
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle("군단장 아브렐슈드", for: .normal)
+            isAbrelshudRaidDone = false
+        }
+    }
+    
+    @objc func iliakanBtnTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle("군단장 일리아칸 토벌 완료", for: .normal)
+            isIliakanRaidDone = true
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle("군단장 일리아칸", for: .normal)
+            isIliakanRaidDone = false
+        }
+    }
+    
+    @objc func kamenBtnTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle("군단장 카멘 토벌 완료", for: .normal)
+            isKamenRaidDone = true
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle("군단장 카멘", for: .normal)
+            isKamenRaidDone = false
         }
     }
     
