@@ -265,12 +265,12 @@ class CharacterDetailViewController: UIViewController {
         }
         
         var commendersBtnData = [
-            CommenderButtonData(title: "군단장 발탄", selector: #selector(valtanBtnTapped), isChecked: characterSetting?.isValtanRaidCheck ?? false),
-            CommenderButtonData(title: "군단장 비아키스", selector: #selector(viaBtnTapped), isChecked: characterSetting?.isViaKissRaidCheck ?? false),
-            CommenderButtonData(title: "군단장 쿠크세이튼", selector: #selector(abrelBtnTapped), isChecked: characterSetting?.isKoukusatonCheck ?? false),
-            CommenderButtonData(title: "군단장 아브렐슈드", selector: #selector(koukuBtnTapped), isChecked: characterSetting?.isAbrelshudRaidCheck ?? false),
-            CommenderButtonData(title: "군단장 일리아칸", selector: #selector(iliakanBtnTapped), isChecked: characterSetting?.isIliakanRaidCheck ?? false),
-            CommenderButtonData(title: "군단장 카멘", selector: #selector(kamenBtnTapped), isChecked: characterSetting?.isKamenRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 발탄", selector: #selector(commendersRaidButtonTapped), isChecked: characterSetting?.isValtanRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 비아키스", selector: #selector(commendersRaidButtonTapped), isChecked: characterSetting?.isViaKissRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 쿠크세이튼", selector: #selector(commendersRaidButtonTapped), isChecked: characterSetting?.isKoukusatonCheck ?? false),
+            CommenderButtonData(title: "군단장 아브렐슈드", selector: #selector(commendersRaidButtonTapped), isChecked: characterSetting?.isAbrelshudRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 일리아칸", selector: #selector(commendersRaidButtonTapped), isChecked: characterSetting?.isIliakanRaidCheck ?? false),
+            CommenderButtonData(title: "군단장 카멘", selector: #selector(commendersRaidButtonTapped), isChecked: characterSetting?.isKamenRaidCheck ?? false),
         ]
         
         // 버튼 레이아웃의 기준값을 잡아주는 변수
@@ -286,6 +286,7 @@ class CharacterDetailViewController: UIViewController {
                 button.setTitleColor(.white, for: .normal)
                 button.backgroundColor = .gray
                 button.addTarget(self, action: data.selector, for: .touchUpInside)
+                button.accessibilityIdentifier = data.title
                 scrollView.addSubview(button)
                 
                 button.snp.makeConstraints { make in
@@ -334,88 +335,18 @@ class CharacterDetailViewController: UIViewController {
             isGuardianRaidDone = false
         }
     }
-    
-    @objc func valtanBtnTapped(_ sender: UIButton) {
+    @objc func commendersRaidButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         
         if sender.isSelected {
             sender.alpha = 0.6
-            sender.setTitle("군단장 발탄 토벌 완료", for: .normal)
-            isValtanRaidDone = true
+            sender.setTitle(sender.accessibilityIdentifier?.appending("토벌 완료"), for: .normal)
+            print(sender.accessibilityIdentifier)
+            isGuardianRaidDone = true
         } else {
             sender.alpha = 1.0
-            sender.setTitle("군단장 발탄", for: .normal)
-            isValtanRaidDone = false
-        }
-    }
-    
-    @objc func viaBtnTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle("군단장 비아키스 토벌 완료", for: .normal)
-            isViaKissRaidDone = true
-        } else {
-            sender.alpha = 1.0
-            sender.setTitle("군단장 비아키스", for: .normal)
-            isViaKissRaidDone = false
-        }
-    }
-    
-    @objc func koukuBtnTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle("군단장 쿠크세이튼 토벌 완료", for: .normal)
-            isKoukusatonRaidDone = true
-        } else {
-            sender.alpha = 1.0
-            sender.setTitle("군단장 쿠크세이튼", for: .normal)
-            isKoukusatonRaidDone = false
-        }
-    }
-    
-    @objc func abrelBtnTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle("군단장 아브렐슈드 토벌 완료", for: .normal)
-            isAbrelshudRaidDone = true
-        } else {
-            sender.alpha = 1.0
-            sender.setTitle("군단장 아브렐슈드", for: .normal)
-            isAbrelshudRaidDone = false
-        }
-    }
-    
-    @objc func iliakanBtnTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle("군단장 일리아칸 토벌 완료", for: .normal)
-            isIliakanRaidDone = true
-        } else {
-            sender.alpha = 1.0
-            sender.setTitle("군단장 일리아칸", for: .normal)
-            isIliakanRaidDone = false
-        }
-    }
-    
-    @objc func kamenBtnTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle("군단장 카멘 토벌 완료", for: .normal)
-            isKamenRaidDone = true
-        } else {
-            sender.alpha = 1.0
-            sender.setTitle("군단장 카멘", for: .normal)
-            isKamenRaidDone = false
+            sender.setTitle(sender.accessibilityIdentifier, for: .normal)
+            isGuardianRaidDone = false
         }
     }
     
