@@ -58,6 +58,11 @@ class CharacterDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         scrollViewSetup()
         self.createCharInfo()
         self.createDailySection()
@@ -68,23 +73,35 @@ class CharacterDetailViewController: UIViewController {
     
     //MARK: - 스크롤 뷰 설정
     func scrollViewSetup() {
-        scrollView.addSubview(contentView)
         view.addSubview(scrollView)
-        
+
+        contentView.snp.makeConstraints { make in
+            make.width.equalTo(view)
+        }
+
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        scrollView.addSubview(contentView)
         
         contentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.width.equalTo(view)
         }
         
-        scrollView.contentSize = contentView.bounds.size
+        var contentHeight: CGFloat = 20
+        for subview in contentView.subviews {
+            contentHeight += subview.frame.height
+        }
+
+        contentView.snp.makeConstraints { make in
+            make.height.equalTo(contentHeight)
+        }
+
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight + 20)
         scrollView.isScrollEnabled = true
-        
-        
     }
+
 
     
     // MARK: - 섹션 구분 밑줄
@@ -269,7 +286,7 @@ class CharacterDetailViewController: UIViewController {
         scrollView.addSubview(deleteButton)
         
         deleteButton.snp.makeConstraints { make in
-            make.top.equalTo(chaosDunButton.snp.bottom).offset(300)
+            make.top.equalTo(chaosDunButton.snp.bottom).offset(600)
             make.leading.equalToSuperview().offset(50)
         }
         deleteButton.setTitle("삭제", for: .normal)
