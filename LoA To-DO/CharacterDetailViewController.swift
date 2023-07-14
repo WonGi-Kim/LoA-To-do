@@ -22,7 +22,7 @@ class CharacterDetailViewController: UIViewController {
     var isAbyssRaidDone: Bool = false
     var isValtanRaidDone: Bool = false
     var isViaKissRaidDone: Bool = false
-    var isKoukusatonDone: Bool = false
+    var isKoukusatonRaidDone: Bool = false
     var isAbrelshudRaidDone: Bool = false
     var isIliakanRaidDone: Bool = false
     var isKamenRaidDone: Bool = false
@@ -54,6 +54,8 @@ class CharacterDetailViewController: UIViewController {
     //  리스트로 선언해서 받아내지 않으면 밑줄 뷰가 겹치는 현상 발생
     var underLines: [UIView] = []
     
+    
+    
     //  MARK: - ViewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,9 +67,13 @@ class CharacterDetailViewController: UIViewController {
         
         scrollViewSetup()
         self.createCharInfo()
-        self.createDailySection()
-        self.createRaidButton()
-        self.createDeleteButton()
+        if let lastBtn = createDailySection() {
+            if let lastBtn = createRaidSection(topAnchor: lastBtn.snp.bottom) {
+                createDeleteButton(topAnchor: lastBtn.snp.bottom)
+            }
+        }
+        
+        
         
     }
     
@@ -185,108 +191,192 @@ class CharacterDetailViewController: UIViewController {
     }
     
     //  MARK: - 일일컨텐츠 그리기
-    func createDailySection() {
+    func createDailySection() -> UIView? {
         view.addSubview(dailySectionLabel)
         scrollView.addSubview(dailySectionLabel)
-        view.addSubview(chaosDunButton)
-        scrollView.addSubview(chaosDunButton)
-        view.addSubview(guardianRaidButton)
-        scrollView.addSubview(guardianRaidButton)
         
         dailySectionLabel.text = "일일 컨텐츠"
-        dailySectionLabel.snp.makeConstraints{ make in
+        dailySectionLabel.snp.makeConstraints { make in
             make.top.equalTo(levelLabel.snp.bottom).offset(30)
             make.leading.equalToSuperview().offset(20)
             make.width.equalTo(150)
             make.height.equalTo(30)
         }
-        self.drawUnderLine(destination: dailySectionLabel)
-        
-        chaosDunButton.setTitle("카오스 던전", for: .normal)
-        chaosDunButton.setTitleColor(.white, for: .normal)
-        chaosDunButton.backgroundColor = .gray
-        chaosDunButton.addTarget(self, action: #selector(chaosButtonTapped), for: .touchUpInside)
-        chaosDunButton.snp.makeConstraints{ make in
-            make.top.equalTo(dailySectionLabel.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20)
-            make.width.left.right.equalToSuperview().inset(20)
-            make.height.equalTo(50)
-        }
-        
-        guardianRaidButton.setTitle("가디언 토벌", for: .normal)
-        guardianRaidButton.setTitleColor(.white, for: .normal)
-        guardianRaidButton.backgroundColor = .gray
-        guardianRaidButton.addTarget(self, action: #selector(guardinaButtonTapped), for: .touchUpInside)
-        guardianRaidButton.snp.makeConstraints{ make in
-            make.top.equalTo(chaosDunButton.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.width.left.right.equalToSuperview().inset(20)
-            make.height.equalTo(50)
-        }
-    }
+        drawUnderLine(destination: dailySectionLabel)
     
-    @objc func chaosButtonTapped() {
-        chaosDunButton.isSelected.toggle()
+        let dailyBtnData = [
+            ("카오스 던전", #selector(chaosButtonTapped)),
+            ("가디언 토벌", #selector(guardianButtonTapped))
+        ]
         
-        if chaosDunButton.isSelected {
-            chaosDunButton.alpha = 0.6
-            chaosDunButton.setTitle("카오스 던전 완료", for: .normal)
-            isChaosDungeonDone = true
-        } else {
-            chaosDunButton.alpha = 1.0
-            chaosDunButton.setTitle("카오스 던전", for: .normal)
-            isChaosDungeonDone = false
-        }
-    }
-    
-    @objc func guardinaButtonTapped() {
-        guardianRaidButton.isSelected.toggle()
+        //마지막 버튼을 저장하는 변수
+        var lastBtn: UIView?
+        var topAnchor = dailySectionLabel.snp.bottom
+        var buttons: [UIButton] = []
         
-        if guardianRaidButton.isSelected {
-            guardianRaidButton.alpha = 0.6
-            guardianRaidButton.setTitle("가디언 토벌 완료", for: .normal)
-            isGuardianRaidDone = true
-        } else {
-            guardianRaidButton.alpha = 1.0
-            guardianRaidButton.setTitle("가디언 토벌", for: .normal)
-            isGuardianRaidDone = false
+        for (index, data) in dailyBtnData.enumerated() {
+            let button = UIButton()
+            button.setTitle(data.0, for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = .gray
+            button.addTarget(self, action: data.1, for: .touchUpInside)
+            scrollView.addSubview(button)
+            contentView.addSubview(button)
+            
+            button.snp.makeConstraints { make in
+                make.top.equalTo(topAnchor).offset(20 + (60 * index))
+                make.leading.trailing.equalToSuperview().inset(20)
+                make.height.equalTo(50)
+            }
+            lastBtn = button
+            buttons.append(button)
         }
+        for button in buttons {
+            button.isSelected = false
+        }
+        
+        return lastBtn
     }
-    
+
     //  MARK: - 레이드 버튼
-    func createRaidButton() {
+    func createRaidSection(topAnchor: ConstraintRelatableTarget) -> UIView? {
         view.addSubview(raidSectionLabel)
         scrollView.addSubview(raidSectionLabel)
-        view.addSubview(valtanButton)
-        scrollView.addSubview(valtanButton)
+        
         view.addSubview(viakissButton)
-        scrollView.addSubview(viakissButton)
         view.addSubview(koukuButton)
-        scrollView.addSubview(koukuButton)
         view.addSubview(abrelButton)
-        scrollView.addSubview(abrelButton)
         view.addSubview(lilakanButton)
-        scrollView.addSubview(lilakanButton)
         
         self.drawUnderLine(destination: raidSectionLabel)
         raidSectionLabel.text = "군단장 토벌"
-        raidSectionLabel.snp.makeConstraints{ make in
-            make.top.equalTo(guardianRaidButton.snp.bottom).offset(20)
+        raidSectionLabel.snp.makeConstraints { make in
+            make.top.equalTo(topAnchor).offset(20)
             make.leading.equalToSuperview().offset(20)
             make.width.equalTo(150)
             make.height.equalTo(30)
         }
         
+        let commendersBtnData = [
+            ("군단장 발탄", #selector(valtanBtnTapped), characterSetting?.isValtanRaidCheck ?? false),
+            ("군단장 비아키스", #selector(viaBtnTapped), characterSetting?.isViaKissRaidCheck ?? false),
+            ("군단장 쿠크세이튼", #selector(koukuBtnTapped), characterSetting?.isKoukusatonCheck ?? false)
+        ]
+        
+        // 버튼 레이아웃의 기준값을 잡아주는 변수
+        var buttonTopAnchor = raidSectionLabel.snp.bottom
+        //마지막 버튼을 저장하는 변수
+        var lastBtn: UIView?
+        var buttons: [UIButton] = []
+        
+        for data in commendersBtnData {
+            if data.2 {
+                let button = UIButton()
+                button.setTitle(data.0, for: .normal)
+                button.setTitleColor(.white, for: .normal)
+                button.backgroundColor = .gray
+                button.addTarget(self, action: data.1, for: .touchUpInside)
+                scrollView.addSubview(button)
+                
+                button.snp.makeConstraints { make in
+                    make.top.equalTo(buttonTopAnchor).offset(20)
+                    make.leading.trailing.equalToSuperview().inset(20)
+                    make.height.equalTo(50)
+                }
+                buttonTopAnchor = button.snp.bottom
+                lastBtn = button
+                buttons.append(button)
+            }
+        }
+        for button in buttons {
+            button.isSelected = false
+        }
+        
+        return lastBtn
+    }
+
+    
+    // MARK: - 버튼 objc
+    @objc func chaosButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle("카오스 던전 완료", for: .normal)
+            isChaosDungeonDone = true
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle("카오스 던전", for: .normal)
+            isChaosDungeonDone = false
+        }
+    }
+    
+    @objc func guardianButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle("가디언 토벌 완료", for: .normal)
+            isGuardianRaidDone = true
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle("가디언 토벌", for: .normal)
+            isGuardianRaidDone = false
+        }
+    }
+    
+    @objc func valtanBtnTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle("군단장 발탄 토벌 완료", for: .normal)
+            isValtanRaidDone = true
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle("군단장 발탄", for: .normal)
+            isValtanRaidDone = false
+        }
+    }
+    
+    @objc func viaBtnTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle("군단장 비아키스 토벌 완료", for: .normal)
+            isViaKissRaidDone = true
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle("군단장 비아키스", for: .normal)
+            isViaKissRaidDone = false
+        }
+    }
+    
+    @objc func koukuBtnTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle("군단장 쿠크세이튼 토벌 완료", for: .normal)
+            isKoukusatonRaidDone = true
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle("군단장 쿠크세이튼", for: .normal)
+            isKoukusatonRaidDone = false
+        }
     }
     
     //  MARK: - 삭제 버튼
-    func createDeleteButton() {
+    func createDeleteButton(topAnchor: ConstraintRelatableTarget) {
         
         view.addSubview(deleteButton)
         scrollView.addSubview(deleteButton)
         
+        var lastBtn: UIView?
+        
         deleteButton.snp.makeConstraints { make in
-            make.top.equalTo(chaosDunButton.snp.bottom).offset(600)
+            make.top.equalTo(topAnchor).offset(600)
             make.leading.equalToSuperview().offset(50)
         }
         deleteButton.setTitle("삭제", for: .normal)

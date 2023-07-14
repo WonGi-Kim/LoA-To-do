@@ -15,7 +15,7 @@ struct CharacterToDoInfo: Codable,Equatable {
     var isAbyssRaidDone: Bool //   어비스 레이드 여부
     var isValtanRaidDone: Bool //   발탄
     var isViaKissRaidDone: Bool //   비아키스
-    var isKoukusatonDone: Bool //   쿠크세이튼ㄴ
+    var isKoukusatonRaidDone: Bool //   쿠크세이튼ㄴ
     var isAbrelshudRaidDone: Bool //   아브렐슈드
     var isIliakanRaidDone: Bool // 일리아칸
     var isKamenRaidDone: Bool  //  카멘
