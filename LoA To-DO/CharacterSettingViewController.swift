@@ -370,8 +370,8 @@ class CharacterSettingViewController: UIViewController {
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
         
-        let doneBtn = UIBarButtonItem(title: "확인", style: .plain, target: nil, action: #selector(doneButtonTapped))
-        toolBar.setItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), doneBtn], animated: true)
+        let doneBtn = UIBarButtonItem(title: "확인", style: .plain, target: self, action: #selector(doneButtonTapped))
+        toolBar.setItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil), doneBtn], animated: true)
 
         return toolBar
     }
@@ -380,6 +380,7 @@ class CharacterSettingViewController: UIViewController {
         // 피커 내용 선택 완료 후 동작할 코드 작성
         characterClassField.resignFirstResponder()
         abyssDunField.resignFirstResponder()
+        
     }
 
     
