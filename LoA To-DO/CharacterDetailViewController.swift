@@ -30,6 +30,9 @@ class CharacterDetailViewController: UIViewController {
     var nameLabel = UILabel()
     var levelLabel = UILabel()
     var classLabel = UILabel()
+    var dailyNoticeLabel = UILabel()
+    var raidNoticeLabel = UILabel()
+    var abyssNoticeLabel = UILabel()
     var characterImage = UIImageView()
     
     var dailySectionLabel = UILabel()
@@ -69,12 +72,11 @@ class CharacterDetailViewController: UIViewController {
         self.createCharInfo()
         if let lastBtn = createDailySection() {
             if let lastBtn = createRaidSection(topAnchor: lastBtn.snp.bottom) {
-                createDeleteButton(topAnchor: lastBtn.snp.bottom)
+                if let lastBtn = createAbyssSection(topAnchor: lastBtn.snp.bottom) {
+                    createDeleteButton(topAnchor: lastBtn.snp.bottom)
+                }
             }
         }
-        
-        
-        
     }
     
     //MARK: - 스크롤 뷰 설정
@@ -126,10 +128,11 @@ class CharacterDetailViewController: UIViewController {
         
         return underLine
     }
+    
     //  MARK: - 기본 정보 라벨의 초기값 설정
     func labelDefaults() {
         var labels: [UILabel] = []
-        labels = [nameLabel, classLabel, levelLabel]
+        labels = [nameLabel, classLabel, levelLabel, dailyNoticeLabel, raidNoticeLabel,abyssNoticeLabel]
         
         labels.forEach { label in
             label.layer.borderWidth = 1.0
@@ -137,6 +140,25 @@ class CharacterDetailViewController: UIViewController {
             label.layer.cornerRadius = 5.0
             label.textAlignment = .center
         }
+    }
+    
+    // MARK: - 버튼의 초기값 설정
+    func createButtons(title: String, selector: Selector, isChecked: Bool, topAnchor: ConstraintRelatableTarget) -> UIButton {
+        let button = UIButton()
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .gray
+        button.addTarget(self, action:selector, for: .touchUpInside)
+        scrollView.addSubview(button)
+        contentView.addSubview(button)
+        
+        button.snp.makeConstraints { make in
+            make.top.equalTo(topAnchor).offset(20)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(50)
+        }
+        
+        return button
     }
     
     //  MARK: - 캐릭터 정보 이름, 직업, 레벨의 라벨 그리기
@@ -190,7 +212,7 @@ class CharacterDetailViewController: UIViewController {
         
     }
     
-    //  MARK: - 일일컨텐츠 그리기
+    //  MARK: - 일일 컨텐츠 생성
     func createDailySection() -> UIView? {
         view.addSubview(dailySectionLabel)
         scrollView.addSubview(dailySectionLabel)
@@ -211,36 +233,42 @@ class CharacterDetailViewController: UIViewController {
         }
     
         var dailyBtnData = [
-            dailyButtonData(title: "카오스 던전", selector: #selector(chaosButtonTapped), isChecked:characterSetting?.isChaosDungeonCheck ?? false),
+            dailyButtonData(title: "카오스 던전", selector: #selector(chaosButtonTapped), isChecked: characterSetting?.isChaosDungeonCheck ?? false),
             dailyButtonData(title: "가디언 토벌", selector: #selector(guardianButtonTapped), isChecked: characterSetting?.isGuardianRaidCheck ?? false)
         ]
         
-        var buttonTopAnchor = dailySectionLabel.snp.bottom
         //마지막 버튼을 저장하는 변수
         var lastBtn: UIView?
         var topAnchor = dailySectionLabel.snp.bottom
         var buttons: [UIButton] = []
         
+        //  일일컨텐츠를 하나라도 설정하지 않았을 시 다른 레이아웃을 호출하기 위해
+        var isCheckedCount = 0
+        
         for data in dailyBtnData {
             if data.isChecked {
-                let button = UIButton()
-                button.setTitle(data.title, for: .normal)
-                button.setTitleColor(.white, for: .normal)
-                button.backgroundColor = .gray
-                button.addTarget(self, action: data.selector, for: .touchUpInside)
-                scrollView.addSubview(button)
-                contentView.addSubview(button)
-                
-                button.snp.makeConstraints { make in
-                    make.top.equalTo(topAnchor).offset(20 )
-                    make.leading.trailing.equalToSuperview().inset(20)
-                    make.height.equalTo(50)
-                }
+                let button = createButtons(title: data.title, selector: data.selector, isChecked: data.isChecked, topAnchor: topAnchor)
+                isCheckedCount += 1
+                topAnchor = button.snp.bottom
                 lastBtn = button
                 buttons.append(button)
             }
-            
         }
+        
+        if isCheckedCount == 0 {
+            labelDefaults()
+            dailyNoticeLabel.text = "일일 컨텐츠 없음"
+            scrollView.addSubview(dailyNoticeLabel)
+            contentView.addSubview(dailyNoticeLabel)
+            
+            dailyNoticeLabel.snp.makeConstraints{ make in
+                make.top.equalTo(topAnchor).offset(20)
+                make.leading.trailing.equalToSuperview().inset(20)
+                make.height.equalTo(50)
+            }
+            lastBtn = dailyNoticeLabel
+        }
+        
         for button in buttons {
             button.isSelected = false
         }
@@ -248,17 +276,13 @@ class CharacterDetailViewController: UIViewController {
         return lastBtn
     }
 
-    //  MARK: - 레이드 버튼
+    //  MARK: - 레이드 버튼 생성
     func createRaidSection(topAnchor: ConstraintRelatableTarget) -> UIView? {
         view.addSubview(raidSectionLabel)
         scrollView.addSubview(raidSectionLabel)
         
-        view.addSubview(viakissButton)
-        view.addSubview(koukuButton)
-        view.addSubview(abrelButton)
-        view.addSubview(lilakanButton)
+        drawUnderLine(destination: raidSectionLabel)
         
-        self.drawUnderLine(destination: raidSectionLabel)
         raidSectionLabel.text = "군단장 토벌"
         raidSectionLabel.snp.makeConstraints { make in
             make.top.equalTo(topAnchor).offset(20)
@@ -284,38 +308,107 @@ class CharacterDetailViewController: UIViewController {
         ]
         
         // 버튼 레이아웃의 기준값을 잡아주는 변수
-        var buttonTopAnchor = raidSectionLabel.snp.bottom
+        var topAnchor = raidSectionLabel.snp.bottom
         //마지막 버튼을 저장하는 변수
         var lastBtn: UIView?
         var buttons: [UIButton] = []
         
+        var isCheckedCount = 0
+        
         for data in commendersBtnData {
             if data.isChecked {
-                let button = UIButton()
-                button.setTitle(data.title, for: .normal)
-                button.setTitleColor(.white, for: .normal)
-                button.backgroundColor = .gray
-                button.addTarget(self, action: data.selector, for: .touchUpInside)
+                let button = createButtons(title: data.title, selector: data.selector, isChecked: data.isChecked, topAnchor: topAnchor)
+                isCheckedCount += 1
+                topAnchor = button.snp.bottom
                 button.accessibilityIdentifier = data.title
-                scrollView.addSubview(button)
-                
-                button.snp.makeConstraints { make in
-                    make.top.equalTo(buttonTopAnchor).offset(20)
-                    make.leading.trailing.equalToSuperview().inset(20)
-                    make.height.equalTo(50)
-                }
-                buttonTopAnchor = button.snp.bottom
                 lastBtn = button
                 buttons.append(button)
             }
         }
+        
+        if isCheckedCount == 0 {
+            labelDefaults()
+            raidNoticeLabel.text = "선택한 군단장 토벌 없음"
+            scrollView.addSubview(raidNoticeLabel)
+            contentView.addSubview(raidNoticeLabel)
+            
+            raidNoticeLabel.snp.makeConstraints{ make in
+                make.top.equalTo(topAnchor).offset(20)
+                make.leading.trailing.equalToSuperview().inset(20)
+                make.height.equalTo(50)
+            }
+            lastBtn = raidNoticeLabel
+        }
+        
         for button in buttons {
             button.isSelected = false
         }
         
         return lastBtn
     }
-
+    
+    // MARK: - 어비스 버튼 생성
+    func createAbyssSection(topAnchor: ConstraintRelatableTarget) -> UIView? {
+        view.addSubview(abyssSectionLabel)
+        scrollView.addSubview(abyssSectionLabel)
+        
+        drawUnderLine(destination: abyssSectionLabel)
+        
+        abyssSectionLabel.text = "어비스 컨텐츠"
+        abyssSectionLabel.snp.makeConstraints { make in
+            make.top.equalTo(topAnchor).offset(20)
+            make.leading.equalToSuperview().offset(20)
+            make.width.equalTo(150)
+            make.height.equalTo(30)
+        }
+        
+        struct abyssButtonData {
+            let title: String
+            let selector: Selector
+            var isChecked: Bool
+        }
+        
+        let abyssBtnData = [
+            abyssButtonData(title: "어비스 레이드: 아르고스", selector: #selector(abyssContentButtonTapped), isChecked: characterSetting?.isAbyssRaidCheck ?? false),
+            abyssButtonData(title: characterSetting?.isAbyssDungeonName ?? "", selector: #selector(abyssContentButtonTapped), isChecked: characterSetting?.isAbyssDungeonCheck ?? false)
+        ]
+        
+        var topAnchor = abyssSectionLabel.snp.bottom
+        var lastBtn: UIView?
+        var buttons: [UIButton] = []
+        var isCheckedCount = 0
+        
+        for data in abyssBtnData {
+            if data.isChecked {
+                let button = createButtons(title: data.title, selector: data.selector, isChecked: data.isChecked, topAnchor: topAnchor)
+                topAnchor = button.snp.bottom
+                isCheckedCount += 1
+                button.accessibilityIdentifier = data.title
+                lastBtn = button
+                buttons.append(button)
+            }
+        }
+        
+        if isCheckedCount == 0 {
+            labelDefaults()
+            abyssNoticeLabel.text = "선택한 어비스 컨텐츠 없음"
+            scrollView.addSubview(abyssNoticeLabel)
+            contentView.addSubview(abyssNoticeLabel)
+            
+            abyssNoticeLabel.snp.makeConstraints{ make in
+                make.top.equalTo(topAnchor).offset(20)
+                make.leading.trailing.equalToSuperview().inset(20)
+                make.height.equalTo(50)
+            }
+            lastBtn = abyssNoticeLabel
+        }
+        
+        for button in buttons {
+            button.isSelected = false
+        }
+        
+        return lastBtn
+    }
     
     // MARK: - 버튼 objc
     @objc func chaosButtonTapped(_ sender: UIButton) {
@@ -345,17 +438,84 @@ class CharacterDetailViewController: UIViewController {
             isGuardianRaidDone = false
         }
     }
+    
     @objc func commendersRaidButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         
         if sender.isSelected {
             sender.alpha = 0.6
-            sender.setTitle(sender.accessibilityIdentifier?.appending("토벌 완료"), for: .normal)
-            isGuardianRaidDone = true
+            sender.setTitle(sender.accessibilityIdentifier?.appending(" 토벌 완료"), for: .normal)
+            if let identifier = sender.accessibilityIdentifier {
+                switch identifier {
+                case "군단장 발탄":
+                    isValtanRaidDone = true
+                case "군단장 비아키스":
+                    isViaKissRaidDone = true
+                case "군단장 쿠크세이튼":
+                    isKoukusatonRaidDone = true
+                case "군단장 아브렐슈드":
+                    isAbrelshudRaidDone = true
+                case "군단장 일리아칸":
+                    isIliakanRaidDone = true
+                case "군단장 카멘":
+                    isKamenRaidDone = true
+                default:
+                    break
+                }
+            }
         } else {
             sender.alpha = 1.0
             sender.setTitle(sender.accessibilityIdentifier, for: .normal)
-            isGuardianRaidDone = false
+            if let identifier = sender.accessibilityIdentifier {
+                switch identifier {
+                case "군단장 발탄":
+                    isValtanRaidDone = false
+                case "군단장 비아키스":
+                    isViaKissRaidDone = false
+                case "군단장 쿠크세이튼":
+                    isKoukusatonRaidDone = false
+                case "군단장 아브렐슈드":
+                    isAbrelshudRaidDone = false
+                case "군단장 일리아칸":
+                    isIliakanRaidDone = false
+                case "군단장 카멘":
+                    isKamenRaidDone = false
+                default:
+                    break
+                }
+            }
+        }
+    }
+    // 어비스 컨텐츠
+    @objc func abyssContentButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.alpha = 0.6
+            sender.setTitle((sender.accessibilityIdentifier ?? "" ) + " 클리어", for: .normal)
+            if let identifier = sender.accessibilityIdentifier {
+                switch identifier {
+                case "어비스 레이드: 아르고스":
+                    isAbyssRaidDone = true
+                case characterSetting?.isAbyssDungeonName:
+                    isAbyssDungeonDone = true
+                default:
+                    break
+                }
+            }
+        } else {
+            sender.alpha = 1.0
+            sender.setTitle((sender.accessibilityIdentifier ?? ""), for: .normal)
+            if let identifier = sender.accessibilityIdentifier {
+                switch identifier {
+                case "어비스 레이드: 아르고스":
+                    isAbyssRaidDone = false
+                case characterSetting?.isAbyssDungeonName:
+                    isAbyssDungeonDone = false
+                default:
+                    break
+                }
+            }
         }
     }
     
@@ -368,8 +528,10 @@ class CharacterDetailViewController: UIViewController {
         var lastBtn: UIView?
         
         deleteButton.snp.makeConstraints { make in
-            make.top.equalTo(topAnchor).offset(600)
-            make.leading.equalToSuperview().offset(50)
+            make.top.equalTo(topAnchor).offset(200)
+            make.leading.equalToSuperview().offset(80)
+            make.width.equalTo(100)
+            make.height.equalTo(30)
         }
         deleteButton.setTitle("삭제", for: .normal)
         deleteButton.setTitleColor(.white, for: .normal)

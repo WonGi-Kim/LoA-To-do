@@ -50,6 +50,7 @@ class CharacterSettingViewController: UIViewController {
     var characterSetting: [CharacterSetting] = []
     var isGuardianRaidCheck: Bool = false //   일일 가디언 토벌 여부
     var isChaosDungeonCheck: Bool = false //   일일 카오스 던전 여부
+    var isAbyssDungeonName: String = ""
     var isAbyssDungeonCheck: Bool = false //   어비스 던전 여부
     var isAbyssRaidCheck: Bool = false //   어비스 레이드 여부
     var isValtanRaidCheck: Bool = false //   발탄
@@ -172,6 +173,7 @@ class CharacterSettingViewController: UIViewController {
             isGuardianRaidCheck: isGuardianRaidCheck,
             isChaosDungeonCheck: isChaosDungeonCheck,
             isAbyssDungeonCheck: isAbyssDungeonCheck,
+            isAbyssDungeonName: isAbyssDungeonName,
             isAbyssRaidCheck: isAbyssRaidCheck,
             isValtanRaidCheck: isValtanRaidCheck,
             isViaKissRaidCheck: isViaKissRaidCheck,
@@ -182,7 +184,6 @@ class CharacterSettingViewController: UIViewController {
         )
         
         print("barButton tapped")
-        print(isChaosDungeonCheck)
         
         //  delegate 메소드 호출 후 데이터 전달
         //self.delegate?.didSelectCharacter(name: name, level: level, playerClass: playerClass)
@@ -355,6 +356,7 @@ class CharacterSettingViewController: UIViewController {
     func abyssDunSelectedCheck() {
         if abyssDunField.text?.isEmpty == false {
             isAbyssDungeonCheck = true
+            isAbyssDungeonName = abyssDunField.text ?? ""
             goldButtonTappedCount += 1
         } else {
             isAbyssDungeonCheck = false
