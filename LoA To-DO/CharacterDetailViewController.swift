@@ -83,35 +83,26 @@ class CharacterDetailViewController: UIViewController {
     func scrollViewSetup() {
         view.addSubview(scrollView)
 
-        contentView.snp.makeConstraints { make in
-            make.width.equalTo(view)
-        }
-
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
         scrollView.addSubview(contentView)
-        
+
         contentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        }
-        
-        var contentHeight: CGFloat = 20
-        for subview in contentView.subviews {
-            contentHeight += subview.frame.height
+            make.width.equalTo(view)
         }
 
-        contentView.snp.makeConstraints { make in
-            make.height.equalTo(contentHeight)
-        }
+        // 스크롤 가능한 영역 크기 제약조건 설정
+        let contentHeightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor)
+        contentHeightConstraint.priority = .defaultLow
+        contentHeightConstraint.isActive = true
 
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight + 20)
         scrollView.isScrollEnabled = true
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: 0)
     }
 
-
-    
     // MARK: - 섹션 구분 밑줄
     func drawUnderLine(destination: UILabel) ->UIView {
         let underLine = UIView()
