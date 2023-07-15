@@ -203,33 +203,43 @@ class CharacterDetailViewController: UIViewController {
             make.height.equalTo(30)
         }
         drawUnderLine(destination: dailySectionLabel)
+        
+        struct dailyButtonData {
+            let title: String
+            let selector: Selector
+            var isChecked: Bool
+        }
     
-        let dailyBtnData = [
-            ("카오스 던전", #selector(chaosButtonTapped)),
-            ("가디언 토벌", #selector(guardianButtonTapped))
+        var dailyBtnData = [
+            dailyButtonData(title: "카오스 던전", selector: #selector(chaosButtonTapped), isChecked:characterSetting?.isChaosDungeonCheck ?? false),
+            dailyButtonData(title: "가디언 토벌", selector: #selector(guardianButtonTapped), isChecked: characterSetting?.isGuardianRaidCheck ?? false)
         ]
         
+        var buttonTopAnchor = dailySectionLabel.snp.bottom
         //마지막 버튼을 저장하는 변수
         var lastBtn: UIView?
         var topAnchor = dailySectionLabel.snp.bottom
         var buttons: [UIButton] = []
         
-        for (index, data) in dailyBtnData.enumerated() {
-            let button = UIButton()
-            button.setTitle(data.0, for: .normal)
-            button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = .gray
-            button.addTarget(self, action: data.1, for: .touchUpInside)
-            scrollView.addSubview(button)
-            contentView.addSubview(button)
-            
-            button.snp.makeConstraints { make in
-                make.top.equalTo(topAnchor).offset(20 + (60 * index))
-                make.leading.trailing.equalToSuperview().inset(20)
-                make.height.equalTo(50)
+        for data in dailyBtnData {
+            if data.isChecked {
+                let button = UIButton()
+                button.setTitle(data.title, for: .normal)
+                button.setTitleColor(.white, for: .normal)
+                button.backgroundColor = .gray
+                button.addTarget(self, action: data.selector, for: .touchUpInside)
+                scrollView.addSubview(button)
+                contentView.addSubview(button)
+                
+                button.snp.makeConstraints { make in
+                    make.top.equalTo(topAnchor).offset(20 )
+                    make.leading.trailing.equalToSuperview().inset(20)
+                    make.height.equalTo(50)
+                }
+                lastBtn = button
+                buttons.append(button)
             }
-            lastBtn = button
-            buttons.append(button)
+            
         }
         for button in buttons {
             button.isSelected = false
@@ -341,7 +351,6 @@ class CharacterDetailViewController: UIViewController {
         if sender.isSelected {
             sender.alpha = 0.6
             sender.setTitle(sender.accessibilityIdentifier?.appending("토벌 완료"), for: .normal)
-            print(sender.accessibilityIdentifier)
             isGuardianRaidDone = true
         } else {
             sender.alpha = 1.0
