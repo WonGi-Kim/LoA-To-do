@@ -224,8 +224,8 @@ class CharacterDetailViewController: UIViewController {
         }
     
         var dailyBtnData = [
-            dailyButtonData(title: "카오스 던전", selector: #selector(chaosButtonTapped), isChecked: characterSetting?.isChaosDungeonCheck ?? false),
-            dailyButtonData(title: "가디언 토벌", selector: #selector(guardianButtonTapped), isChecked: characterSetting?.isGuardianRaidCheck ?? false)
+            dailyButtonData(title: "카오스 던전", selector: #selector(dailyButtonTapped), isChecked: characterSetting?.isChaosDungeonCheck ?? false),
+            dailyButtonData(title: "가디언 토벌", selector: #selector(dailyButtonTapped), isChecked: characterSetting?.isGuardianRaidCheck ?? false)
         ]
         
         //마지막 버튼을 저장하는 변수
@@ -241,6 +241,7 @@ class CharacterDetailViewController: UIViewController {
                 let button = createButtons(title: data.title, selector: data.selector, isChecked: data.isChecked, topAnchor: topAnchor)
                 isCheckedCount += 1
                 topAnchor = button.snp.bottom
+                button.accessibilityIdentifier = data.title
                 lastBtn = button
                 buttons.append(button)
             }
@@ -402,32 +403,37 @@ class CharacterDetailViewController: UIViewController {
     }
     
     // MARK: - 버튼 objc
-    @objc func chaosButtonTapped(_ sender: UIButton) {
+    @objc func dailyButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         
         if sender.isSelected {
             sender.alpha = 0.6
-            sender.setTitle("카오스 던전 완료", for: .normal)
-            isChaosDungeonDone = true
+            sender.setTitle(sender.accessibilityIdentifier?.appending(" 완료"), for: .normal)
+            if let identifier = sender.accessibilityIdentifier {
+                switch identifier {
+                case "카오스 던전":
+                    isChaosDungeonDone = true
+                case "가디언 토벌":
+                    isGuardianRaidDone = true
+                default:
+                    break
+                }
+            }
         } else {
             sender.alpha = 1.0
-            sender.setTitle("카오스 던전", for: .normal)
-            isChaosDungeonDone = false
+            sender.setTitle(sender.accessibilityIdentifier, for: .normal)
+            if let identifier = sender.accessibilityIdentifier {
+                switch identifier {
+                case "카오스 던전":
+                    isChaosDungeonDone = false
+                case "가디언 토벌":
+                    isGuardianRaidDone = false
+                default:
+                    break
+                }
+            }
         }
-    }
-    
-    @objc func guardianButtonTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
         
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle("가디언 토벌 완료", for: .normal)
-            isGuardianRaidDone = true
-        } else {
-            sender.alpha = 1.0
-            sender.setTitle("가디언 토벌", for: .normal)
-            isGuardianRaidDone = false
-        }
     }
     
     @objc func commendersRaidButtonTapped(_ sender: UIButton) {
@@ -527,6 +533,9 @@ class CharacterDetailViewController: UIViewController {
         deleteButton.setTitle("삭제", for: .normal)
         deleteButton.setTitleColor(.white, for: .normal)
         deleteButton.backgroundColor = .red
+        deleteButton.layer.cornerRadius = 10
+        deleteButton.layer.borderColor = UIColor.gray.cgColor
+        deleteButton.layer.borderWidth = 3
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
@@ -536,5 +545,32 @@ class CharacterDetailViewController: UIViewController {
         NotificationCenter.default.post(name: Notification.Name("CharacterDeleted"), object: characterSetting)
         
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    //  MARK: - 수정 버튼
+    func createEditButton(topAnchor: ConstraintRelatableTarget) {
+        view.addSubview(editButton)
+        scrollView.addSubview(editButton)
+        
+        var lastBtn: UIView?
+        
+        editButton.snp.makeConstraints { make in
+            make.top.equalTo(topAnchor).offset(200)
+            make.trailing.equalToSuperview().inset(80)
+            make.width.equalTo(100)
+            make.height.equalTo(30)
+        }
+        editButton.setTitle("수정", for: .normal)
+        editButton.setTitleColor(.white, for: .normal)
+        editButton.backgroundColor = .blue
+        editButton.layer.cornerRadius = 10
+        editButton.layer.borderColor = UIColor.gray.cgColor
+        editButton.layer.borderWidth = 3
+        editButton.addTarget(self, action: #selector(editButtonTapped(_:)), for: .touchUpInside)
+        
+    }
+    
+    @objc func editButtonTapped(_ sender: UIButton) {
+        
     }
 }
