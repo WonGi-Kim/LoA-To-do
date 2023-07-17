@@ -8,10 +8,11 @@
 import UIKit
 
 //  CharacterMainViewController로 데이터를 전달하기 위해 delegate 속성을 추가하기 위한 프로토콜 작성
-protocol CharacterSettingViewControllerDelgate: AnyObject {
+protocol CharacterSettingViewControllerDelegate: AnyObject {
     //func didSelectCharacter(name: String, level: String, playerClass: String)
     //  CharacterDetailViewController를 위한 protocol 작성
     func didSelectCharacter(characterSetting: CharacterSetting)
+    func didUpdateCharacterSetting(_ characterSetting: CharacterSetting)
 }
 
 
@@ -20,7 +21,7 @@ class CharacterSettingViewController: UIViewController {
     
     //  MARK: - Declare Outlet and Variaus
     //  delegate 속성 추가
-    weak var delegate: CharacterSettingViewControllerDelgate?
+    weak var delegate: CharacterSettingViewControllerDelegate?
     
     @IBOutlet weak var characterNameField: UITextField!
     @IBOutlet weak var itemLevelField: UITextField!
@@ -61,6 +62,9 @@ class CharacterSettingViewController: UIViewController {
     var isKamenRaidCheck: Bool = false //  카멘
     
     var goldButtonTappedCount = 0 // 레이드 버튼 갯수를 3개
+    
+    // detailView에서 선택된 캐릭터 셋팅을 받아주는 변수
+    var selectedCharacterSetting: CharacterSetting?
     
     //  MARK: - ViewDidLoad()
     override func viewDidLoad() {
@@ -109,6 +113,30 @@ class CharacterSettingViewController: UIViewController {
         
         
     }
+    
+    //  MARK: - viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectedCharacterSetting = characterSetting.first{
+            characterNameField.text = selectedCharacterSetting.charName
+            characterClassField.text = selectedCharacterSetting.charClass
+            itemLevelField.text = selectedCharacterSetting.charLevel
+            chaosDunButton.isSelected = selectedCharacterSetting.isChaosDungeonCheck
+            guardianRaidButton.isSelected = selectedCharacterSetting.isGuardianRaidCheck
+            valtanRaidButton.isSelected = selectedCharacterSetting.isValtanRaidCheck
+            viaKissRaidButton.isSelected = selectedCharacterSetting.isViaKissRaidCheck
+            koukusatonRaidButton.isSelected = selectedCharacterSetting.isKoukusatonCheck
+            abrelshudRaidButton.isSelected = selectedCharacterSetting.isAbrelshudRaidCheck
+            iliakanRaidButton.isSelected = selectedCharacterSetting.isIliakanRaidCheck
+            kamenRaidButton.isSelected = selectedCharacterSetting.isKamenRaidCheck
+            if selectedCharacterSetting.isAbyssDungeonCheck {
+                abyssDunField.text = selectedCharacterSetting.isAbyssDungeonName
+            }
+            abyssRaidButton.isSelected = selectedCharacterSetting.isAbyssRaidCheck
+        }
+    }
+    
+    //  MARK: - saveCharacterSetting()
     
     //  MARK: - endEditing
     //  singleTapGestureRecognizer의 selector 구현
@@ -183,14 +211,43 @@ class CharacterSettingViewController: UIViewController {
             isKamenRaidCheck: isKamenRaidCheck
         )
         
-        print("barButton tapped")
-        
         //  delegate 메소드 호출 후 데이터 전달
-        //self.delegate?.didSelectCharacter(name: name, level: level, playerClass: playerClass)
         self.delegate?.didSelectCharacter(characterSetting: characterSetting)
+        
+        guard let editedCharacterSetting = getEditedCharacterSetting() else { return }
+        //  detailViewController로 전달
+        delegate?.didUpdateCharacterSetting(editedCharacterSetting)
+        
         navigationController?.popViewController(animated: true)
     }
     
+    //  MARK: - getEditedCharacterSetting()
+    private func getEditedCharacterSetting() -> CharacterSetting? {
+        guard let name = characterNameField.text,
+              let level = itemLevelField.text,
+              let playerClass = characterClassField.text else {
+            return nil
+        }
+        
+        let editedCharacterSetting = CharacterSetting(
+            charName: name,
+            charLevel: level,
+            charClass: playerClass,
+            isGuardianRaidCheck: isGuardianRaidCheck,
+            isChaosDungeonCheck: isChaosDungeonCheck,
+            isAbyssDungeonCheck: isAbyssDungeonCheck,
+            isAbyssDungeonName: isAbyssDungeonName,
+            isAbyssRaidCheck: isAbyssRaidCheck,
+            isValtanRaidCheck: isValtanRaidCheck,
+            isViaKissRaidCheck: isViaKissRaidCheck,
+            isKoukusatonCheck: isKoukusatonCheck,
+            isAbrelshudRaidCheck: isAbrelshudRaidCheck,
+            isIliakanRaidCheck: isIliakanRaidCheck,
+            isKamenRaidCheck: isKamenRaidCheck
+        )
+        
+        return editedCharacterSetting
+    }
     //  MARK: - Using Segue for DataTransper
     /**
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -383,6 +440,11 @@ class CharacterSettingViewController: UIViewController {
         characterClassField.resignFirstResponder()
         abyssDunField.resignFirstResponder()
         
+    }
+    
+    //  MARK: - configureView()
+    func configureView() {
+       
     }
 
     

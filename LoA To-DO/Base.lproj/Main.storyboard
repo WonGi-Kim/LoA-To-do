@@ -100,7 +100,7 @@
         <!--캐릭터 설정-->
         <scene sceneID="yq2-9f-814">
             <objects>
-                <viewController id="ML8-6G-UC7" customClass="CharacterSettingViewController" customModule="LoA_To_DO" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CharacterSettingViewController" id="ML8-6G-UC7" customClass="CharacterSettingViewController" customModule="LoA_To_DO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zxq-w2-d05">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

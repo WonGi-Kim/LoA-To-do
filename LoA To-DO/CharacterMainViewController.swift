@@ -7,7 +7,11 @@
 
 import UIKit
 
-class CharacterMainViewController: UIViewController, CharacterSettingViewControllerDelgate{
+class CharacterMainViewController: UIViewController, CharacterSettingViewControllerDelegate{
+    func didUpdateCharacterSetting(_ characterSetting: CharacterSetting) {
+        self.characterSetting = characterSetting
+    }
+    
     
     @IBOutlet weak var TableView: UITableView!
     
@@ -87,6 +91,7 @@ extension CharacterMainViewController {
         saveCharacterSettings()
         TableView.reloadData()
     }
+    
 }
 
 extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -113,6 +118,13 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
         let characterSetting = characterSettingArray[indexPath.row]
         performSegue(withIdentifier: "DetailViewSegue", sender: characterSetting)
         print(characterSetting.isAbyssDungeonCheck)
+        
+        if indexPath.row < [characterSetting].count {
+            let selectedCharacterSetting = characterSettingArray[indexPath.row]
+            let characterDetailViewController = CharacterDetailViewController()
+            characterDetailViewController.characterSetting = selectedCharacterSetting
+            
+        }
     }
 }
 
