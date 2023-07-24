@@ -62,6 +62,9 @@ class CharacterSettingViewController: UIViewController {
     
     var goldButtonTappedCount = 0 // 레이드 버튼 갯수를 3개
     
+    //  abyss던전의 밸류가 사라짐을 방지하기 위한 코드
+    var abyssDunValue: String = ""
+    
     var editMode: Bool = false
     
     //  MARK: - ViewDidLoad()
@@ -115,7 +118,11 @@ class CharacterSettingViewController: UIViewController {
             configureEditMode()
         }
         
+        // 어비스 던전의 값이 사라지는 현상 방지
+        abyssDunValue = abyssDunField.text ?? ""
+        
     }
+    
     
     //  MARK: - editMode
     private func configureEditMode() {
@@ -286,6 +293,7 @@ class CharacterSettingViewController: UIViewController {
 
         if editMode == true {
             // 기존 캐릭터 수정
+            NotificationCenter.default.post(name: Notification.Name("CharacterUpdated"), object: characterSetting)
             self.delegate?.didSelectCharacter(characterSetting: characterSetting)
             navigationController?.popViewController(animated: true)
             //print("데이터 업데이트",characterSetting)

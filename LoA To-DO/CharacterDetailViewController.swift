@@ -70,6 +70,20 @@ class CharacterDetailViewController: UIViewController {
         }
         
         scrollViewSetup()
+        setupUI()
+        // CharacterUpdated 노티피케이션을 수신하고, 데이터를 업데이트하는 메서드를 등록합니다.
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleCharacterUpdatedNotification(_:)),
+            name: Notification.Name("CharacterUpdated"),
+            object: nil
+        )
+        updateUI()
+                
+    }
+    
+    //  MARK: - setupUI
+    func setupUI() {
         self.createCharInfo()
         if let lastBtn = createDailySection() {
             if let lastBtn = createRaidSection(topAnchor: lastBtn.snp.bottom) {
@@ -595,7 +609,44 @@ class CharacterDetailViewController: UIViewController {
             self.navigationController?.pushViewController(settingViewController, animated: true)
         }
     }
+    
+    // MARK: - CharacterUpdated 노티피케이션 처리
+        
+    @objc func handleCharacterUpdatedNotification(_ notification: Notification) {
+        if let updatedCharacter = notification.object as? CharacterSetting {
+            // 노티피케이션으로 전달된 수정된 데이터를 반영하여 화면을 업데이트합니다.
+            self.characterSetting = updatedCharacter
+            updateUI()
+        }
+    }
+    
+    //  MARK: - updateUI
+    func updateUI() {
+        // 기존에 생성된 버튼과 밑줄을 제거합니다.
+        contentView.subviews.forEach { subview in
+            subview.removeFromSuperview()
+        }
+        underLines.forEach { line in
+            line.removeFromSuperview()
+        }
+        underLines.removeAll()
+        
+        // 갱신된 데이터를 기반으로 버튼과 레이블을 생성하고 UI를 구성합니다.
+        scrollViewSetup()
+        createCharInfo()
+        if let lastBtn = createDailySection() {
+            if let lastBtn = createRaidSection(topAnchor: lastBtn.snp.bottom) {
+                if let lastBtn = createAbyssSection(topAnchor: lastBtn.snp.bottom) {
+                    createDeleteButton(topAnchor: lastBtn.snp.bottom)
+                    createEditButton(topAnchor: lastBtn.snp.bottom)
+                }
+            }
+        }
+    }
 
-
+    deinit {
+        // 노티피케이션 관련 처리를 위해 등록된 옵저버를 해제합니다.
+        NotificationCenter.default.removeObserver(self)
+    }
 
 }
