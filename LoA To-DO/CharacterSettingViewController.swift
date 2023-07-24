@@ -1,5 +1,5 @@
 //
-//  SettingViewController.swift
+//  CharacterSettingViewController.swift
 //  LoA To-DO
 //
 //  Created by 김원기 on 2023/05/30.
@@ -62,9 +62,13 @@ class CharacterSettingViewController: UIViewController {
     
     var goldButtonTappedCount = 0 // 레이드 버튼 갯수를 3개
     
+    var editMode: Bool = false
+    
     //  MARK: - ViewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        delegate = navigationController?.viewControllers.first as? CharacterMainViewController
         
         characterNameField.delegate = self
         itemLevelField.delegate = self
@@ -107,7 +111,58 @@ class CharacterSettingViewController: UIViewController {
         kamenRaidButton.isEnabled = true
         kamenRaidButton.alpha = 0.4
         
+        if editMode == true {
+            configureEditMode()
+        }
         
+    }
+    
+    //  MARK: - editMode
+    private func configureEditMode() {
+        if let editCharacter = characterSetting.first{
+            self.navigationItem.title = "캐릭터 수정"
+            self.navigationItem.rightBarButtonItem?.title = "수정 완료"
+            characterNameField.text = editCharacter.charName
+            characterClassField.text = editCharacter.charClass
+            itemLevelField.text = editCharacter.charLevel
+            if editCharacter.isChaosDungeonCheck == true {
+                chaosDunButton.isSelected = true
+                isChaosDungeonCheck = true
+            }
+            if editCharacter.isGuardianRaidCheck == true {
+                guardianRaidButton.isSelected = true
+                isGuardianRaidCheck = true
+            }
+            if editCharacter.isValtanRaidCheck == true {
+                valtanRaidButton.isSelected = true
+                isValtanRaidCheck = true
+            }
+            if editCharacter.isViaKissRaidCheck == true {
+                viaKissRaidButton.isSelected = true
+                isViaKissRaidCheck = true
+            }
+            if editCharacter.isKoukusatonCheck == true {
+                koukusatonRaidButton.isSelected = true
+                isKoukusatonCheck = true
+            }
+            if editCharacter.isIliakanRaidCheck == true {
+                iliakanRaidButton.isSelected = true
+                isIliakanRaidCheck = true
+            }
+            if editCharacter.isKamenRaidCheck == true {
+                kamenRaidButton.isSelected = true
+                isKamenRaidCheck = true
+            }
+            if editCharacter.isAbyssRaidCheck == true {
+                abyssRaidButton.isSelected = true
+                isAbyssRaidCheck = true
+            }
+            if editCharacter.isAbyssDungeonCheck == true {
+                abyssDunField.text = editCharacter.isAbyssDungeonName
+                isAbyssDungeonCheck = true
+            }
+            
+        }
     }
     
     //  MARK: - endEditing
@@ -162,9 +217,11 @@ class CharacterSettingViewController: UIViewController {
     
     //  MARK: - Using BarButton for DataTransfer
     @IBAction func confirmBarButton(_ sender: UIBarButtonItem) {
-        guard let name = self.characterNameField.text else { return }
-        guard let level = self.itemLevelField.text else { return }
-        guard let playerClass = self.characterClassField.text else { return }
+        guard let name = self.characterNameField.text,
+              let level = self.itemLevelField.text,
+              let playerClass = self.characterClassField.text else {
+            return
+        }
         
         let characterSetting = CharacterSetting(
             charName: name,
@@ -182,14 +239,20 @@ class CharacterSettingViewController: UIViewController {
             isIliakanRaidCheck: isIliakanRaidCheck,
             isKamenRaidCheck: isKamenRaidCheck
         )
-        
-        print("barButton tapped")
-        
-        //  delegate 메소드 호출 후 데이터 전달
-        //self.delegate?.didSelectCharacter(name: name, level: level, playerClass: playerClass)
-        self.delegate?.didSelectCharacter(characterSetting: characterSetting)
-        navigationController?.popViewController(animated: true)
+
+        if editMode == true {
+            // 기존 캐릭터 수정
+            self.delegate?.didSelectCharacter(characterSetting: characterSetting)
+            navigationController?.popViewController(animated: true)
+            //print("데이터 업데이트",characterSetting)
+            editMode = false
+        } else {
+            // 새로운 캐릭터 추가
+            self.delegate?.didSelectCharacter(characterSetting: characterSetting)
+            navigationController?.popViewController(animated: true)
+        }
     }
+
     
     //  MARK: - Using Segue for DataTransper
     /**

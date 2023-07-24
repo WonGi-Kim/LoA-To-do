@@ -23,20 +23,44 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
         TableView.reloadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleCharacterDeleted(_:)), name: Notification.Name("CharacterDeleted"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEditCharacter(_:)), name: Notification.Name("EditCharacter"), object: nil)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //TableView.reloadData()
     }
     
     @objc func handleCharacterDeleted(_ notification: Notification) {
         
         if let characterSetting = notification.object as? CharacterSetting,
-           let index = characterSettingArray.firstIndex(of: characterSetting) {
-            characterSettingArray.remove(at: index)
+           let index = characterSettings.firstIndex(of: characterSetting) {
+            characterSettings.remove(at: index)
             let indexPath = IndexPath(row: index, section: 0)
             TableView.deleteRows(at: [indexPath], with: .automatic)
                 
             saveCharacterSettings()
         }
     }
+    
+    @objc func handleEditCharacter(_ notification: Notification) {
+        if let characterSetting = notification.object as? CharacterSetting {
+            if let selectedIndex = TableView.indexPathForSelectedRow?.row {
+                // 기존 캐릭터 수정
+                characterSettings[selectedIndex] = characterSetting
+                // 편집된 행만 리로드
+                TableView.reloadRows(at: [IndexPath(row: selectedIndex, section: 0)], with: .automatic)
+            } else {
+                // 새로운 캐릭터 추가
+                characterSettings.append(characterSetting)
+                // 테이블 전체 리로드
+                // TableView.reloadData()
+            }
+            saveCharacterSettings()
+        }
+    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is CharacterSettingViewController {
@@ -49,12 +73,14 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
            let characterDetailViewController = segue.destination as? CharacterDetailViewController,
            let characterSetting = sender as? CharacterSetting {
             characterDetailViewController.characterSetting = characterSetting
+            
+            
         }
     }
         
     func saveCharacterSettings() {
         let encoder = JSONEncoder()
-        if let encodedData = try? encoder.encode(characterSettingArray) {
+        if let encodedData = try? encoder.encode(characterSettings) {
             UserDefaults.standard.set(encodedData, forKey: "CharacterSettings")
         }
     }
@@ -64,8 +90,7 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
               let decodedData = try? JSONDecoder().decode([CharacterSetting].self, from: encodedData) else {
             return
         }
-        characterSettingArray = decodedData
-        print("출력",characterSettingArray.isEmpty)
+        characterSettings = decodedData
     }
     
     var characterSetting: CharacterSetting?
@@ -82,10 +107,15 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
 extension CharacterMainViewController {
     
     func didSelectCharacter(characterSetting: CharacterSetting) {
-        self.characterSetting = characterSetting
-        self.characterSettingArray.append(characterSetting)
-        saveCharacterSettings()
+        
+        if let selectedIndex = TableView.indexPathForSelectedRow?.row {
+            characterSettings[selectedIndex] = characterSetting
+        } else {
+            characterSettings.append(characterSetting)
+        }
+        
         TableView.reloadData()
+        saveCharacterSettings()
     }
 }
 
@@ -95,25 +125,28 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     //  xib로 만든 셀을 반환하도록 구현
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as! CharacterCell
-        let characterSetting = characterSettingArray[indexPath.row]
-        cell.characterSetting = characterSetting
         
+        // 기존의 cellSetting을 가져옴
+        let characterSetting = characterSettings[indexPath.row]
+        
+        // 기존의 cell에 새로운 데이터를 반영
+        cell.configure(with: characterSetting)
         
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //  테이블 뷰의 데이터 개수 반환
         
-        return characterSettingArray.count
+        return characterSettings.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //   셀을 선택했을 때 동작 구현
-        let characterSetting = characterSettingArray[indexPath.row]
+        let characterSetting = characterSettings[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "DetailViewSegue", sender: characterSetting)
-        print(characterSetting.isAbyssDungeonCheck)
+        //print("didSelectRowAt",characterSettingArray)
     }
 }
-
-//extension CharacterMainViewController: CharacterSettingViewController {}

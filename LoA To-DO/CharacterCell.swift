@@ -41,9 +41,11 @@ class CharacterCell: UITableViewCell {
         }
     }
     
-    func configure(with characterSetting: CharacterSetting){
-        
-    }
+    func configure(with characterSetting: CharacterSetting) {
+            nameLabel.text = characterSetting.charName
+            levelLabel.text = characterSetting.charLevel
+            classImage.image = UIImage(named: characterSetting.charClass)
+        }
     
     required init? (coder: NSCoder) {
         super.init(coder: coder)

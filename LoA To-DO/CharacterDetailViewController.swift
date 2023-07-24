@@ -74,6 +74,7 @@ class CharacterDetailViewController: UIViewController {
             if let lastBtn = createRaidSection(topAnchor: lastBtn.snp.bottom) {
                 if let lastBtn = createAbyssSection(topAnchor: lastBtn.snp.bottom) {
                     createDeleteButton(topAnchor: lastBtn.snp.bottom)
+                    createEditButton(topAnchor: lastBtn.snp.bottom)
                 }
             }
         }
@@ -566,11 +567,34 @@ class CharacterDetailViewController: UIViewController {
         editButton.layer.cornerRadius = 10
         editButton.layer.borderColor = UIColor.gray.cgColor
         editButton.layer.borderWidth = 3
-        editButton.addTarget(self, action: #selector(editButtonTapped(_:)), for: .touchUpInside)
+        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        
         
     }
     
-    @objc func editButtonTapped(_ sender: UIButton) {
-        
+    @objc func editButtonTapped() {
+        if let selectedCharacter = characterSetting {
+            let notification = Notification(name: Notification.Name("EditCharacter"), object: selectedCharacter)
+            handleEditCharacterNotification(notification)
+        }
     }
+
+    // EditCharacter라는 이름의 Notification을 처리하는 메서드
+    func handleEditCharacterNotification(_ notification: Notification) {
+        guard let selectedCharacter = notification.object as? CharacterSetting else { return }
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let settingViewController = storyboard.instantiateViewController(withIdentifier: "CharacterSettingViewController") as? CharacterSettingViewController else { return }
+            
+            settingViewController.characterSetting = [selectedCharacter]
+            settingViewController.editMode = true
+            self.navigationController?.pushViewController(settingViewController, animated: true)
+        }
+    }
+
+
+
 }
