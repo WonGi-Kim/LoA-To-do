@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class CharacterDetailViewController: UIViewController {
+    
     var characterSetting: CharacterSetting?
     var characterToDoInto: [CharacterToDoInfo] = []
     

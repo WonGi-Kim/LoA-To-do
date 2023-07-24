@@ -144,9 +144,19 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //   셀을 선택했을 때 동작 구현
-        let characterSetting = characterSettings[indexPath.row]
+        /**let characterSetting = characterSettings[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "DetailViewSegue", sender: characterSetting)
-        //print("didSelectRowAt",characterSettingArray)
+        */
+        // 셀 갱신이 되지 않아 전달방식 변경
+        // 변경 후 셀 갱신 정상 작동
+        let characterSetting = characterSettings[indexPath.row]
+        guard let detailViewController = self.storyboard?.instantiateViewController(identifier: "CharacterDetailViewController") as?
+                CharacterDetailViewController else { return }
+        detailViewController.characterSetting = characterSetting
+        //detailViewController.delegate = self
+        navigationController?.pushViewController(detailViewController, animated: true)
+        print("수정되어 넘어가는 캐릭터 세팅: ")
+        print(characterSetting)
     }
 }

@@ -125,41 +125,85 @@ class CharacterSettingViewController: UIViewController {
             characterNameField.text = editCharacter.charName
             characterClassField.text = editCharacter.charClass
             itemLevelField.text = editCharacter.charLevel
+            
             if editCharacter.isChaosDungeonCheck == true {
                 chaosDunButton.isSelected = true
                 isChaosDungeonCheck = true
+            } else {
+                chaosDunButton.isSelected = false
+                isChaosDungeonCheck = false
             }
+            
             if editCharacter.isGuardianRaidCheck == true {
                 guardianRaidButton.isSelected = true
                 isGuardianRaidCheck = true
+            } else {
+                guardianRaidButton.isSelected = false
+                isGuardianRaidCheck = false
             }
+            
             if editCharacter.isValtanRaidCheck == true {
                 valtanRaidButton.isSelected = true
                 isValtanRaidCheck = true
+            } else {
+                valtanRaidButton.isSelected = false
+                isValtanRaidCheck = false
             }
+            
             if editCharacter.isViaKissRaidCheck == true {
                 viaKissRaidButton.isSelected = true
                 isViaKissRaidCheck = true
+            } else {
+                viaKissRaidButton.isSelected = false
+                isViaKissRaidCheck = false
             }
+            
             if editCharacter.isKoukusatonCheck == true {
                 koukusatonRaidButton.isSelected = true
                 isKoukusatonCheck = true
+            } else {
+                koukusatonRaidButton.isSelected = false
+                isKoukusatonCheck = false
             }
+            
+            if editCharacter.isAbrelshudRaidCheck == true {
+                abrelshudRaidButton.isSelected = true
+                isAbrelshudRaidCheck = true
+            } else {
+                abrelshudRaidButton.isSelected = false
+                isAbrelshudRaidCheck = false
+            }
+            
             if editCharacter.isIliakanRaidCheck == true {
                 iliakanRaidButton.isSelected = true
                 isIliakanRaidCheck = true
+            } else {
+                iliakanRaidButton.isSelected = false
+                isIliakanRaidCheck = false
             }
+            
             if editCharacter.isKamenRaidCheck == true {
                 kamenRaidButton.isSelected = true
                 isKamenRaidCheck = true
+            } else {
+                kamenRaidButton.isSelected = false
+                isKamenRaidCheck = false
             }
+            
             if editCharacter.isAbyssRaidCheck == true {
                 abyssRaidButton.isSelected = true
                 isAbyssRaidCheck = true
+            } else {
+                abyssRaidButton.isSelected = false
+                isAbyssRaidCheck = false
             }
+            
             if editCharacter.isAbyssDungeonCheck == true {
                 abyssDunField.text = editCharacter.isAbyssDungeonName
                 isAbyssDungeonCheck = true
+            } else {
+                abyssDunField.text = ""
+                isAbyssDungeonCheck = false
             }
             
         }
@@ -295,13 +339,21 @@ class CharacterSettingViewController: UIViewController {
     //  MARK: - 카오스던전 버튼 관리
     @IBAction func chaosDunButton(_ sender: UIButton) {
         sender.isSelected.toggle()
-        isChaosDungeonCheck = true
+        if sender.isSelected {
+            isChaosDungeonCheck = true
+        } else {
+            isChaosDungeonCheck = false
+        }
     }
     
     //  MARK: - 가디언 토벌 버튼 관리
     @IBAction func guardianRaidButton(_ sender: UIButton) {
         sender.isSelected.toggle()
-        isGuardianRaidCheck = true
+        if sender.isSelected {
+            isGuardianRaidCheck = true
+        } else {
+            isGuardianRaidCheck = false
+        }
     }
     
     //  MARK: - 군단장 레이드 버튼

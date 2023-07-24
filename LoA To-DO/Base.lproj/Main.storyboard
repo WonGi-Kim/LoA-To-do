@@ -84,7 +84,7 @@
         <!--Character Detail View Controller-->
         <scene sceneID="tjz-aZ-YeL">
             <objects>
-                <viewController id="1yU-JF-ry1" customClass="CharacterDetailViewController" customModule="LoA_To_DO" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CharacterDetailViewController" id="1yU-JF-ry1" customClass="CharacterDetailViewController" customModule="LoA_To_DO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dca-9B-Fqr">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
