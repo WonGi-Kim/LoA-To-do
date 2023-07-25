@@ -207,6 +207,7 @@ class CharacterSettingViewController: UIViewController {
             
             if editCharacter.isAbyssDungeonCheck == true {
                 abyssDunField.text = editCharacter.isAbyssDungeonName
+                isAbyssDungeonName = abyssDunField.text ?? ""
                 isAbyssDungeonCheck = true
             } else {
                 abyssDunField.text = ""

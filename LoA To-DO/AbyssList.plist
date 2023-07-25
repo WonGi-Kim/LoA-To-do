@@ -4,6 +4,10 @@
 <array>
 	<dict>
 		<key>dunName</key>
+		<string>--선택안함--</string>
+	</dict>
+	<dict>
+		<key>dunName</key>
 		<string>(1티어) 고대 유적 엘베리아</string>
 	</dict>
 	<dict>

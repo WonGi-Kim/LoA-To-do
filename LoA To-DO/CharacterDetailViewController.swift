@@ -79,6 +79,8 @@ class CharacterDetailViewController: UIViewController {
             object: nil
         )
         updateUI()
+        loadToDoInfo()
+        print("앱을 재 시작했을때", toDoInfo)
                 
     }
     
@@ -119,6 +121,61 @@ class CharacterDetailViewController: UIViewController {
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: 0)
     }
 
+    // MARK: - UserDefaults
+    var toDoInfo = CharacterToDoInfo(isGuardianRaidDone: false, isChaosDungeonDone: false, isAbyssDungeonDone: false, isAbyssRaidDone: false, isValtanRaidDone: false, isViaKissRaidDone: false, isKoukusatonRaidDone: false, isAbrelshudRaidDone: false, isIliakanRaidDone: false, isKamenRaidDone: false)
+    
+    // MARK: UserDefaults 값 저장
+    func saveToDoInfo() {
+        let encoder = JSONEncoder()
+        do {
+            let encodedData = try encoder.encode(toDoInfo)
+            UserDefaults.standard.set(encodedData, forKey: "CharacterToDoInfo")
+            UserDefaults.standard.synchronize() // 데이터 동기화
+            print("ToDoInfo saved successfully.")
+        } catch {
+            print("Failed to save ToDoInfo:", error)
+        }
+    }
+    
+    // MARK: UserDefaults 값 로드
+    func loadToDoInfo() {
+        guard let encodedData = UserDefaults.standard.data(forKey: "CharacterToDoInfo"),
+              let decodedData = try? JSONDecoder().decode(CharacterToDoInfo.self, from: encodedData) else {
+            print("ToDoInfo data not found or decoding failed.")
+            return
+        }
+        toDoInfo = decodedData
+        setButtonStates()
+        print("ToDoInfo loaded successfully.")
+    }
+
+    
+    // MARK: - 버튼 상태 변경
+    func setButtonStates() {
+        chaosDunButton.isSelected = toDoInfo.isChaosDungeonDone
+        updateButtonAppearence(button: chaosDunButton, isChecked: toDoInfo.isChaosDungeonDone)
+        guardianRaidButton.isSelected = toDoInfo.isGuardianRaidDone
+        updateButtonAppearence(button: guardianRaidButton, isChecked: toDoInfo.isGuardianRaidDone)
+        
+        valtanButton.isSelected = toDoInfo.isValtanRaidDone
+        updateButtonAppearence(button: valtanButton, isChecked: toDoInfo.isValtanRaidDone)
+        viakissButton.isSelected = toDoInfo.isViaKissRaidDone
+        updateButtonAppearence(button: viakissButton, isChecked: toDoInfo.isViaKissRaidDone)
+        koukuButton.isSelected = toDoInfo.isKoukusatonRaidDone
+        updateButtonAppearence(button: koukuButton, isChecked: toDoInfo.isKoukusatonRaidDone)
+        abrelButton.isSelected = toDoInfo.isAbrelshudRaidDone
+        updateButtonAppearence(button: abrelButton, isChecked: toDoInfo.isAbrelshudRaidDone)
+        lilakanButton.isSelected = toDoInfo.isIliakanRaidDone
+        updateButtonAppearence(button: lilakanButton, isChecked: toDoInfo.isIliakanRaidDone)
+        kamenButtonn.isSelected = toDoInfo.isKamenRaidDone
+        updateButtonAppearence(button: kamenButtonn, isChecked: toDoInfo.isKamenRaidDone)
+        
+        abyssRaidButton.isSelected = toDoInfo.isAbyssRaidDone
+        updateButtonAppearence(button: abyssRaidButton, isChecked: toDoInfo.isAbyssRaidDone)
+        abyssDunButton.isSelected = toDoInfo.isAbyssDungeonDone
+        updateButtonAppearence(button: abyssDunButton, isChecked: toDoInfo.isAbyssDungeonDone)
+    }
+    
     // MARK: - 섹션 구분 밑줄
     func drawUnderLine(destination: UILabel) ->UIView {
         let underLine = UIView()
@@ -163,6 +220,33 @@ class CharacterDetailViewController: UIViewController {
             make.top.equalTo(topAnchor).offset(20)
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(50)
+        }
+        
+        //버튼 상태 관리를 위해 인스턴스 변수 선언 후 관리
+        switch title {
+        case "카오스 던전":
+            chaosDunButton = button
+        case "가디언 토벌":
+            guardianRaidButton = button
+        case "군단장 발탄":
+            valtanButton = button
+        case "군단장 비아키스":
+            viakissButton = button
+        case "군단장 쿠크세이튼":
+            koukuButton = button
+        case "군단장 아브렐슈드":
+            abrelButton = button
+        case "군단장 일리아칸":
+            lilakanButton = button
+        case "군단장 카멘":
+            kamenButtonn = button
+        case "어비스 레이드: 아르고스":
+            abyssRaidButton = button
+        case characterSetting?.isAbyssDungeonName:
+            abyssDunButton = button
+            
+        default:
+            break
         }
         
         return button
@@ -375,11 +459,18 @@ class CharacterDetailViewController: UIViewController {
             let selector: Selector
             var isChecked: Bool
         }
+        let abyssBtnData: [abyssButtonData]
         
-        let abyssBtnData = [
-            abyssButtonData(title: "어비스 레이드: 아르고스", selector: #selector(abyssContentButtonTapped), isChecked: characterSetting?.isAbyssRaidCheck ?? false),
-            abyssButtonData(title: characterSetting?.isAbyssDungeonName ?? "", selector: #selector(abyssContentButtonTapped), isChecked: characterSetting?.isAbyssDungeonCheck ?? false)
-        ]
+        if let abyssDungeonName = characterSetting?.isAbyssDungeonName, abyssDungeonName != "--선택안함--" {
+            abyssBtnData = [
+                abyssButtonData(title: "어비스 레이드: 아르고스", selector: #selector(abyssContentButtonTapped), isChecked: characterSetting?.isAbyssRaidCheck ?? false),
+                abyssButtonData(title: characterSetting?.isAbyssDungeonName ?? "", selector: #selector(abyssContentButtonTapped), isChecked: characterSetting?.isAbyssDungeonCheck ?? false)
+            ]
+        } else {
+            abyssBtnData = [
+                abyssButtonData(title: "어비스 레이드: 아르고스", selector: #selector(abyssContentButtonTapped), isChecked: characterSetting?.isAbyssRaidCheck ?? false)
+            ]
+        }
         
         var topAnchor = abyssSectionLabel.snp.bottom
         var lastBtn: UIView?
@@ -419,117 +510,80 @@ class CharacterDetailViewController: UIViewController {
     }
     
     // MARK: - 버튼 objc
-    @objc func dailyButtonTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle(sender.accessibilityIdentifier?.appending(" 완료"), for: .normal)
-            if let identifier = sender.accessibilityIdentifier {
-                switch identifier {
-                case "카오스 던전":
-                    isChaosDungeonDone = true
-                case "가디언 토벌":
-                    isGuardianRaidDone = true
-                default:
-                    break
-                }
-            }
+    // MARK: 버튼 외형 변경(위의 기본값과 다름 -> 버튼 작동을 보여주는 것)
+    func updateButtonAppearence(button: UIButton, isChecked: Bool) {
+        button.isSelected = isChecked
+        if isChecked {
+            button.alpha = 0.6
+            button.setTitle(button.accessibilityIdentifier?.appending(" 완료"), for: .normal)
         } else {
-            sender.alpha = 1.0
-            sender.setTitle(sender.accessibilityIdentifier, for: .normal)
-            if let identifier = sender.accessibilityIdentifier {
-                switch identifier {
-                case "카오스 던전":
-                    isChaosDungeonDone = false
-                case "가디언 토벌":
-                    isGuardianRaidDone = false
-                default:
-                    break
-                }
-            }
+            button.alpha = 1.0
+            button.setTitle(button.accessibilityIdentifier, for: .normal)
         }
-        
     }
     
+    
+    // MARK: 일일컨텐츠 버튼 작동
+    @objc func dailyButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        updateButtonAppearence(button: sender, isChecked: sender.isSelected)
+        
+        if let identifier = sender.accessibilityIdentifier {
+            switch identifier {
+            case "카오스 던전":
+                toDoInfo.isChaosDungeonDone = sender.isSelected
+            case "가디언 토벌":
+                toDoInfo.isGuardianRaidDone = sender.isSelected
+            default:
+                break
+            }
+        }
+        saveToDoInfo()
+        print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
+    }
+    
+    // MARK: 군단장 컨텐츠 버튼 작동
     @objc func commendersRaidButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle(sender.accessibilityIdentifier?.appending(" 토벌 완료"), for: .normal)
-            if let identifier = sender.accessibilityIdentifier {
-                switch identifier {
-                case "군단장 발탄":
-                    isValtanRaidDone = true
-                case "군단장 비아키스":
-                    isViaKissRaidDone = true
-                case "군단장 쿠크세이튼":
-                    isKoukusatonRaidDone = true
-                case "군단장 아브렐슈드":
-                    isAbrelshudRaidDone = true
-                case "군단장 일리아칸":
-                    isIliakanRaidDone = true
-                case "군단장 카멘":
-                    isKamenRaidDone = true
-                default:
-                    break
-                }
-            }
-        } else {
-            sender.alpha = 1.0
-            sender.setTitle(sender.accessibilityIdentifier, for: .normal)
-            if let identifier = sender.accessibilityIdentifier {
-                switch identifier {
-                case "군단장 발탄":
-                    isValtanRaidDone = false
-                case "군단장 비아키스":
-                    isViaKissRaidDone = false
-                case "군단장 쿠크세이튼":
-                    isKoukusatonRaidDone = false
-                case "군단장 아브렐슈드":
-                    isAbrelshudRaidDone = false
-                case "군단장 일리아칸":
-                    isIliakanRaidDone = false
-                case "군단장 카멘":
-                    isKamenRaidDone = false
-                default:
-                    break
-                }
+        updateButtonAppearence(button: sender, isChecked: sender.isSelected)
+
+        if let identifier = sender.accessibilityIdentifier {
+            switch identifier {
+            case "군단장 발탄":
+                isValtanRaidDone = true
+            case "군단장 비아키스":
+                isViaKissRaidDone = true
+            case "군단장 쿠크세이튼":
+                isKoukusatonRaidDone = true
+            case "군단장 아브렐슈드":
+                isAbrelshudRaidDone = true
+            case "군단장 일리아칸":
+                isIliakanRaidDone = true
+            case "군단장 카멘":
+                isKamenRaidDone = true
+            default:
+                break
             }
         }
+        saveToDoInfo()
     }
-    // 어비스 컨텐츠
+    
+    // MARK: 어비스 컨텐츠 버튼 작동
     @objc func abyssContentButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
+        updateButtonAppearence(button: sender, isChecked: sender.isSelected)
         
-        if sender.isSelected {
-            sender.alpha = 0.6
-            sender.setTitle((sender.accessibilityIdentifier ?? "" ) + " 클리어", for: .normal)
-            if let identifier = sender.accessibilityIdentifier {
-                switch identifier {
-                case "어비스 레이드: 아르고스":
-                    isAbyssRaidDone = true
-                case characterSetting?.isAbyssDungeonName:
-                    isAbyssDungeonDone = true
-                default:
-                    break
-                }
-            }
-        } else {
-            sender.alpha = 1.0
-            sender.setTitle((sender.accessibilityIdentifier ?? ""), for: .normal)
-            if let identifier = sender.accessibilityIdentifier {
-                switch identifier {
-                case "어비스 레이드: 아르고스":
-                    isAbyssRaidDone = false
-                case characterSetting?.isAbyssDungeonName:
-                    isAbyssDungeonDone = false
-                default:
-                    break
-                }
+        if let identifier = sender.accessibilityIdentifier {
+            switch identifier {
+            case "어비스 레이드: 아르고스":
+                isAbyssRaidDone = true
+            case characterSetting?.isAbyssDungeonName:
+                isAbyssDungeonDone = true
+            default:
+                break
             }
         }
+        saveToDoInfo()
     }
     
     //  MARK: - 삭제 버튼
@@ -583,8 +637,6 @@ class CharacterDetailViewController: UIViewController {
         editButton.layer.borderColor = UIColor.gray.cgColor
         editButton.layer.borderWidth = 3
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        
-        
     }
     
     @objc func editButtonTapped() {
