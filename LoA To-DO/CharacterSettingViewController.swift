@@ -47,7 +47,12 @@ class CharacterSettingViewController: UIViewController {
     var abyssArray: [String] = []
     var abyssDunPicker: UIPickerView!
     
-    var characterSetting: [CharacterSetting] = []
+    //var characterSetting: [CharacterSetting] = []
+    /**
+     //var characterSetting: [CharacterSetting] = []
+    characterSetting을 단일 객체화 시켜서 배열에 여러번 저장되고 겹치는 문제 수정
+     */
+    var characterSetting: CharacterSetting?
     var isGuardianRaidCheck: Bool = false //   일일 가디언 토벌 여부
     var isChaosDungeonCheck: Bool = false //   일일 카오스 던전 여부
     var isAbyssDungeonName: String = ""
@@ -126,7 +131,7 @@ class CharacterSettingViewController: UIViewController {
     
     //  MARK: - editMode
     private func configureEditMode() {
-        if let editCharacter = characterSetting.first{
+        if let editCharacter = characterSetting{
             self.navigationItem.title = "캐릭터 수정"
             self.navigationItem.rightBarButtonItem?.title = "수정 완료"
             characterNameField.text = editCharacter.charName

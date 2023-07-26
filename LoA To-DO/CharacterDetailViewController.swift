@@ -815,7 +815,7 @@ class CharacterDetailViewController: UIViewController {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             guard let settingViewController = storyboard.instantiateViewController(withIdentifier: "CharacterSettingViewController") as? CharacterSettingViewController else { return }
             
-            settingViewController.characterSetting = [selectedCharacter]
+            settingViewController.characterSetting = selectedCharacter
             settingViewController.editMode = true
             self.navigationController?.pushViewController(settingViewController, animated: true)
         }
