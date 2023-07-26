@@ -21,6 +21,7 @@ class CharacterDetailViewController: UIViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
     
+    var characterName: String = ""
     var isGuardianRaidDone: Bool = false
     var isChaosDungeonDone: Bool = false
     var isAbyssDungeonDone: Bool = false
@@ -83,7 +84,8 @@ class CharacterDetailViewController: UIViewController {
             object: nil
         )
         updateUI()
-        loadToDoInfo()
+        loadDataFromFireStore()
+        //loadToDoInfo()
         print("앱을 재 시작했을때", toDoInfo)
                 
     }
@@ -126,8 +128,22 @@ class CharacterDetailViewController: UIViewController {
     }
 
     // MARK: - UserDefaults
-    var toDoInfo = CharacterToDoInfo(isGuardianRaidDone: false, isChaosDungeonDone: false, isAbyssDungeonDone: false, isAbyssRaidDone: false, isValtanRaidDone: false, isViaKissRaidDone: false, isKoukusatonRaidDone: false, isAbrelshudRaidDone: false, isIliakanRaidDone: false, isKamenRaidDone: false)
     
+    var toDoInfo = CharacterToDoInfo(
+        characterName: "",
+        isGuardianRaidDone: false,
+        isChaosDungeonDone: false,
+        isAbyssDungeonDone: false,
+        isAbyssRaidDone: false,
+        isValtanRaidDone: false,
+        isViaKissRaidDone: false,
+        isKoukusatonRaidDone: false,
+        isAbrelshudRaidDone: false,
+        isIliakanRaidDone: false,
+        isKamenRaidDone: false,
+        isAbyssDungeonName: ""
+    )
+    /**
     // MARK: UserDefaults 값 저장
     func saveToDoInfo() {
         let encoder = JSONEncoder()
@@ -151,14 +167,16 @@ class CharacterDetailViewController: UIViewController {
         toDoInfo = decodedData
         setButtonStates()
         print("ToDoInfo loaded successfully.")
-    }
+    }*/
 
     // MARK: - Firebase/Firestore
     let db = Firestore.firestore()
     
-    // 데이터를 Firestore에 저장하는 메서드
+    // MARK: 데이터를 Firestore에 저장하는 메서드
     func saveDataToFireStore() {
-        let dataToSave: [String: Any] = [
+        guard let characterName = characterSetting?.charName else { return }
+        
+        let dataToUpdateAndSave: [String: Any] = [
             "charName": characterSetting?.charName ?? "",
             "charLevel": characterSetting?.charLevel ?? "",
             "charClass": characterSetting?.charClass ?? "",
@@ -172,24 +190,39 @@ class CharacterDetailViewController: UIViewController {
             "isKoukusatonRaidDone": toDoInfo.isKoukusatonRaidDone,
             "isAbrelshudRaidDone": toDoInfo.isAbrelshudRaidDone,
             "isIliakanRaidDone": toDoInfo.isIliakanRaidDone,
-            "isKamenRaidDone": toDoInfo.isKamenRaidDone,
+            "isKamenRaidDone": toDoInfo.isKamenRaidDone
         ]
         
         let characterCollection = db.collection("characters")
+        let documentRef = characterCollection.document(characterName)
         
-        characterCollection.addDocument(data: dataToSave) { (error) in
-            if let error = error {
-                print("Error adding document: \(error)")
+        documentRef.getDocument{ (document, error) in
+            if let document = document, document.exists {
+                // characterName이 같은 문서가 있는지 확인 후 업데이트
+                documentRef.setData(dataToUpdateAndSave) { error in
+                    if let error {
+                        print("Error updating document: \(error)")
+                    } else {
+                        print("Document updated successfully!")
+                    }
+                }
             } else {
-                print("Document added successfully!")
+                // 해당 캐릭터 이름을 가진 문서가 존재하지 않는 경우 생성
+                documentRef.setData(dataToUpdateAndSave) { error in
+                    if let error = error {
+                        print("Error adding document: \(error)")
+                    } else {
+                        print("Document added successfully!")
+                    }
+                }
             }
         }
     }
     
-    // 데이터를 가져오는 메서드
+    // MARK: 데이터를 가져오는 메서드
     func loadDataFromFireStore() {
         // firestore 콜렉션 레퍼런스 생성
-        let characterCollection = db.collection("chracters")
+        let characterCollection = db.collection("characters")
         
         // 특정 캐릭터 데이터 가져오기
         let characterID = characterSetting?.charName ?? ""
@@ -203,15 +236,62 @@ class CharacterDetailViewController: UIViewController {
                 return
             }
             if document.exists {
-                // Document 데이터를 파싱하고 활용합니다.
+                // Document 데이터를 파싱하고 활용
                 if let data = document.data() {
-                    // Firestore 데이터를 사용하는 코드 작성
+                    // Firestore 데이터를 사용하는 코드
+                    self.toDoInfo.isChaosDungeonDone = data["isChaosDungeonDone"] as? Bool ?? false
+                    self.toDoInfo.isGuardianRaidDone = data["isGuardianRaidDone"] as? Bool ?? false
+                    self.toDoInfo.isValtanRaidDone = data["isValtanRaidDone"] as? Bool ?? false
+                    self.toDoInfo.isViaKissRaidDone = data["isViaKissRaidDone"] as? Bool ?? false
+                    self.toDoInfo.isKoukusatonRaidDone = data["isKoukusatonRaidDone"] as? Bool ?? false
+                    self.toDoInfo.isAbrelshudRaidDone = data["isAbrelshudRaidDone"] as? Bool ?? false
+                    self.toDoInfo.isIliakanRaidDone = data["isIliakanRaidDone"] as? Bool ?? false
+                    self.toDoInfo.isKamenRaidDone = data["isKamenRaidDone"] as? Bool ?? false
+                    self.toDoInfo.isAbyssRaidDone = data["isAbyssRaidDone"] as? Bool ?? false
+                    self.toDoInfo.isAbyssDungeonDone = data["isAbyssDungeonDone"] as? Bool ?? false
+                    self.toDoInfo.isAbyssDungeonName = data["isAbyssDungeonName"] as? String ?? ""
+                    
+                    self.setButtonStates()
                 }
             } else {
                 print("Document does not exist")
             }
         }
     }
+    
+    // MARK: firestore 데이터를 초기값으로 수정
+    func updateFirestoreDataWithInitialValues(character: CharacterSetting) {
+        guard let characterName = characterSetting?.charName else { return }
+        
+        let dataToUpdate: [String: Any] = [
+            "charName": characterSetting?.charName ?? "",
+            "charLevel": characterSetting?.charLevel ?? "",
+            "charClass": characterSetting?.charClass ?? "",
+            "isChaosDungeonDone": false,
+            "isGuardianRaidDone": false,
+            "isAbyssDungeonDone": false,
+            "isAbyssDungeonName": characterSetting?.isAbyssDungeonName ?? "",
+            "isAbyssRaidDone": false,
+            "isValtanRaidDone": false,
+            "isViaKissRaidDone": false,
+            "isKoukusatonRaidDone": false,
+            "isAbrelshudRaidDone": false,
+            "isIliakanRaidDone": false,
+            "isKamenRaidDone": false
+        ]
+        
+        let characterCollection = db.collection("characters")
+        let documentRef = characterCollection.document(characterName)
+        
+        documentRef.updateData(dataToUpdate) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document updated successfully!")
+            }
+        }
+    }
+
     
     // MARK: - 버튼 상태 변경
     func setButtonStates() {
@@ -602,7 +682,6 @@ class CharacterDetailViewController: UIViewController {
             }
         }
         saveDataToFireStore()
-        saveToDoInfo()
         print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     }
     
@@ -629,7 +708,7 @@ class CharacterDetailViewController: UIViewController {
                 break
             }
         }
-        saveToDoInfo()
+        saveDataToFireStore()
         print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     }
     
@@ -648,7 +727,7 @@ class CharacterDetailViewController: UIViewController {
                 break
             }
         }
-        saveToDoInfo()
+        saveDataToFireStore()
         print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     }
     
@@ -676,10 +755,22 @@ class CharacterDetailViewController: UIViewController {
     }
     
     @objc func deleteButtonTapped() {
+        // firestore 에서 삭제
+        guard let characterName = characterSetting?.charName else { return }
+        
+        let characterCollection = db.collection("characters")
+        let documentRef = characterCollection.document(characterName)
+        
+        documentRef.delete { error in
+            if let error = error {
+                print("Error deleting document: \(error)")
+            } else {
+                print("Document deleted successfully!")
+            }
+        }
+        // CharacterMainViewController에 CharacterSetting을 삭제한 것을 알리기 위해 노티피케이션 전송
         guard let characterSetting = characterSetting else { return }
-        
         NotificationCenter.default.post(name: Notification.Name("CharacterDeleted"), object: characterSetting)
-        
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -706,7 +797,9 @@ class CharacterDetailViewController: UIViewController {
     }
     
     @objc func editButtonTapped() {
+        
         if let selectedCharacter = characterSetting {
+            updateFirestoreDataWithInitialValues(character: selectedCharacter)
             let notification = Notification(name: Notification.Name("EditCharacter"), object: selectedCharacter)
             handleEditCharacterNotification(notification)
         }
