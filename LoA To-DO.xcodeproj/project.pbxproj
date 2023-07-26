@@ -18,6 +18,7 @@
 		B20FE4BC2A25135300B9E2D5 /* CharacterSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20FE4BB2A25135300B9E2D5 /* CharacterSetting.swift */; };
 		B20FE4C52A25C76B00B9E2D5 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20FE4C32A25C76B00B9E2D5 /* CharacterCell.swift */; };
 		B20FE4C62A25C76B00B9E2D5 /* CharacterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */; };
+		B23483AA2A6FB49300E5E0F4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B23483A92A6FB49200E5E0F4 /* GoogleService-Info.plist */; };
 		B241E7A72A4AC2EA00C2E161 /* CharacterSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */; };
 		B241E7A92A4AC8B400C2E161 /* CharacterClass.plist in Resources */ = {isa = PBXBuildFile; fileRef = B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */; };
 		B29FB8A82A5D27090011C9CD /* CharacterToDoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FB8A72A5D27090011C9CD /* CharacterToDoInfo.swift */; };
@@ -40,6 +41,7 @@
 		B20FE4BB2A25135300B9E2D5 /* CharacterSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSetting.swift; sourceTree = "<group>"; };
 		B20FE4C32A25C76B00B9E2D5 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		B20FE4C42A25C76B00B9E2D5 /* CharacterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterCell.xib; sourceTree = "<group>"; };
+		B23483A92A6FB49200E5E0F4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B241E7A62A4AC2EA00C2E161 /* CharacterSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSettingViewController.swift; sourceTree = "<group>"; };
 		B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CharacterClass.plist; sourceTree = "<group>"; };
 		B29FB8A72A5D27090011C9CD /* CharacterToDoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterToDoInfo.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				B241E7A82A4AC8B400C2E161 /* CharacterClass.plist */,
 				B2BC1BD62A56B4B200DE08CA /* AbyssList.plist */,
 				B20FE4AE2A250F9100B9E2D5 /* Assets.xcassets */,
+				B23483A92A6FB49200E5E0F4 /* GoogleService-Info.plist */,
 				B20FE4B02A250F9100B9E2D5 /* LaunchScreen.storyboard */,
 				B20FE4B32A250F9100B9E2D5 /* Info.plist */,
 				B20FE4AB2A250F9000B9E2D5 /* LoA_To_DO.xcdatamodeld */,
@@ -184,6 +187,7 @@
 				B20FE4AF2A250F9100B9E2D5 /* Assets.xcassets in Resources */,
 				B20FE4AA2A250F9000B9E2D5 /* Main.storyboard in Resources */,
 				B20FE4C62A25C76B00B9E2D5 /* CharacterCell.xib in Resources */,
+				B23483AA2A6FB49300E5E0F4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 import SnapKit
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseCore
 
 class CharacterDetailViewController: UIViewController {
     
@@ -149,6 +153,65 @@ class CharacterDetailViewController: UIViewController {
         print("ToDoInfo loaded successfully.")
     }
 
+    // MARK: - Firebase/Firestore
+    let db = Firestore.firestore()
+    
+    // 데이터를 Firestore에 저장하는 메서드
+    func saveDataToFireStore() {
+        let dataToSave: [String: Any] = [
+            "charName": characterSetting?.charName ?? "",
+            "charLevel": characterSetting?.charLevel ?? "",
+            "charClass": characterSetting?.charClass ?? "",
+            "isChaosDungeonDone": toDoInfo.isChaosDungeonDone,
+            "isGuardianRaidDone": toDoInfo.isGuardianRaidDone,
+            "isAbyssDungeonDone": toDoInfo.isAbyssDungeonDone,
+            "isAbyssDungeonName": characterSetting?.isAbyssDungeonName ?? "",
+            "isAbyssRaidDone": toDoInfo.isAbyssRaidDone,
+            "isValtanRaidDone": toDoInfo.isValtanRaidDone,
+            "isViaKissRaidDone": toDoInfo.isViaKissRaidDone,
+            "isKoukusatonRaidDone": toDoInfo.isKoukusatonRaidDone,
+            "isAbrelshudRaidDone": toDoInfo.isAbrelshudRaidDone,
+            "isIliakanRaidDone": toDoInfo.isIliakanRaidDone,
+            "isKamenRaidDone": toDoInfo.isKamenRaidDone,
+        ]
+        
+        let characterCollection = db.collection("characters")
+        
+        characterCollection.addDocument(data: dataToSave) { (error) in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully!")
+            }
+        }
+    }
+    
+    // 데이터를 가져오는 메서드
+    func loadDataFromFireStore() {
+        // firestore 콜렉션 레퍼런스 생성
+        let characterCollection = db.collection("chracters")
+        
+        // 특정 캐릭터 데이터 가져오기
+        let characterID = characterSetting?.charName ?? ""
+        characterCollection.document(characterID).getDocument { (snapshot, error) in
+            if let error = error {
+                print("Error fetching document: \(error)")
+                return
+            }
+            guard let document = snapshot else {
+                print("Document does not exist")
+                return
+            }
+            if document.exists {
+                // Document 데이터를 파싱하고 활용합니다.
+                if let data = document.data() {
+                    // Firestore 데이터를 사용하는 코드 작성
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
     
     // MARK: - 버튼 상태 변경
     func setButtonStates() {
@@ -538,6 +601,7 @@ class CharacterDetailViewController: UIViewController {
                 break
             }
         }
+        saveDataToFireStore()
         saveToDoInfo()
         print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     }
@@ -550,22 +614,23 @@ class CharacterDetailViewController: UIViewController {
         if let identifier = sender.accessibilityIdentifier {
             switch identifier {
             case "군단장 발탄":
-                isValtanRaidDone = true
+                toDoInfo.isValtanRaidDone = sender.isSelected
             case "군단장 비아키스":
-                isViaKissRaidDone = true
+                toDoInfo.isViaKissRaidDone = sender.isSelected
             case "군단장 쿠크세이튼":
-                isKoukusatonRaidDone = true
+                toDoInfo.isKoukusatonRaidDone = sender.isSelected
             case "군단장 아브렐슈드":
-                isAbrelshudRaidDone = true
+                toDoInfo.isAbrelshudRaidDone = sender.isSelected
             case "군단장 일리아칸":
-                isIliakanRaidDone = true
+                toDoInfo.isIliakanRaidDone = sender.isSelected
             case "군단장 카멘":
-                isKamenRaidDone = true
+                toDoInfo.isKamenRaidDone = sender.isSelected
             default:
                 break
             }
         }
         saveToDoInfo()
+        print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     }
     
     // MARK: 어비스 컨텐츠 버튼 작동
@@ -576,14 +641,15 @@ class CharacterDetailViewController: UIViewController {
         if let identifier = sender.accessibilityIdentifier {
             switch identifier {
             case "어비스 레이드: 아르고스":
-                isAbyssRaidDone = true
+                toDoInfo.isAbyssRaidDone = sender.isSelected
             case characterSetting?.isAbyssDungeonName:
-                isAbyssDungeonDone = true
+                toDoInfo.isAbyssDungeonDone = sender.isSelected
             default:
                 break
             }
         }
         saveToDoInfo()
+        print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     }
     
     //  MARK: - 삭제 버튼

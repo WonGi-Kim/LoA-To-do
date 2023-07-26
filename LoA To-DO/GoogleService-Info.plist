@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>526863511900-4lu4i6u57v0k4d4eoa86f4dfingu82bl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.526863511900-4lu4i6u57v0k4d4eoa86f4dfingu82bl</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAyX8QBiWMY-4SidV3Iyc4r6Z3bRvQ-Vt8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>526863511900</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>WonGi.LoA-To-DO</string>
+	<key>PROJECT_ID</key>
+	<string>loa-to-do</string>
+	<key>STORAGE_BUCKET</key>
+	<string>loa-to-do.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:526863511900:ios:5c39471ee9b82aff3c9199</string>
+</dict>
+</plist>
