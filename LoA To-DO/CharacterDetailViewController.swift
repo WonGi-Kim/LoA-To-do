@@ -80,6 +80,7 @@ class CharacterDetailViewController: UIViewController {
         )
         updateUI()
         loadToDoInfo()
+        
         print("앱을 재 시작했을때", toDoInfo)
                 
     }
@@ -550,17 +551,17 @@ class CharacterDetailViewController: UIViewController {
         if let identifier = sender.accessibilityIdentifier {
             switch identifier {
             case "군단장 발탄":
-                isValtanRaidDone = true
+                isValtanRaidDone = sender.isSelected
             case "군단장 비아키스":
-                isViaKissRaidDone = true
+                isViaKissRaidDone = sender.isSelected
             case "군단장 쿠크세이튼":
-                isKoukusatonRaidDone = true
+                isKoukusatonRaidDone = sender.isSelected
             case "군단장 아브렐슈드":
-                isAbrelshudRaidDone = true
+                isAbrelshudRaidDone = sender.isSelected
             case "군단장 일리아칸":
-                isIliakanRaidDone = true
+                isIliakanRaidDone = sender.isSelected
             case "군단장 카멘":
-                isKamenRaidDone = true
+                isKamenRaidDone = sender.isSelected
             default:
                 break
             }
@@ -576,9 +577,9 @@ class CharacterDetailViewController: UIViewController {
         if let identifier = sender.accessibilityIdentifier {
             switch identifier {
             case "어비스 레이드: 아르고스":
-                isAbyssRaidDone = true
+                isAbyssRaidDone = sender.isSelected
             case characterSetting?.isAbyssDungeonName:
-                isAbyssDungeonDone = true
+                isAbyssDungeonDone = sender.isSelected
             default:
                 break
             }
@@ -610,11 +611,21 @@ class CharacterDetailViewController: UIViewController {
     }
     
     @objc func deleteButtonTapped() {
-        guard let characterSetting = characterSetting else { return }
         
+        //  toDoInfo로 저장된 UserDefaults 삭제
+        UserDefaults.standard.removeObject(forKey: "CharacterToDoInfo")
+        print("deleteButtonTapped1..: characterToDoInfo", characterToDoInto)
+                
+        //  characterSetting을 없애서 CharacterCell과 캐릭터 정보를 노티피케이션으로 전달
+        guard let characterSetting = characterSetting else { return }
         NotificationCenter.default.post(name: Notification.Name("CharacterDeleted"), object: characterSetting)
         
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    deinit {
+        // 노티피케이션 관련 처리를 위해 등록된 옵저버를 해제합니다.
+        NotificationCenter.default.removeObserver(self)
     }
     
     //  MARK: - 수정 버튼
@@ -694,11 +705,6 @@ class CharacterDetailViewController: UIViewController {
                 }
             }
         }
-    }
-
-    deinit {
-        // 노티피케이션 관련 처리를 위해 등록된 옵저버를 해제합니다.
-        NotificationCenter.default.removeObserver(self)
     }
 
 }

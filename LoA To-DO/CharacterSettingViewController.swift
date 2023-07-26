@@ -48,6 +48,7 @@ class CharacterSettingViewController: UIViewController {
     var abyssDunPicker: UIPickerView!
     
     var characterSetting: [CharacterSetting] = []
+    var newCharacterSetting: CharacterSetting?
     var isGuardianRaidCheck: Bool = false //   일일 가디언 토벌 여부
     var isChaosDungeonCheck: Bool = false //   일일 카오스 던전 여부
     var isAbyssDungeonName: String = ""
@@ -291,19 +292,35 @@ class CharacterSettingViewController: UIViewController {
             isIliakanRaidCheck: isIliakanRaidCheck,
             isKamenRaidCheck: isKamenRaidCheck
         )
+        
+        let newCharacterSetting = CharacterSetting(
+            charName: name,
+            charLevel: level,
+            charClass: playerClass,
+            isGuardianRaidCheck: isGuardianRaidCheck,
+            isChaosDungeonCheck: isChaosDungeonCheck,
+            isAbyssDungeonCheck: isAbyssDungeonCheck,
+            isAbyssDungeonName: isAbyssDungeonName,
+            isAbyssRaidCheck: isAbyssRaidCheck,
+            isValtanRaidCheck: isValtanRaidCheck,
+            isViaKissRaidCheck: isViaKissRaidCheck,
+            isKoukusatonCheck: isKoukusatonCheck,
+            isAbrelshudRaidCheck: isAbrelshudRaidCheck,
+            isIliakanRaidCheck: isIliakanRaidCheck,
+            isKamenRaidCheck: isKamenRaidCheck
+        )
 
         if editMode == true {
-            // 기존 캐릭터 수정
+            // 기존 캐릭터
             NotificationCenter.default.post(name: Notification.Name("CharacterUpdated"), object: characterSetting)
-            self.delegate?.didSelectCharacter(characterSetting: characterSetting)
             navigationController?.popViewController(animated: true)
-            //print("데이터 업데이트",characterSetting)
             editMode = false
         } else {
             // 새로운 캐릭터 추가
             self.delegate?.didSelectCharacter(characterSetting: characterSetting)
             navigationController?.popViewController(animated: true)
         }
+        print(editMode)
     }
 
     
