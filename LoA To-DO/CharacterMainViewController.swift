@@ -35,8 +35,8 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
     @objc func handleCharacterDeleted(_ notification: Notification) {
         
         if let characterSetting = notification.object as? CharacterSetting,
-           let index = characterSettings.firstIndex(of: characterSetting) {
-            characterSettings.remove(at: index)
+           let index = characterSettingArray.firstIndex(of: characterSetting) {
+            characterSettingArray.remove(at: index)
             let indexPath = IndexPath(row: index, section: 0)
             TableView.deleteRows(at: [indexPath], with: .automatic)
                 
@@ -48,12 +48,12 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
         if let characterSetting = notification.object as? CharacterSetting {
             if let selectedIndex = TableView.indexPathForSelectedRow?.row {
                 // 기존 캐릭터 수정
-                characterSettings[selectedIndex] = characterSetting
+                characterSettingArray[selectedIndex] = characterSetting
                 // 편집된 행만 리로드
                 TableView.reloadRows(at: [IndexPath(row: selectedIndex, section: 0)], with: .automatic)
             } else {
                 // 새로운 캐릭터 추가
-                characterSettings.append(characterSetting)
+                characterSettingArray.append(characterSetting)
                 // 테이블 전체 리로드
                 // TableView.reloadData()
             }
@@ -80,7 +80,7 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
         
     func saveCharacterSettings() {
         let encoder = JSONEncoder()
-        if let encodedData = try? encoder.encode(characterSettings) {
+        if let encodedData = try? encoder.encode(characterSettingArray) {
             UserDefaults.standard.set(encodedData, forKey: "CharacterSettings")
         }
     }
@@ -90,7 +90,7 @@ class CharacterMainViewController: UIViewController, CharacterSettingViewControl
               let decodedData = try? JSONDecoder().decode([CharacterSetting].self, from: encodedData) else {
             return
         }
-        characterSettings = decodedData
+        characterSettingArray = decodedData
     }
     
     var characterSetting: CharacterSetting?
@@ -109,9 +109,9 @@ extension CharacterMainViewController {
     func didSelectCharacter(characterSetting: CharacterSetting) {
         
         if let selectedIndex = TableView.indexPathForSelectedRow?.row {
-            characterSettings[selectedIndex] = characterSetting
+            characterSettingArray[selectedIndex] = characterSetting
         } else {
-            characterSettings.append(characterSetting)
+            characterSettingArray.append(characterSetting)
         }
         
         TableView.reloadData()
@@ -127,7 +127,7 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as! CharacterCell
         
         // 기존의 cellSetting을 가져옴
-        let characterSetting = characterSettings[indexPath.row]
+        let characterSetting = characterSettingArray[indexPath.row]
         
         // 기존의 cell에 새로운 데이터를 반영
         cell.configure(with: characterSetting)
@@ -139,7 +139,7 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //  테이블 뷰의 데이터 개수 반환
         
-        return characterSettings.count
+        return characterSettingArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -150,7 +150,7 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
         */
         // 셀 갱신이 되지 않아 전달방식 변경
         // 변경 후 셀 갱신 정상 작동
-        let characterSetting = characterSettings[indexPath.row]
+        let characterSetting = characterSettingArray[indexPath.row]
         guard let detailViewController = self.storyboard?.instantiateViewController(identifier: "CharacterDetailViewController") as?
                 CharacterDetailViewController else { return }
         detailViewController.characterSetting = characterSetting
