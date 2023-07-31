@@ -63,6 +63,65 @@ class CharacterDetailViewController: UIViewController {
     //  리스트로 선언해서 받아내지 않으면 밑줄 뷰가 겹치는 현상 발생
     var underLines: [UIView] = []
     
+    //  API 오류 메시지
+    struct ErrorResponse: Codable {
+        let Code: Int
+        let Description: String
+    }
+    
+    //  MARK: - LostArk Open API
+    func getProfiles(characterName: String) {
+        let baseURLString = "https://developer-lostark.game.onstove.com/armories/\(characterName)/profiles"
+        
+        if let url = URL(string: baseURLString) {
+            var request = URLRequest(url: url)
+            
+            request.httpMethod = "GET"
+            
+            //  헤더
+            request.setValue("application/json", forHTTPHeaderField: "accept")
+            request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAyOTM2NDEifQ.C0xcwnZTK3MwikcL9Q9zAu4wHZnKxNJgo2f3zVnR27e2gXiVvqnLVEUvj2Ns2Mj3-XNKj9F0ume1pU_EZhGFQWz6KBnHmj3dOeROn28cC21wWBWrrwnaO8ANoE5rVhBzfBaIzb_QsXTBhCEM5lPStnjbE8fVS4ihRZTOi0LLTZfgpVe0Z3zYOL5MOfDXksr2vRgMeH00USOKBeU--bgwU-hwcadcuuYngoGLOsX0zKhow8Hxdecrd4d2_svM_Wd7ju1URsL9ne88LKOemHh_VxrDzQzzGByDlPc95q3-ceBSiT0b_ICWb7leMOMkURAhsoK5J3gV4k7SaEKmdVbmcw", forHTTPHeaderField: "authorization")
+            
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    // 네트워크 에러 처리
+                    print("Network Error:", error)
+                    return
+                }
+                
+                
+                
+                guard let data = data, let response = response as? HTTPURLResponse else {
+                    // 데이터나 응답이 없을 경우 처리
+                    print("No Data or Response")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                if (200..<300).contains(response.statusCode) {
+                    do {
+                        let characterProfiles = try decoder.decode(CharacterProfiles.self, from: data)
+                        // 성공적으로 디코딩된 데이터 처리
+                        self.characterImage.image = UIImage(named: characterProfiles.CharacterImage)
+                        print("Success:", characterProfiles)
+                    } catch {
+                        // 디코딩 에러 처리
+                        print("Decoding Error:", error)
+                    }
+                } else {
+                    // 서버 에러 처리
+                    print("Server Error:", response.statusCode)
+                    if let errorMessage = try? decoder.decode(ErrorResponse.self, from: data) {
+                        print("Error Message:", errorMessage)
+                    }
+                }
+            }
+            dataTask.resume()
+        }
+    }
+
+
     
     
     //  MARK: - ViewDidLoad()
@@ -85,8 +144,19 @@ class CharacterDetailViewController: UIViewController {
         )
         updateUI()
         loadDataFromFireStore()
+        
+        if let characterName = characterSetting?.charName{
+            if let encodingName = characterName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                getProfiles(characterName: encodingName)
+                print("encoding name", encodingName)
+            } else {
+                return
+            }
+        }
         //loadToDoInfo()
-        print("앱을 재 시작했을때", toDoInfo)
+        print("앱을 재 시작했을때", characterSetting?.charName)
+        
+        //print("ContentView Size: ", contentView)
                 
     }
     
@@ -116,12 +186,15 @@ class CharacterDetailViewController: UIViewController {
         contentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(view)
+            make.height.greaterThanOrEqualToSuperview() // 요소들의 크기에 따라 동적으로 설정
         }
 
         // 스크롤 가능한 영역 크기 제약조건 설정
-        let contentHeightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor)
-        contentHeightConstraint.priority = .defaultLow
-        contentHeightConstraint.isActive = true
+        /**
+         let contentHeightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor)
+         contentHeightConstraint.priority = .defaultLow
+         contentHeightConstraint.isActive = true
+         */
 
         scrollView.isScrollEnabled = true
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: 0)
@@ -339,7 +412,8 @@ class CharacterDetailViewController: UIViewController {
     //  MARK: - 기본 정보 라벨의 초기값 설정
     func labelDefaults() {
         var labels: [UILabel] = []
-        labels = [nameLabel, classLabel, levelLabel, dailyNoticeLabel, raidNoticeLabel,abyssNoticeLabel]
+        labels = [dailyNoticeLabel, raidNoticeLabel,abyssNoticeLabel]
+        //labels = [nameLabel, classLabel, levelLabel, dailyNoticeLabel, raidNoticeLabel,abyssNoticeLabel]
         
         labels.forEach { label in
             label.layer.borderWidth = 1.0
@@ -402,7 +476,7 @@ class CharacterDetailViewController: UIViewController {
         nameLabel.text = "캐릭터 명: " + (characterSetting?.charName ?? "")
         levelLabel.text = "아이템 레벨: " + (characterSetting?.charLevel ?? "")
         classLabel.text = "직업: " + (characterSetting?.charClass ?? "")
-        characterImage.image = UIImage(named: (characterSetting?.charClass) ?? "")
+        
         
         view.addSubview(nameLabel)
         scrollView.addSubview(nameLabel)
@@ -415,34 +489,35 @@ class CharacterDetailViewController: UIViewController {
         view.addSubview(editButton)
         scrollView.addSubview(editButton)
         
-        classLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.width.equalTo(160)
-            make.height.equalTo(50)
-        }
-        
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(classLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.width.equalTo(160)
-            make.height.equalTo(50)
-        }
-        levelLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.width.equalTo(160)
-            make.height.equalTo(50)
-        }
         characterImage.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-20)
-            make.width.equalTo(160)
-            make.height.equalTo(170)
+            make.leading.equalToSuperview().offset(10)
+            make.width.equalToSuperview().inset(10)
+            make.height.equalTo(700)
         }
         characterImage.layer.borderWidth = 1.0
         characterImage.layer.borderColor = UIColor.gray.withAlphaComponent(0.8).cgColor
         characterImage.layer.cornerRadius = 5.0
+        
+        classLabel.snp.makeConstraints { make in
+            make.top.equalTo(characterImage.snp.bottom).offset(1)
+            make.leading.equalToSuperview().offset(20)
+            make.width.equalTo(160)
+            make.height.equalTo(20)
+        }
+        
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(classLabel.snp.bottom).offset(1)
+            make.leading.equalToSuperview().offset(20)
+            make.width.equalTo(160)
+            make.height.equalTo(20)
+        }
+        levelLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(1)
+            make.leading.equalToSuperview().offset(20)
+            make.width.equalTo(160)
+            make.height.equalTo(20)
+        }
         
     }
     
@@ -683,6 +758,7 @@ class CharacterDetailViewController: UIViewController {
         }
         saveDataToFireStore()
         print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
+    
     }
     
     // MARK: 군단장 컨텐츠 버튼 작동
