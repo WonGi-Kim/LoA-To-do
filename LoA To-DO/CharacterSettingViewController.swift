@@ -126,6 +126,19 @@ class CharacterSettingViewController: UIViewController {
         // 어비스 던전의 값이 사라지는 현상 방지
         abyssDunValue = abyssDunField.text ?? ""
         
+        //  최초 뷰 진입시 텍스트 필드 포커스
+        characterNameField.becomeFirstResponder()
+        
+    }
+    
+    //  MARK: - Alert() {
+    func showAlertInfo() {
+        let alertController = UIAlertController(title: "알려드립니다.", message: "데이터 불일치시 수정 화면에서 수정완료를 눌러주세요!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     
@@ -306,6 +319,7 @@ class CharacterSettingViewController: UIViewController {
             editMode = false
         } else {
             // 새로운 캐릭터 추가
+            showAlertInfo()
             self.delegate?.didSelectCharacter(characterSetting: characterSetting)
             navigationController?.popViewController(animated: true)
         }
@@ -342,7 +356,7 @@ class CharacterSettingViewController: UIViewController {
     }
     
     //  MARK: - 주간 골드 횟수를 초과하게된다면 알럿 호출
-    func showAlert() {
+    func showAlertGold() {
         let alert = UIAlertController(title: "확인해주세요", message: "더이상 골드를 획득할 수 없습니다.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
         alert.addAction(okAction)
@@ -383,7 +397,7 @@ class CharacterSettingViewController: UIViewController {
         }
         
         if goldButtonTappedCount > 3 {
-            showAlert()
+            showAlertGold()
         }
     }
     @IBAction func viakissRaidButton(_ sender: UIButton) {
@@ -398,7 +412,7 @@ class CharacterSettingViewController: UIViewController {
         }
         
         if goldButtonTappedCount > 3 {
-            showAlert()
+            showAlertGold()
         }
     }
     @IBAction func koukusatonRaidButton(_ sender: UIButton) {
@@ -413,7 +427,7 @@ class CharacterSettingViewController: UIViewController {
         }
         
         if goldButtonTappedCount > 3 {
-            showAlert()
+            showAlertGold()
         }
     }
     @IBAction func abrelshudRaidButton(_ sender: UIButton) {
@@ -428,7 +442,7 @@ class CharacterSettingViewController: UIViewController {
         }
         
         if goldButtonTappedCount > 3 {
-            showAlert()
+            showAlertGold()
         }
     }
     @IBAction func iliakanRaidButton(_ sender: UIButton) {
@@ -443,7 +457,7 @@ class CharacterSettingViewController: UIViewController {
         }
         
         if goldButtonTappedCount > 3 {
-            showAlert()
+            showAlertGold()
         }
     }
     @IBAction func kamenRaidButton(_ sender: UIButton) {
@@ -460,7 +474,7 @@ class CharacterSettingViewController: UIViewController {
         }
         
         if goldButtonTappedCount > 3 {
-            showAlert()
+         showAlertGold()
         }
          */
     }
@@ -478,7 +492,7 @@ class CharacterSettingViewController: UIViewController {
         }
         
         if goldButtonTappedCount > 3 {
-            showAlert()
+            showAlertGold()
         }
     }
     
@@ -492,7 +506,7 @@ class CharacterSettingViewController: UIViewController {
         }
         
         if goldButtonTappedCount > 3 {
-            showAlert()
+            showAlertGold()
         }
     }
     
@@ -590,7 +604,11 @@ extension CharacterSettingViewController: UITextFieldDelegate {
         
         return true
     }
-
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
 }
 // MARK: - UIScrollView

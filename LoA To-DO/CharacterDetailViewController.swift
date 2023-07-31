@@ -101,6 +101,7 @@ class CharacterDetailViewController: UIViewController {
                         let decoder = JSONDecoder()
                         do {
                             let characterProfiles = try decoder.decode(CharacterProfiles.self, from: processedData)
+                            
                             // 성공적으로 디코딩된 데이터 처리
                             if let imageUrlString = characterProfiles.CharacterImage,
                                let imageUrl = URL(string: imageUrlString),
@@ -108,26 +109,37 @@ class CharacterDetailViewController: UIViewController {
                                let image = UIImage(data: imageData) {
                                 DispatchQueue.main.async {
                                     self.characterImage.image = image
+                                    self.classLabel.text = "직업: " + (characterProfiles.CharacterClassName ?? "")
+                                    self.nameLabel.text = "캐릭터 명: " + (characterProfiles.CharacterName ?? "")
+                                    self.levelLabel.text = "아이템 레벨: " + (characterProfiles.ItemAvgLevel ?? "")
                                 }
                             }
-                            print("Success:", characterProfiles)
+                            
+                            self.characterSetting?.charClass = characterProfiles.CharacterClassName ?? ""
+                            self.characterSetting?.charLevel = characterProfiles.ItemAvgLevel ?? ""
+                            self.characterSetting?.charName = characterProfiles.CharacterName ?? ""
+                            
                         } catch {
                             // 디코딩 에러 처리
                             print("Decoding Error:", error)
+                            
                             // JSON 데이터 확인
                             if let jsonString = String(data: data, encoding: .utf8) {
                                 print("JSON Data:", jsonString)
                             }
+                            
                         }
                     } else {
                         print("Failed to preprocess JSON data.")
                     }
                 } else {
+                    
                     // 서버 에러 처리
                     print("Server Error:", response.statusCode)
                     if let errorMessage = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
                         print("Error Message:", errorMessage)
                     }
+                    
                     // JSON 데이터 확인
                     if let jsonString = String(data: data, encoding: .utf8) {
                         print("JSON Data:", jsonString)
@@ -142,6 +154,7 @@ class CharacterDetailViewController: UIViewController {
     func preprocessJSONData(_ data: Data) -> Data? {
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+            
             if var processedObject = preprocessJSONObject(jsonObject) {
                 return try JSONSerialization.data(withJSONObject: processedObject)
             } else {
@@ -172,11 +185,6 @@ class CharacterDetailViewController: UIViewController {
         }
     }
 
-
-
-
-    
-    
     //  MARK: - ViewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -206,12 +214,8 @@ class CharacterDetailViewController: UIViewController {
                 return
             }
         }
-        //loadToDoInfo()
-        print("앱을 재 시작했을때", characterSetting?.charName)
-        
-        //print("ContentView Size: ", contentView)
-                
     }
+    
     
     //  MARK: - setupUI
     func setupUI() {
@@ -252,8 +256,10 @@ class CharacterDetailViewController: UIViewController {
         scrollView.isScrollEnabled = true
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: 0)
     }
+    
 
-    // MARK: - UserDefaults
+    // MARK: - Firebase/Firestore
+    let db = Firestore.firestore()
     
     var toDoInfo = CharacterToDoInfo(
         characterName: "",
@@ -269,34 +275,6 @@ class CharacterDetailViewController: UIViewController {
         isKamenRaidDone: false,
         isAbyssDungeonName: ""
     )
-    /**
-    // MARK: UserDefaults 값 저장
-    func saveToDoInfo() {
-        let encoder = JSONEncoder()
-        do {
-            let encodedData = try encoder.encode(toDoInfo)
-            UserDefaults.standard.set(encodedData, forKey: "CharacterToDoInfo")
-            UserDefaults.standard.synchronize() // 데이터 동기화
-            print("ToDoInfo saved successfully.")
-        } catch {
-            print("Failed to save ToDoInfo:", error)
-        }
-    }
-    
-    // MARK: UserDefaults 값 로드
-    func loadToDoInfo() {
-        guard let encodedData = UserDefaults.standard.data(forKey: "CharacterToDoInfo"),
-              let decodedData = try? JSONDecoder().decode(CharacterToDoInfo.self, from: encodedData) else {
-            print("ToDoInfo data not found or decoding failed.")
-            return
-        }
-        toDoInfo = decodedData
-        setButtonStates()
-        print("ToDoInfo loaded successfully.")
-    }*/
-
-    // MARK: - Firebase/Firestore
-    let db = Firestore.firestore()
     
     // MARK: 데이터를 Firestore에 저장하는 메서드
     func saveDataToFireStore() {
@@ -555,20 +533,20 @@ class CharacterDetailViewController: UIViewController {
         classLabel.snp.makeConstraints { make in
             make.top.equalTo(characterImage.snp.bottom).offset(1)
             make.leading.equalToSuperview().offset(20)
-            make.width.equalTo(160)
+            make.width.equalToSuperview()
             make.height.equalTo(20)
         }
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(classLabel.snp.bottom).offset(1)
             make.leading.equalToSuperview().offset(20)
-            make.width.equalTo(160)
+            make.width.equalToSuperview()
             make.height.equalTo(20)
         }
         levelLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(1)
             make.leading.equalToSuperview().offset(20)
-            make.width.equalTo(160)
+            make.width.equalToSuperview()
             make.height.equalTo(20)
         }
         
