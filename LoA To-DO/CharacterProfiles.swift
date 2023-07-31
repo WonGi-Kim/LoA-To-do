@@ -8,27 +8,27 @@
 import Foundation
 
 struct CharacterProfiles: Codable {
-    var CharacterImage: String
-    var CharacterName: String
-    var CharacterClassName: String
-    var ItemAvgLevel: String
-    var ExpeditionLevel: Int
-    var PvpGradeName: String
-    var TownLevel: Int
-    var TownName: String
-    var Title: String
+    var CharacterImage: String?
+    var CharacterName: String?
+    var CharacterClassName: String?
+    var ItemAvgLevel: String?
+    var ExpeditionLevel: Int?
+    var PvpGradeName: String?
+    var TownLevel: Int?
+    var TownName: String?
+    var Title: String?
     var GuildMemberGrade: String? // Make it optional
     var GuildName: String? // Make it optional
-    var UsingSkillPoint: Int
-    var TotalSkillPoint: Int
-    var Stats: [Stat]
-    var Tendencies: [Tendency]
-    var ServerName: String
+    var UsingSkillPoint: Int?
+    var TotalSkillPoint: Int?
+    var Stats: [Stat]?
+    var Tendencies: [Tendency]?
+    var ServerName: String?
 
     struct Stat: Codable {
-        var statType: String
-        var Value: String
-        var Tooltip: [String]
+        var statType: String?
+        var Value: String?
+        var Tooltip: [String]?
         
         enum CodingKeys: String, CodingKey {
             case statType = "Type"
@@ -38,9 +38,9 @@ struct CharacterProfiles: Codable {
     }
 
     struct Tendency: Codable {
-        var tendType: String
-        var Point: Int
-        var MaxPoint: Int
+        var tendType: String?
+        var Point: Int?
+        var MaxPoint: Int?
         
         enum CodingKeys: String, CodingKey {
             case tendType = "Type"
@@ -68,6 +68,4 @@ struct CharacterProfiles: Codable {
         case Tendencies
         case ServerName
     }
-    
-    
 }
