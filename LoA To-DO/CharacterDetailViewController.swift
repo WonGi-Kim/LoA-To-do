@@ -79,7 +79,7 @@ class CharacterDetailViewController: UIViewController {
 
             // 헤더 설정
             request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAyOTM2NDEifQ.C0xcwnZTK3MwikcL9Q9zAu4wHZnKxNJgo2f3zVnR27e2gXiVvqnLVEUvj2Ns2Mj3-XNKj9F0ume1pU_EZhGFQWz6KBnHmj3dOeROn28cC21wWBWrrwnaO8ANoE5rVhBzfBaIzb_QsXTBhCEM5lPStnjbE8fVS4ihRZTOi0LLTZfgpVe0Z3zYOL5MOfDXksr2vRgMeH00USOKBeU--bgwU-hwcadcuuYngoGLOsX0zKhow8Hxdecrd4d2_svM_Wd7ju1URsL9ne88LKOemHh_VxrDzQzzGByDlPc95q3-ceBSiT0b_ICWb7leMOMkURAhsoK5J3gV4k7SaEKmdVbmcw", forHTTPHeaderField: "Authorization")
+            request.setValue("bearer API-key", forHTTPHeaderField: "Authorization")
 
             let session = URLSession.shared
             let dataTask = session.dataTask(with: request) { data, response, error in
