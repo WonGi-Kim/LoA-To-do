@@ -189,13 +189,22 @@ class CharacterDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(contentView)
-        contentView.snp.makeConstraints { make in
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        scrollViewSetup()
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(view)
+            make.height.greaterThanOrEqualToSuperview()
+        }
+        
+        //scrollViewSetup()
         setupUI()
+
+        
         // CharacterUpdated 노티피케이션을 수신하고, 데이터를 업데이트하는 메서드를 등록합니다.
         NotificationCenter.default.addObserver(
             self,
@@ -203,13 +212,13 @@ class CharacterDetailViewController: UIViewController {
             name: Notification.Name("CharacterUpdated"),
             object: nil
         )
-        updateUI()
+        //updateUI()
+        
         loadDataFromFireStore()
         
         if let characterName = characterSetting?.charName{
             if let encodingName = characterName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
                 getProfiles(characterName: encodingName)
-                print("encoding name", encodingName)
             } else {
                 return
             }
@@ -217,46 +226,41 @@ class CharacterDetailViewController: UIViewController {
     }
     
     
+    
     //  MARK: - setupUI
     func setupUI() {
         self.createCharInfo()
-        if let lastBtn = createDailySection() {
-            if let lastBtn = createRaidSection(topAnchor: lastBtn.snp.bottom) {
-                if let lastBtn = createAbyssSection(topAnchor: lastBtn.snp.bottom) {
-                    createDeleteButton(topAnchor: lastBtn.snp.bottom)
-                    createEditButton(topAnchor: lastBtn.snp.bottom)
-                }
-            }
-        }
-    }
-    
-    //MARK: - 스크롤 뷰 설정
-    func scrollViewSetup() {
-        view.addSubview(scrollView)
 
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        var topAnchor: ConstraintRelatableTarget = levelLabel.snp.bottom // 최상단 버튼의 topAnchor를 변경
+
+        if let dailySection = createDailySection() {
+            topAnchor = dailySection.snp.bottom // 최상단 버튼의 topAnchor를 변경
         }
 
-        scrollView.addSubview(contentView)
+        if let raidSection = createRaidSection(topAnchor: topAnchor) {
+            topAnchor = raidSection.snp.bottom // 최상단 버튼의 topAnchor를 변경
+        }
 
-        contentView.snp.makeConstraints { make in
+        if let abyssSection = createAbyssSection(topAnchor: topAnchor) {
+            topAnchor = abyssSection.snp.bottom // 최상단 버튼의 topAnchor를 변경
+            createEditButton(topAnchor: topAnchor)
+            createDeleteButton(topAnchor: topAnchor)
+        }
+
+        // contentView의 크기를 설정합니다.
+        contentView.snp.remakeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(view)
-            make.height.greaterThanOrEqualToSuperview() // 요소들의 크기에 따라 동적으로 설정
+            make.bottom.equalTo(deleteButton.snp.bottom).offset(20) // contentView의 하단을 삭제 버튼의 하단으로 설정.
         }
 
-        // 스크롤 가능한 영역 크기 제약조건 설정
-        /**
-         let contentHeightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor)
-         contentHeightConstraint.priority = .defaultLow
-         contentHeightConstraint.isActive = true
-         */
-
-        scrollView.isScrollEnabled = true
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: 0)
+        // scrollView의 contentSize를 contentView의 크기와 동일하게
+        scrollView.contentSize = contentView.bounds.size
+        scrollView.contentInset = ConstraintInsets(top: 0, left: 0, bottom: 0, right: 0)
+        //print("setupUI에서 스크롤뷰의 컨텐트 사이즈: \(scrollView.contentSize)")
+        
     }
-    
+
 
     // MARK: - Firebase/Firestore
     let db = Firestore.firestore()
@@ -503,53 +507,50 @@ class CharacterDetailViewController: UIViewController {
     //  MARK: - 캐릭터 정보 이름, 직업, 레벨의 라벨 그리기
     func createCharInfo() {
         labelDefaults()
-        
+
         nameLabel.text = "캐릭터 명: " + (characterSetting?.charName ?? "")
         levelLabel.text = "아이템 레벨: " + (characterSetting?.charLevel ?? "")
         classLabel.text = "직업: " + (characterSetting?.charClass ?? "")
-        
-        
-        view.addSubview(nameLabel)
-        scrollView.addSubview(nameLabel)
-        view.addSubview(levelLabel)
-        scrollView.addSubview(levelLabel)
-        view.addSubview(classLabel)
-        scrollView.addSubview(classLabel)
+
         view.addSubview(characterImage)
         scrollView.addSubview(characterImage)
-        view.addSubview(editButton)
-        scrollView.addSubview(editButton)
-        
+
         characterImage.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(10)
-            make.width.equalToSuperview().inset(10)
-            make.height.equalTo(700)
+            make.trailing.equalToSuperview().offset(-10)
+            make.height.equalTo(characterImage.snp.width).multipliedBy(1.5) // 이미지의 가로 너비에 대해 세로 높이를 1.5 배로 설정
         }
         characterImage.layer.borderWidth = 1.0
         characterImage.layer.borderColor = UIColor.gray.withAlphaComponent(0.8).cgColor
         characterImage.layer.cornerRadius = 5.0
-        
+
+        view.addSubview(classLabel)
+        scrollView.addSubview(classLabel)
+
         classLabel.snp.makeConstraints { make in
-            make.top.equalTo(characterImage.snp.bottom).offset(1)
+            make.top.equalTo(characterImage.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(20)
-            make.width.equalToSuperview()
-            make.height.equalTo(20)
+            make.trailing.equalToSuperview().offset(-20)
         }
-        
+
+        view.addSubview(nameLabel)
+        scrollView.addSubview(nameLabel)
+
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(classLabel.snp.bottom).offset(1)
+            make.top.equalTo(classLabel.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(20)
-            make.width.equalToSuperview()
-            make.height.equalTo(20)
+            make.trailing.equalToSuperview().offset(-20)
         }
+
+        view.addSubview(levelLabel)
+        scrollView.addSubview(levelLabel)
+
         levelLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(1)
+            make.top.equalTo(nameLabel.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(20)
-            make.width.equalToSuperview()
-            make.height.equalTo(20)
+            make.trailing.equalToSuperview().offset(-20)
         }
-        
     }
     
     //  MARK: - 일일 컨텐츠 생성
@@ -788,7 +789,7 @@ class CharacterDetailViewController: UIViewController {
             }
         }
         saveDataToFireStore()
-        print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
+        //print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     
     }
     
@@ -816,7 +817,7 @@ class CharacterDetailViewController: UIViewController {
             }
         }
         saveDataToFireStore()
-        print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
+        //print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     }
     
     // MARK: 어비스 컨텐츠 버튼 작동
@@ -835,11 +836,11 @@ class CharacterDetailViewController: UIViewController {
             }
         }
         saveDataToFireStore()
-        print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
+        //print("버튼이 눌렸을때의 toDoInfo: ",toDoInfo)
     }
     
     //  MARK: - 삭제 버튼
-    func createDeleteButton(topAnchor: ConstraintRelatableTarget) {
+    func createDeleteButton(topAnchor: ConstraintRelatableTarget) -> UIView {
         
         view.addSubview(deleteButton)
         scrollView.addSubview(deleteButton)
@@ -847,7 +848,7 @@ class CharacterDetailViewController: UIViewController {
         var lastBtn: UIView?
         
         deleteButton.snp.makeConstraints { make in
-            make.top.equalTo(topAnchor).offset(200)
+            make.top.equalTo(topAnchor).offset(20)
             make.leading.equalToSuperview().offset(80)
             make.width.equalTo(100)
             make.height.equalTo(30)
@@ -859,6 +860,8 @@ class CharacterDetailViewController: UIViewController {
         deleteButton.layer.borderColor = UIColor.gray.cgColor
         deleteButton.layer.borderWidth = 3
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        
+        return deleteButton
     }
     
     @objc func deleteButtonTapped() {
@@ -882,14 +885,14 @@ class CharacterDetailViewController: UIViewController {
     }
     
     //  MARK: - 수정 버튼
-    func createEditButton(topAnchor: ConstraintRelatableTarget) {
+    func createEditButton(topAnchor: ConstraintRelatableTarget) -> UIView {
         view.addSubview(editButton)
         scrollView.addSubview(editButton)
         
         var lastBtn: UIView?
         
         editButton.snp.makeConstraints { make in
-            make.top.equalTo(topAnchor).offset(200)
+            make.top.equalTo(topAnchor).offset(20)
             make.trailing.equalToSuperview().inset(80)
             make.width.equalTo(100)
             make.height.equalTo(30)
@@ -901,6 +904,8 @@ class CharacterDetailViewController: UIViewController {
         editButton.layer.borderColor = UIColor.gray.cgColor
         editButton.layer.borderWidth = 3
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        
+        return editButton
     }
     
     @objc func editButtonTapped() {
@@ -924,13 +929,15 @@ class CharacterDetailViewController: UIViewController {
             
             settingViewController.characterSetting = selectedCharacter
             settingViewController.editMode = true
-            self.navigationController?.pushViewController(settingViewController, animated: true)
+            //self.navigationController?.pushViewController(settingViewController, animated: true)
+            self.navigationController?.show(settingViewController, sender: self)
         }
     }
     
     // MARK: - CharacterUpdated 노티피케이션 처리
         
     @objc func handleCharacterUpdatedNotification(_ notification: Notification) {
+        print("handleCharacterUpdatedNotification called")
         if let updatedCharacter = notification.object as? CharacterSetting {
             // 노티피케이션으로 전달된 수정된 데이터를 반영하여 화면을 업데이트합니다.
             self.characterSetting = updatedCharacter
@@ -940,26 +947,40 @@ class CharacterDetailViewController: UIViewController {
     
     //  MARK: - updateUI
     func updateUI() {
-        // 기존에 생성된 버튼과 밑줄을 제거합니다.
-        contentView.subviews.forEach { subview in
+        print("updateUI Called")
+        print("Delete Before Views..")
+        for subview in contentView.subviews {
             subview.removeFromSuperview()
         }
-        underLines.forEach { line in
-            line.removeFromSuperview()
+        print("re Generate UI..")
+        self.createCharInfo()
+
+        var topAnchor: ConstraintRelatableTarget = levelLabel.snp.bottom // 최상단 버튼의 topAnchor를 변경
+
+        if let dailySection = createDailySection() {
+            topAnchor = dailySection.snp.bottom // 최상단 버튼의 topAnchor를 변경
         }
-        underLines.removeAll()
+
+        if let raidSection = createRaidSection(topAnchor: topAnchor) {
+            topAnchor = raidSection.snp.bottom // 최상단 버튼의 topAnchor를 변경
+        }
+
+        if let abyssSection = createAbyssSection(topAnchor: topAnchor) {
+            topAnchor = abyssSection.snp.bottom // 최상단 버튼의 topAnchor를 변경
+            createEditButton(topAnchor: topAnchor)
+            createDeleteButton(topAnchor: topAnchor)
+        }
+
+        // contentView의 크기를 설정합니다.
+        contentView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(view)
+            make.bottom.equalTo(deleteButton.snp.bottom).offset(20) // contentView의 하단을 삭제 버튼의 하단으로 설정.
+        }
+
+        // scrollView의 contentSize를 contentView의 크기와 동일하게
+        scrollView.contentSize = contentView.bounds.size
         
-        // 갱신된 데이터를 기반으로 버튼과 레이블을 생성하고 UI를 구성합니다.
-        scrollViewSetup()
-        createCharInfo()
-        if let lastBtn = createDailySection() {
-            if let lastBtn = createRaidSection(topAnchor: lastBtn.snp.bottom) {
-                if let lastBtn = createAbyssSection(topAnchor: lastBtn.snp.bottom) {
-                    createDeleteButton(topAnchor: lastBtn.snp.bottom)
-                    createEditButton(topAnchor: lastBtn.snp.bottom)
-                }
-            }
-        }
     }
 
     deinit {

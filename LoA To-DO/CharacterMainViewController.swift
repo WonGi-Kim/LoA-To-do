@@ -156,7 +156,6 @@ extension CharacterMainViewController: UITableViewDelegate, UITableViewDataSourc
         detailViewController.characterSetting = characterSetting
         //detailViewController.delegate = self
         navigationController?.pushViewController(detailViewController, animated: true)
-        print("수정되어 넘어가는 캐릭터 세팅: ")
-        print(characterSetting)
+        
     }
 }
