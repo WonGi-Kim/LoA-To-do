@@ -112,6 +112,7 @@ class CharacterDetailViewController: UIViewController {
                                     self.classLabel.text = "직업: " + (characterProfiles.CharacterClassName ?? "")
                                     self.nameLabel.text = "캐릭터 명: " + (characterProfiles.CharacterName ?? "")
                                     self.levelLabel.text = "아이템 레벨: " + (characterProfiles.ItemAvgLevel ?? "")
+                                    
                                 }
                             }
                             
@@ -375,17 +376,17 @@ class CharacterDetailViewController: UIViewController {
             "charName": characterSetting?.charName ?? "",
             "charLevel": characterSetting?.charLevel ?? "",
             "charClass": characterSetting?.charClass ?? "",
-            "isChaosDungeonDone": false,
-            "isGuardianRaidDone": false,
-            "isAbyssDungeonDone": false,
+            "isChaosDungeonDone": toDoInfo.isChaosDungeonDone,
+            "isGuardianRaidDone": toDoInfo.isGuardianRaidDone,
+            "isAbyssDungeonDone": toDoInfo.isAbyssDungeonDone,
             "isAbyssDungeonName": characterSetting?.isAbyssDungeonName ?? "",
-            "isAbyssRaidDone": false,
-            "isValtanRaidDone": false,
-            "isViaKissRaidDone": false,
-            "isKoukusatonRaidDone": false,
-            "isAbrelshudRaidDone": false,
-            "isIliakanRaidDone": false,
-            "isKamenRaidDone": false
+            "isAbyssRaidDone": toDoInfo.isAbyssRaidDone,
+            "isValtanRaidDone": toDoInfo.isValtanRaidDone,
+            "isViaKissRaidDone": toDoInfo.isViaKissRaidDone,
+            "isKoukusatonRaidDone": toDoInfo.isKoukusatonRaidDone,
+            "isAbrelshudRaidDone": toDoInfo.isAbrelshudRaidDone,
+            "isIliakanRaidDone": toDoInfo.isIliakanRaidDone,
+            "isKamenRaidDone": toDoInfo.isKamenRaidDone
         ]
         
         let characterCollection = db.collection("characters")
@@ -980,6 +981,8 @@ class CharacterDetailViewController: UIViewController {
 
         // scrollView의 contentSize를 contentView의 크기와 동일하게
         scrollView.contentSize = contentView.bounds.size
+        
+        self.setButtonStates()
         
     }
 

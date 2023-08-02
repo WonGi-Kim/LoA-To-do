@@ -28,7 +28,7 @@
         <!--Character Main View Controller-->
         <scene sceneID="ORZ-KW-g7A">
             <objects>
-                <viewController id="E1M-gG-0wI" customClass="CharacterMainViewController" customModule="LoA_To_DO" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CharacterMainViewController" id="E1M-gG-0wI" customClass="CharacterMainViewController" customModule="LoA_To_DO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zpl-WO-rON">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
