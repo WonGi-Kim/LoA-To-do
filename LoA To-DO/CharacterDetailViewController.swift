@@ -107,7 +107,7 @@ class CharacterDetailViewController: UIViewController {
                                let imageUrl = URL(string: imageUrlString),
                                let imageData = try? Data(contentsOf: imageUrl),
                                let image = UIImage(data: imageData) {
-                                DispatchQueue.main.async {
+                                DispatchQueue.main.async { // Api를 통해 불러온 데이터로 UI 업데이트를 위함
                                     self.characterImage.image = image
                                     self.classLabel.text = "직업: " + (characterProfiles.CharacterClassName ?? "")
                                     self.nameLabel.text = "캐릭터 명: " + (characterProfiles.CharacterName ?? "")
